@@ -1,0 +1,1084 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#241209">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>A Trilha da Abolição — O Desafio de Ser Livre</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<style>
+  :root{
+    --ink:#241209;
+    --ink-soft:#3d2414;
+    --parchment:#f4ecda;
+    --parchment-deep:#e7d9b8;
+    --panel:#fffdf8;
+    --brass:#a97a2f;
+    --brass-light:#c99a4d;
+    --good:#1e6b45;
+    --good-bg:#e4f2ea;
+    --bad:#a6293a;
+    --bad-bg:#faeaec;
+    --quiz:#2f4c66;
+    --quiz-bg:#e9eff4;
+    --border:#d9c79c;
+    --shadow:0 8px 24px rgba(36,18,9,0.16);
+    --radius:14px;
+    --safe-top:env(safe-area-inset-top,0px);
+    --safe-bottom:env(safe-area-inset-bottom,0px);
+  }
+
+  *{box-sizing:border-box;}
+  html{-webkit-text-size-adjust:100%;}
+  body{
+    margin:0;
+    font-family:'Source Sans 3', system-ui, sans-serif;
+    color:var(--ink);
+    background:
+      radial-gradient(1200px 600px at 50% -10%, #fbf5e6 0%, var(--parchment) 55%),
+      var(--parchment);
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    padding-bottom:calc(24px + var(--safe-bottom));
+  }
+
+  a{color:var(--quiz);}
+
+  /* ===== HERO / HEADER ===== */
+  .hero{
+    width:100%;
+    max-width:480px;
+    position:relative;
+    color:#fbf3e2;
+    padding-top:var(--safe-top);
+    background:#1a0d05;
+  }
+  .hero-img{
+    width:100%;
+    height:150px;
+    object-fit:cover;
+    display:block;
+    filter:saturate(0.85) contrast(1.05);
+    opacity:0.9;
+  }
+  .hero-overlay{
+    position:absolute;
+    inset:0;
+    top:var(--safe-top);
+    background:linear-gradient(180deg, rgba(20,10,4,0.15) 0%, rgba(20,10,4,0.55) 55%, rgba(20,10,4,0.92) 100%);
+    display:flex;
+    flex-direction:column;
+    justify-content:flex-end;
+    padding:16px 18px;
+  }
+  .eyebrow{
+    font-size:0.68rem;
+    letter-spacing:0.16em;
+    text-transform:uppercase;
+    color:var(--brass-light);
+    font-weight:700;
+    margin-bottom:4px;
+  }
+  h1{
+    font-family:'Fraunces', serif;
+    font-weight:700;
+    font-size:1.32rem;
+    line-height:1.2;
+    margin:0 0 6px 0;
+  }
+  .hero-sub{
+    font-size:0.78rem;
+    line-height:1.45;
+    color:#e9dcc4;
+    margin:0;
+    max-width:46ch;
+  }
+  .info-toggle{
+    position:absolute;
+    top:calc(var(--safe-top) + 10px);
+    right:10px;
+    width:30px;
+    height:30px;
+    border-radius:50%;
+    background:rgba(0,0,0,0.35);
+    border:1px solid rgba(255,255,255,0.35);
+    color:#fbf3e2;
+    font-family:'Fraunces', serif;
+    font-weight:600;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:0.85rem;
+    cursor:pointer;
+  }
+
+  /* ===== PROGRESS BAR ===== */
+  .progress-wrap{
+    width:100%;
+    max-width:480px;
+    background:var(--panel);
+    padding:10px 18px;
+    border-bottom:1px solid var(--border);
+    position:sticky;
+    top:0;
+    z-index:20;
+    box-shadow:0 2px 10px rgba(36,18,9,0.08);
+  }
+  .progress-label{
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    font-size:0.72rem;
+    font-weight:700;
+    color:var(--ink-soft);
+    letter-spacing:0.03em;
+    margin-bottom:6px;
+  }
+  .progress-label span.big{
+    font-family:'Fraunces', serif;
+    font-size:0.95rem;
+    color:var(--brass);
+  }
+  .progress-track{
+    height:7px;
+    border-radius:99px;
+    background:var(--parchment-deep);
+    overflow:hidden;
+  }
+  .progress-fill{
+    height:100%;
+    border-radius:99px;
+    background:linear-gradient(90deg, var(--brass), var(--good));
+    transition:width 0.5s cubic-bezier(.4,0,.2,1);
+  }
+  .score-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    font-size:0.72rem;
+    font-weight:700;
+    color:var(--ink-soft);
+    margin-top:8px;
+  }
+  .score-value{
+    font-family:'Fraunces', serif;
+    font-size:0.9rem;
+    color:var(--brass);
+  }
+
+  /* ===== MAIN CONTAINER ===== */
+  .container{
+    width:100%;
+    max-width:480px;
+    padding:16px;
+    display:flex;
+    flex-direction:column;
+    gap:16px;
+  }
+
+  /* ===== TRILHA / BOARD ===== */
+  .board{
+    display:flex;
+    flex-direction:column;
+    gap:0;
+  }
+  .board-row{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:8px;
+    position:relative;
+  }
+  .row-turn{
+    display:flex;
+    justify-content:center;
+    margin:2px 0;
+  }
+  .row-turn svg{ opacity:0.55; }
+
+  .cell{
+    background:var(--panel);
+    border:1.5px solid var(--border);
+    border-radius:10px;
+    padding:7px 4px 6px;
+    min-height:72px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:flex-start;
+    text-align:center;
+    cursor:pointer;
+    position:relative;
+    transition:transform .15s ease, box-shadow .15s ease, border-color .15s ease;
+  }
+  .cell:active{ transform:scale(0.95); }
+  .cell-num{
+    font-family:'Fraunces', serif;
+    font-size:0.68rem;
+    font-weight:600;
+    color:var(--brass);
+    background:var(--parchment);
+    border-radius:99px;
+    width:18px;
+    height:18px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin-bottom:4px;
+  }
+  .cell-title{
+    font-size:0.62rem;
+    font-weight:700;
+    line-height:1.15;
+    color:var(--ink-soft);
+  }
+  .cell-year{
+    font-size:0.52rem;
+    color:#8a7350;
+    margin-top:2px;
+  }
+  .token-slot{
+    position:absolute;
+    top:4px;
+    right:4px;
+    height:12px;
+  }
+
+  .cell.passed{
+    background:#fbf6ea;
+    border-color:var(--good);
+  }
+  .cell.passed .cell-num{
+    background:var(--good);
+    color:#fff;
+  }
+  .cell.passed::after{
+    content:"✓";
+    position:absolute;
+    bottom:3px;
+    right:5px;
+    font-size:0.6rem;
+    color:var(--good);
+    font-weight:700;
+  }
+  .cell.checkpoint{
+    border-color:var(--quiz);
+    border-style:double;
+  }
+  .cell.checkpoint::before{
+    content:"🚩";
+    position:absolute;
+    top:2px;
+    left:4px;
+    font-size:0.6rem;
+  }
+  .cell.current{
+    border-color:var(--brass);
+    box-shadow:0 0 0 3px rgba(169,122,47,0.28), var(--shadow);
+    animation:pulse 1.8s ease-in-out infinite;
+  }
+  @keyframes pulse{
+    0%,100%{ box-shadow:0 0 0 3px rgba(169,122,47,0.28), var(--shadow); }
+    50%{ box-shadow:0 0 0 6px rgba(169,122,47,0.14), var(--shadow); }
+  }
+
+  .player-token{
+    width:13px;
+    height:13px;
+    background:var(--bad);
+    border:2px solid #fff;
+    border-radius:50%;
+    box-shadow:0 2px 5px rgba(0,0,0,0.35);
+    animation:hop .4s ease;
+  }
+  @keyframes hop{
+    0%{ transform:translateY(0) scale(0.7); opacity:0.4; }
+    45%{ transform:translateY(-9px) scale(1.15); opacity:1; }
+    100%{ transform:translateY(0) scale(1); }
+  }
+
+  /* ===== CONTROLS PANEL ===== */
+  .controls{
+    background:var(--panel);
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    padding:18px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:12px;
+  }
+
+  .pos-readout{
+    font-size:0.78rem;
+    font-weight:600;
+    color:var(--ink-soft);
+    text-align:center;
+  }
+  .pos-readout strong{
+    font-family:'Fraunces', serif;
+    color:var(--brass);
+    font-size:1rem;
+  }
+
+  button{
+    font-family:inherit;
+    background:var(--ink);
+    color:#f4ecda;
+    border:none;
+    padding:13px 20px;
+    font-size:0.92rem;
+    border-radius:10px;
+    width:100%;
+    font-weight:700;
+    letter-spacing:0.01em;
+    cursor:pointer;
+    transition:background .15s ease, transform .1s ease;
+  }
+  button:active{ transform:scale(0.98); }
+  button:hover{ background:var(--ink-soft); }
+  button:disabled{ background:#cbbfa2; color:#8a7c5c; cursor:not-allowed; }
+  button:focus-visible{ outline:2px solid var(--brass); outline-offset:2px; }
+
+  .log-box{
+    width:100%;
+    padding:12px 14px;
+    background:var(--parchment);
+    border-left:4px solid var(--brass);
+    border-radius:8px;
+    font-size:0.84rem;
+    line-height:1.45;
+    min-height:52px;
+    color:var(--ink-soft);
+  }
+  .log-box.state-good{ background:var(--good-bg); border-color:var(--good); }
+  .log-box.state-bad{ background:var(--bad-bg); border-color:var(--bad); }
+
+  .quiz-container{
+    display:none;
+    width:100%;
+    background:var(--quiz-bg);
+    border:1px solid #c7d4de;
+    border-radius:12px;
+    padding:14px;
+    animation:slideUp .28s ease;
+  }
+  @keyframes slideUp{
+    from{ opacity:0; transform:translateY(10px); }
+    to{ opacity:1; transform:translateY(0); }
+  }
+  .quiz-top-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:4px;
+  }
+  .quiz-eyebrow{
+    font-size:0.62rem;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    font-weight:700;
+    color:var(--quiz);
+    margin-bottom:0;
+  }
+  .quiz-timer-text{
+    font-size:0.74rem;
+    font-weight:700;
+    color:var(--quiz);
+    transition:color .2s ease;
+  }
+  .quiz-timer-text.urgent{ color:var(--bad); }
+  .quiz-timer-track{
+    height:5px;
+    border-radius:99px;
+    background:#c7d4de;
+    overflow:hidden;
+    margin-bottom:10px;
+  }
+  .quiz-timer-bar{
+    height:100%;
+    width:100%;
+    border-radius:99px;
+    background:var(--quiz);
+  }
+  .quiz-timer-bar.urgent{ background:var(--bad); }
+  #quiz-question{
+    font-weight:700;
+    margin:0 0 10px 0;
+    color:var(--ink);
+    font-size:0.9rem;
+    line-height:1.4;
+  }
+  .quiz-options{ display:flex; flex-direction:column; gap:7px; }
+  .quiz-options button{
+    padding:12px;
+    font-size:0.82rem;
+    background:#fff;
+    color:var(--ink-soft);
+    border:1.5px solid #c7d4de;
+    font-weight:600;
+    text-align:left;
+  }
+  .quiz-options button:hover{ background:#f5f8fa; border-color:var(--quiz); }
+
+  footer.reset-wrap{ width:100%; }
+  #reset-btn{ background:var(--brass); }
+  #reset-btn:hover{ background:var(--brass-light); }
+
+  /* ===== MODAL (balão de informação) ===== */
+  .modal{
+    display:none;
+    position:fixed;
+    z-index:1000;
+    inset:0;
+    background:rgba(20,10,4,0.6);
+    backdrop-filter:blur(2px);
+    align-items:flex-end;
+    justify-content:center;
+    padding:0;
+  }
+  .modal-content{
+    background:var(--panel);
+    padding:22px 20px calc(20px + var(--safe-bottom));
+    border-radius:18px 18px 0 0;
+    max-width:480px;
+    width:100%;
+    box-shadow:0 -6px 24px rgba(0,0,0,0.35);
+    text-align:left;
+    position:relative;
+    line-height:1.55;
+    font-size:0.9rem;
+    animation:sheetUp .25s ease;
+  }
+  @keyframes sheetUp{
+    from{ transform:translateY(30px); opacity:0.6; }
+    to{ transform:translateY(0); opacity:1; }
+  }
+  .modal-badge{
+    display:inline-block;
+    font-size:0.68rem;
+    font-weight:700;
+    letter-spacing:0.05em;
+    color:var(--brass);
+    background:var(--parchment);
+    border-radius:99px;
+    padding:3px 10px;
+    margin-bottom:8px;
+  }
+  #modal-title{
+    margin:0 0 4px 0;
+    color:var(--ink);
+    font-family:'Fraunces', serif;
+    font-size:1.15rem;
+  }
+  #modal-desc{ color:var(--ink-soft); margin:6px 0 0 0; }
+  .modal-link{
+    display:inline-block;
+    margin-top:14px;
+    color:var(--quiz);
+    font-weight:700;
+    text-decoration:none;
+    border-bottom:1.5px solid var(--quiz);
+    font-size:0.85rem;
+  }
+  .close-modal{
+    background:var(--parchment-deep);
+    color:var(--ink-soft);
+    margin-top:16px;
+    padding:11px;
+    font-size:0.85rem;
+  }
+  .close-modal:hover{ background:var(--border); }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation-duration:0.001ms !important; transition-duration:0.001ms !important; }
+  }
+
+  @media (min-width:520px){
+    .hero-img{ height:190px; }
+  }
+
+  /* ===== TELA INICIAL ===== */
+  #start-screen{
+    position:fixed;
+    inset:0;
+    z-index:2000;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+    background:
+      linear-gradient(180deg, rgba(20,10,4,0.55) 0%, rgba(20,10,4,0.86) 100%),
+      url('https://ichef.bbci.co.uk/ace/ws/800/cpsprodpb/08A6/production/_107141220_gettyimages-802464822-1.jpg.webp') center/cover;
+  }
+  .start-card{
+    background:var(--panel);
+    border-radius:18px;
+    box-shadow:0 12px 40px rgba(0,0,0,0.45);
+    padding:26px 22px;
+    max-width:380px;
+    width:100%;
+    text-align:center;
+  }
+  .start-eyebrow{
+    font-size:0.68rem;
+    letter-spacing:0.16em;
+    text-transform:uppercase;
+    color:var(--brass);
+    font-weight:700;
+    margin-bottom:6px;
+  }
+  .start-card h2{
+    font-family:'Fraunces', serif;
+    font-size:1.35rem;
+    margin:0 0 8px 0;
+    color:var(--ink);
+  }
+  .start-card p{
+    font-size:0.85rem;
+    color:var(--ink-soft);
+    line-height:1.5;
+    margin:0 0 18px 0;
+  }
+  .field{
+    text-align:left;
+    margin-bottom:14px;
+  }
+  .field label{
+    display:block;
+    font-size:0.72rem;
+    font-weight:700;
+    color:var(--ink-soft);
+    margin-bottom:5px;
+    letter-spacing:0.02em;
+  }
+  .field input{
+    width:100%;
+    font-family:inherit;
+    font-size:1rem;
+    padding:12px 13px;
+    border:1.5px solid var(--border);
+    border-radius:9px;
+    background:var(--parchment);
+    color:var(--ink);
+  }
+  .field input:focus{
+    outline:none;
+    border-color:var(--brass);
+    background:#fff;
+  }
+  .start-error{
+    font-size:0.76rem;
+    color:var(--bad);
+    font-weight:700;
+    min-height:16px;
+    margin-bottom:6px;
+  }
+
+  /* ===== CARTA DE ALFORRIA (bloco de vitória) ===== */
+  .cert-block{
+    display:none;
+    width:100%;
+    background:linear-gradient(180deg, #fffdf8, #f7edd6);
+    border:1.5px solid var(--brass);
+    border-radius:12px;
+    padding:16px;
+    text-align:center;
+  }
+  .cert-seal{
+    font-size:1.6rem;
+    margin-bottom:4px;
+  }
+  .cert-block h4{
+    font-family:'Fraunces', serif;
+    margin:0 0 4px 0;
+    color:var(--ink);
+    font-size:1.05rem;
+  }
+  .cert-block p{
+    font-size:0.8rem;
+    color:var(--ink-soft);
+    margin:0 0 12px 0;
+    line-height:1.4;
+  }
+  #download-cert-btn{ background:var(--brass); }
+  #download-cert-btn:hover{ background:var(--brass-light); }
+</style>
+</head>
+<body>
+
+  <div id="start-screen">
+    <div class="start-card">
+      <div class="start-eyebrow">Antes de começar</div>
+      <h2>Identifique-se</h2>
+      <p>Seu nome e turma vão aparecer na sua Carta de Alforria, entregue ao final da jornada.</p>
+      <div class="field">
+        <label for="student-name">Nome do aluno</label>
+        <input type="text" id="student-name" placeholder="Digite seu nome" autocomplete="name" onkeydown="if(event.key==='Enter') document.getElementById('student-class').focus()">
+      </div>
+      <div class="field">
+        <label for="student-class">Turma</label>
+        <input type="text" id="student-class" placeholder="Ex: 8º Ano B" autocomplete="off" onkeydown="if(event.key==='Enter') startGame()">
+      </div>
+      <div class="start-error" id="start-error"></div>
+      <button onclick="startGame()">Iniciar Jornada</button>
+    </div>
+  </div>
+
+  <div class="hero">
+    <img class="hero-img" src="https://ichef.bbci.co.uk/ace/ws/800/cpsprodpb/08A6/production/_107141220_gettyimages-802464822-1.jpg.webp" alt="Pintura histórica de Rugendas sobre a escravidão no Brasil">
+    <div class="hero-overlay">
+      <div class="eyebrow">Jogo educativo · História do Brasil</div>
+      <h1>A Trilha da Abolição</h1>
+      <p class="hero-sub">O desafio de ser livre. Percorra 24 marcos históricos, responda aos quizzes e chegue até a Lei Áurea de 1888.</p>
+    </div>
+    <button class="info-toggle" onclick="document.getElementById('rules-modal').style.display='flex'" aria-label="Como jogar">?</button>
+  </div>
+
+  <div class="progress-wrap">
+    <div class="progress-label">
+      <span id="player-info">Progresso na trilha</span>
+      <span class="big">Casa <span id="current-pos">1</span> / 24</span>
+    </div>
+    <div class="progress-track"><div class="progress-fill" id="progress-fill" style="width:4.16%"></div></div>
+    <div class="score-row">
+      <span>⭐ Pontuação</span>
+      <span class="score-value"><span id="score-display">0</span> / 72</span>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="board" id="board"></div>
+
+    <div class="controls">
+      <div class="pos-readout">Avance casa por casa pela trilha</div>
+
+      <button id="roll-btn" onclick="advanceOneHouse()">➡️ Avançar para a próxima casa</button>
+
+      <div class="quiz-container" id="quiz-area">
+        <div class="quiz-top-row">
+          <div class="quiz-eyebrow" id="quiz-eyebrow">Desafio obrigatório</div>
+          <div class="quiz-timer-text" id="quiz-timer-text">⏱ 20s</div>
+        </div>
+        <div class="quiz-timer-track"><div class="quiz-timer-bar" id="quiz-timer-bar"></div></div>
+        <p id="quiz-question"></p>
+        <div class="quiz-options" id="quiz-options"></div>
+      </div>
+
+      <div class="log-box" id="log-text">Clique em "Avançar" para começar sua jornada.</div>
+
+      <div class="cert-block" id="cert-block">
+        <div class="cert-seal">🕊️</div>
+        <h4>Sua Carta de Alforria está pronta</h4>
+        <p>Um documento simbólico com seu nome, sua turma e a data da conquista.</p>
+        <button id="download-cert-btn" onclick="generateCertificate()">📜 Baixar Carta de Alforria (PDF)</button>
+      </div>
+
+      <footer class="reset-wrap">
+        <button id="reset-btn" onclick="resetGame()" style="display:none;">Jogar Novamente</button>
+      </footer>
+    </div>
+  </div>
+
+  <!-- Balão de informação de cada casa -->
+  <div class="modal" id="info-modal" onclick="closeModal()">
+    <div class="modal-content" onclick="event.stopPropagation()">
+      <div class="modal-badge" id="modal-date"></div>
+      <h3 id="modal-title"></h3>
+      <p id="modal-desc"></p>
+      <a id="modal-link" href="#" target="_blank" rel="noopener" class="modal-link">Pesquisar este marco na internet ↗</a>
+      <button class="close-modal" onclick="closeModal()">Fechar</button>
+    </div>
+  </div>
+
+  <!-- Regras do jogo -->
+  <div class="modal" id="rules-modal" onclick="document.getElementById('rules-modal').style.display='none'">
+    <div class="modal-content" onclick="event.stopPropagation()">
+      <div class="modal-badge">Como jogar</div>
+      <h3 style="margin-bottom:10px;">Regras da trilha</h3>
+      <p id="modal-desc-rules" style="color:var(--ink-soft); margin:0 0 4px;">Toque em qualquer casa para ver o marco histórico. Clique em "Avançar" e responda ao quiz de cada casa <strong>dentro do tempo</strong> — errar ou zerar o cronômetro te manda de volta ao último marco seguro (🚩 casas 1, 7, 13 e 19). Às vezes um evento surpresa reduz seu tempo de resposta. Acerte rápido para ganhar mais ⭐ estrelas. Chegue à Casa 24 para vencer.</p>
+      <button class="close-modal" onclick="document.getElementById('rules-modal').style.display='none'">Entendi</button>
+    </div>
+  </div>
+
+<script>
+  const boardData = [
+    { id: 1, title: "Início da Jornada", date: "Início do Século XIX", query: "Escravidao Brasil seculo XIX cafe", desc: "O café começa a enriquecer o Sudeste, baseando a economia imperial na exploração escravista.", quiz: { q: "Qual era a principal base econômica do Brasil no início do século XIX?", options: [{text:"Monocultura do café", correct:true},{text:"Borracha na Amazônia", correct:false},{text:"Trigo para Europa", correct:false},{text:"Indústria metalúrgica", correct:false}] } },
+    { id: 2, title: "Pressão Britânica", date: "1810", query: "Tratados de 1810 pressao britanica", desc: "A Inglaterra pressiona por tratados comerciais para restringir o comércio de africanos.", quiz: { q: "Por que a Inglaterra pressionava pelo fim do tráfico?", options: [{text:"Interesses comerciais e humanitários", correct:true},{text:"Para invadir o Brasil", correct:false},{text:"Para vender seus próprios escravos", correct:false},{text:"Para enfraquecer Portugal", correct:false}] } },
+    { id: 3, title: "Lei Feijó", date: "1831", query: "Lei de 1831 para ingles ver", desc: "Primeira lei para proibir o tráfico, mas que não foi cumprida na prática.", quiz: { q: "Por que a Lei de 1831 ficou conhecida como 'Para Inglês Ver'?", options: [{text:"O governo fingia fiscalizar, mas o tráfico continuou livre", correct:true},{text:"Foi escrita em inglês", correct:false},{text:"Os ingleses aprovaram", correct:false},{text:"Ninguém ligava para os ingleses", correct:false}] } },
+    { id: 4, title: "Emboscada", date: "1831-1840", query: "Contrabando de escravos regencia", desc: "Traficantes burla leis e intensificam o contrabando de africanos em praias isoladas.", quiz: { q: "Como os traficantes agiam no período Regencial?", options: [{text:"Desembarcavam clandestinamente em praias desertas", correct:true},{text:"Desistiram do tráfico", correct:false},{text:"Compravam navios oficiais do governo", correct:false},{text:"Traficavam por vias terrestres", correct:false}] } },
+    { id: 5, title: "Revolta Malês", date: "1835", query: "Revolta dos Males salvador", desc: "Africanos muçulmanos organizam uma grande revolta em Salvador.", quiz: { q: "O que diferenciava os líderes da Revolta dos Malês?", options: [{text:"Eram letrados e sabiam escrever em árabe", correct:true},{text:"Eram apoiados pelo Imperador", correct:false},{text:"Eram generais portugueses", correct:false},{text:"Usavam armas inglesas modernas", correct:false}] } },
+    { id: 6, title: "Bill Aberdeen", date: "1845", query: "Bill Aberdeen 1845", desc: "Inglaterra autoriza sua marinha a prender navios negreiros até em águas brasileiras.", quiz: { q: "O que determinava o Bill Aberdeen?", options: [{text:"Autorizava prender e afundar navios negreiros", correct:true},{text:"Proibia o comércio com a Europa", correct:false},{text:"Comprava as fazendas de café", correct:false},{text:"Enviava soldados ingleses para as cidades", correct:false}] } },
+    { id: 7, title: "Lei de Terras", date: "1850", query: "Lei de Terras 1850", desc: "Terras só podiam ser compradas, excluindo negros libertos da posse de propriedades.", quiz: { q: "Qual o impacto social da Lei de Terras de 1850?", options: [{text:"Dificultou o acesso à terra por libertos e imigrantes pobres", correct:true},{text:"Deu terras de graça aos ex-escravizados", correct:false},{text:"Acabou com os grandes latifúndios", correct:false},{text:"Dividiu as fazendas igualmente", correct:false}] } },
+    { id: 8, title: "Eusébio de Queirós", date: "1850", query: "Lei Eusebio de Queiros", desc: "O tráfico transatlântico de africanos é finalmente extinto sob severa repressão.", quiz: { q: "Qual foi o resultado da Lei Eusébio de Queirós?", options: [{text:"O fim definitivo do tráfico vindo da África", correct:true},{text:"A abolição imediata da escravidão", correct:false},{text:"O fim do comércio de escravos entre províncias", correct:false},{text:"A expulsão de embaixadores", correct:false}] } },
+    { id: 9, title: "Tráfico Interno", date: "1850-1880", query: "Trafico interprovincial", desc: "Com o fim da rota da África, escravizados são vendidos do Nordeste para o café do Sudeste.", quiz: { q: "Como o Sudeste obteve mão de obra após 1850?", options: [{text:"Pelo tráfico interprovincial vindo do Nordeste", correct:true},{text:"Trazendo assalariados da Argentina", correct:false},{text:"Substituindo tudo por robôs a vapor", correct:false},{text:"Libertando os idosos", correct:false}] } },
+    { id: 10, title: "Luís Gama", date: "Década de 1870", query: "Luis Gama advogado", desc: "O advogado negro usa as leis para libertar centenas de cativos ilegais.", quiz: { q: "Como Luís Gama atuou no movimento abolicionista?", options: [{text:"Libertando judicialmente centenas de pessoas", correct:true},{text:"Financiando navios negreiros", correct:false},{text:"Sendo ministro do Imperador", correct:false},{text:"Comprando fazendas de café", correct:false}] } },
+    { id: 11, title: "Guerra do Paraguai", date: "1864-1870", query: "Escravizados Guerra do Paraguai", desc: "Escravizados lutam na guerra sob promessa de liberdade no retorno.", quiz: { q: "Como a Guerra do Paraguai ajudou o abolicionismo?", options: [{text:"O Exército voltou defendendo o fim da escravidão", correct:true},{text:"O Paraguai obrigou o Brasil a assinar leis", correct:false},{text:"Os fazendeiros doaram seus escravos", correct:false},{text:"A abolição foi feita para vencer a guerra", correct:false}] } },
+    { id: 12, title: "Ventre Livre", date: "1871", query: "Lei do Ventre Livre", desc: "Filhos de mulheres escravizadas nascem livres, mas trabalham até os 21 anos.", quiz: { q: "Qual a crítica abolicionista à Lei do Ventre Livre?", options: [{text:"Promovia uma transição lenta e explorava os jovens até os 21 anos", correct:true},{text:"Libertava todos de uma vez só", correct:false},{text:"Prendia as mães e soltava os filhos", correct:false},{text:"Dava salários muito altos", correct:false}] } },
+    { id: 13, title: "Capitães-do-Mato", date: "Século XIX", query: "Capitao do mato", desc: "Caçadores armados perseguem escravizados e destroem redes de apoio.", quiz: { q: "Qual era o papel do capitão-do-mato?", options: [{text:"Perseguir e capturar escravizados fugidos", correct:true},{text:"Proteger os quilombos", correct:false},{text:"Alfabetizar libertos nas cidades", correct:false},{text:"Servir na marinha inglesa", correct:false}] } },
+    { id: 14, title: "Imprensa Negra", date: "Anos 1870-1880", query: "Imprensa abolicionista", desc: "Jornais urbanos pautam o debate e denunciam os crimes rurais.", quiz: { q: "Qual o papel da imprensa abolicionista?", options: [{text:"Politizar a sociedade e denunciar abusos dos senhores", correct:true},{text:"Fazer propaganda do Imperador", correct:false},{text:"Anunciar venda de fazendas", correct:false},{text:"Esconder notícias da Europa", correct:false}] } },
+    { id: 15, title: "Clube Abolicionista", date: "Circa 1880", query: "Sociedades abolicionistas", desc: "Associações arrecadam fundos civis para comprar cartas de alforria.", quiz: { q: "O que os clubes abolicionistas faziam?", options: [{text:"Vaquinhas e eventos para comprar alforrias", correct:true},{text:"Bancos de empréstimo para fazendeiros", correct:false},{text:"Cobravam impostos dos libertos", correct:false},{text:"Compravam ações em Londres", correct:false}] } },
+    { id: 16, title: "Adelina, Espiã", date: "Anos 1880", query: "Adelina charuteira", desc: "Charuteira escravizada que ouvia segredos da polícia para alertar rotas de fuga.", quiz: { q: "Como Adelina ajudava na resistência?", options: [{text:"Ouvia planos da polícia e avisava redes de fuga", correct:true},{text:"Liderou uma revolta armada no interior", correct:false},{text:"Fugiu em um balão de ar", correct:false},{text:"Comprou a fazenda do senhor", correct:false}] } },
+    { id: 17, title: "Fuga do Vale", date: "1880-1887", query: "Fugas em massa cafeicultores", desc: "Policiamento tenta fechar ferrovias para conter fugas em massa.", quiz: { q: "Por que o Vale do Paraíba resistiu tanto à abolição?", options: [{text:"Era a elite cafeicultora mais dependente da escravidão", correct:true},{text:"Não tinha escravizados na região", correct:false},{text:"Era controlado por piratas", correct:false},{text:"Ficava perto de Palmares", correct:false}] } },
+    { id: 18, title: "Dragão do Mar", date: "1881", query: "Dragao do Mar", desc: "Jangadeiros fecham o porto do Ceará para o comércio de escravizados.", quiz: { q: "O que Dragão do Mar liderou no Ceará?", options: [{text:"Greve de jangadeiros contra o transporte de escravizados", correct:true},{text:"A queima da capital imperial", correct:false},{text:"A criação de leis inglesas", correct:false},{text:"A compra do porto", correct:false}] } },
+    { id: 19, title: "Sexagenários", date: "1885", query: "Lei dos Sexagenarios", desc: "Liberta escravizados com mais de 60 anos, exigindo indenização em trabalho.", quiz: { q: "Por que a Lei dos Sexagenários foi vista como uma farsa?", options: [{text:"Poucos chegavam aos 60 anos e exigia mais trabalho compensatório", correct:true},{text:"Os idosos não queriam sair", correct:false},{text:"Dava pensões muito caras", correct:false},{text:"Obrigava a ir para a guerra", correct:false}] } },
+    { id: 20, title: "Os Caifazes", date: "1886-1888", query: "Caifazes abolicionismo", desc: "Militantes radicais invadem fazendas em SP e guiam negros a quilombos.", quiz: { q: "Quem eram os Caifazes?", options: [{text:"Militantes radicais que organizavam fugas em massa", correct:true},{text:"Políticos a favor da escravidão", correct:false},{text:"Atores de teatro imperial", correct:false},{text:"Imigrantes europeus", correct:false}] } },
+    { id: 21, title: "Bancada Latifundiária", date: "1887", query: "Bancada escravocrata", desc: "Deputados travam leis exigindo dinheiro por cada negro livre.", quiz: { q: "O que os deputados escravocratas exigiam em 1887?", options: [{text:"Indenizações financeiras do Estado por cada liberto", correct:true},{text:"O trono para um fazendeiro", correct:false},{text:"O envio de libertos para fora do país", correct:false},{text:"Títulos de nobreza ingleses", correct:false}] } },
+    { id: 22, title: "Revolta Exército", date: "1887", query: "Clube Militar recusa capturar", desc: "Exército se recusa formalmente a caçar escravizados fugitivos.", quiz: { q: "Impacto da decisão do Clube Militar em 1887?", options: [{text:"O Estado perdeu seu braço armado para conter as fugas", correct:true},{text:"Iniciou uma guerra contra a Marinha", correct:false},{text:"Dissolveu todas as forças policiais", correct:false},{text:"Trocou os generais por fazendeiros", correct:false}] } },
+    { id: 23, title: "Colapso Geral", date: "Início de 1888", query: "Colapso sistema escravista", desc: "Fugas em massa incontroláveis paralisam plantações inteiras.", quiz: { q: "Como estava o sistema escravista no início de 1888?", options: [{text:"Em colapso total, com fugas massivas e apoio das cidades", correct:true},{text:"Pacificado e estável", correct:false},{text:"Com o tráfico africano reaberto", correct:false},{text:"Comprado inteiramente pela Inglaterra", correct:false}] } },
+    { id: 24, title: "Lei Áurea", date: "13 de Maio de 1888", query: "Lei Aurea", desc: "Assinatura do decreto que extinguiu em definitivo o regime da escravidão.", quiz: { q: "Que lacuna histórica grave a Lei Áurea deixou?", options: [{text:"Não incluiu planos de inserção social, terras ou direitos aos libertos", correct:true},{text:"Não foi aceita em nenhuma província", correct:false},{text:"Obrigou os negros a pagarem impostos retroativos", correct:false},{text:"Decretou o envio da população à África", correct:false}] } }
+  ];
+
+  let playerPosition = 1;
+  let studentName = '';
+  let studentClass = '';
+  const PER_ROW = 4;
+
+  const CHECKPOINTS = [1, 7, 13, 19];
+  const RANDOM_EVENTS = [
+    'Um capitão-do-mato foi avistado rondando perto de {title}! Responda depressa.',
+    'Alarme na região da {title}! Alguém pode denunciar sua rota a qualquer momento.',
+    'Boato de fiscalização próximo a {title}. Não há tempo a perder.',
+    'Movimentação suspeita perto de {title}! Prove seu conhecimento com rapidez.'
+  ];
+
+  let eventActive = false;
+  let currentTimeLimit = 15;
+  let quizStartTime = 0;
+  let quizResolved = false;
+  let timerInterval = null;
+  const houseStars = {};
+
+  function getCheckpoint(pos) {
+    let cp = 1;
+    CHECKPOINTS.forEach(c => { if (pos >= c) cp = c; });
+    return cp;
+  }
+
+  function updateScoreDisplay() {
+    const total = Object.values(houseStars).reduce((sum, v) => sum + v, 0);
+    document.getElementById('score-display').innerText = total;
+    return total;
+  }
+
+  function startGame() {
+    const nameInput = document.getElementById('student-name');
+    const classInput = document.getElementById('student-class');
+    const errorEl = document.getElementById('start-error');
+
+    const name = nameInput.value.trim();
+    if (!name) {
+      errorEl.innerText = 'Por favor, digite seu nome para continuar.';
+      nameInput.focus();
+      return;
+    }
+
+    studentName = name;
+    studentClass = classInput.value.trim() || 'Turma não informada';
+
+    document.getElementById('player-info').innerText = `${studentName} · ${studentClass}`;
+    document.getElementById('start-screen').style.display = 'none';
+    document.body.style.overflow = 'auto';
+  }
+
+  function createBoard() {
+    const boardEl = document.getElementById('board');
+    boardEl.innerHTML = '';
+    const rows = Math.ceil(boardData.length / PER_ROW);
+    for (let r = 0; r < rows; r++) {
+      const rowItems = boardData.slice(r * PER_ROW, r * PER_ROW + PER_ROW);
+
+      const rowEl = document.createElement('div');
+      rowEl.className = 'board-row';
+      rowItems.forEach(data => {
+        const cell = document.createElement('div');
+        cell.className = 'cell';
+        if (CHECKPOINTS.includes(data.id)) cell.classList.add('checkpoint');
+        cell.id = `cell-${data.id}`;
+        cell.innerHTML = `<span class="cell-num">${data.id}</span><span class="cell-title">${data.title}</span><span class="cell-year">${data.date}</span><div id="token-space-${data.id}" class="token-slot"></div>`;
+        cell.onclick = () => { openModal(data); };
+        rowEl.appendChild(cell);
+      });
+      boardEl.appendChild(rowEl);
+
+      if (r < rows - 1) {
+        const turn = document.createElement('div');
+        turn.className = 'row-turn';
+        turn.innerHTML = '<svg width="10" height="14" viewBox="0 0 10 14"><path d="M5 1 L5 11" stroke="#a97a2f" stroke-width="2" fill="none" stroke-linecap="round" stroke-dasharray="2 3"/><path d="M1 8 L5 12 L9 8" stroke="#a97a2f" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+        boardEl.appendChild(turn);
+      }
+    }
+    updatePlayerPosition();
+  }
+
+  function openModal(data) {
+    document.getElementById('modal-title').innerText = data.title;
+    document.getElementById('modal-date').innerText = data.date;
+    document.getElementById('modal-desc').innerText = data.desc;
+    document.getElementById('modal-link').href = `https://www.google.com/search?q=${encodeURIComponent(data.query)}`;
+    document.getElementById('info-modal').style.display = 'flex';
+  }
+
+  function closeModal() {
+    document.getElementById('info-modal').style.display = 'none';
+  }
+
+  function updatePlayerPosition() {
+    document.querySelectorAll('.player-token').forEach(t => t.remove());
+    const space = document.getElementById(`token-space-${playerPosition}`);
+    if (space) space.innerHTML = '<div class="player-token"></div>';
+    document.getElementById('current-pos').innerText = playerPosition;
+    document.getElementById('progress-fill').style.width = `${(playerPosition / 24) * 100}%`;
+
+    boardData.forEach(data => {
+      const cellEl = document.getElementById(`cell-${data.id}`);
+      if (!cellEl) return;
+      cellEl.classList.remove('current', 'passed');
+      if (data.id < playerPosition) cellEl.classList.add('passed');
+      if (data.id === playerPosition) cellEl.classList.add('current');
+    });
+
+    const currentCellEl = document.getElementById(`cell-${playerPosition}`);
+    if (currentCellEl) currentCellEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+
+  function advanceOneHouse() {
+    const btn = document.getElementById('roll-btn');
+    btn.disabled = true;
+    document.getElementById('quiz-area').style.display = 'none';
+
+    playerPosition = Math.min(playerPosition + 1, 24);
+    updatePlayerPosition();
+
+    const data = boardData[playerPosition - 1];
+    const logText = document.getElementById('log-text');
+    logText.className = 'log-box';
+
+    eventActive = playerPosition !== 1 && playerPosition !== 24 && Math.random() < 0.35;
+    currentTimeLimit = 20;
+
+    if (eventActive) {
+      const template = RANDOM_EVENTS[Math.floor(Math.random() * RANDOM_EVENTS.length)];
+      logText.innerHTML = `⚠️ ${template.replace('{title}', data.title)}`;
+    } else {
+      logText.innerHTML = `Você chegou na Casa ${playerPosition}: <strong>${data.title}</strong>. Responda o desafio!`;
+    }
+
+    setTimeout(() => showQuiz(data.quiz), 900);
+  }
+
+  function showQuiz(quiz) {
+    document.getElementById('quiz-area').style.display = 'block';
+    document.getElementById('quiz-eyebrow').innerText = eventActive ? '⚠️ Evento urgente' : 'Desafio obrigatório';
+    document.getElementById('quiz-question').innerText = quiz.q;
+    const optDiv = document.getElementById('quiz-options');
+    optDiv.innerHTML = '';
+
+    const shuffledOptions = [...quiz.options].sort(() => Math.random() - 0.5);
+    shuffledOptions.forEach(opt => {
+      const btn = document.createElement('button');
+      btn.innerText = opt.text;
+      btn.onclick = () => resolveQuiz(opt.correct, false);
+      optDiv.appendChild(btn);
+    });
+
+    startTimer(currentTimeLimit);
+  }
+
+  function startTimer(limit) {
+    clearInterval(timerInterval);
+    quizResolved = false;
+    quizStartTime = Date.now();
+
+    const barEl = document.getElementById('quiz-timer-bar');
+    const textEl = document.getElementById('quiz-timer-text');
+    barEl.classList.remove('urgent');
+    textEl.classList.remove('urgent');
+    barEl.style.transition = 'none';
+    barEl.style.width = '100%';
+    void barEl.offsetWidth;
+    barEl.style.transition = `width ${limit}s linear`;
+    requestAnimationFrame(() => { barEl.style.width = '0%'; });
+
+    let remaining = limit;
+    textEl.innerText = `⏱ ${remaining}s`;
+
+    timerInterval = setInterval(() => {
+      remaining--;
+      textEl.innerText = `⏱ ${Math.max(remaining, 0)}s`;
+      if (remaining <= 3) {
+        barEl.classList.add('urgent');
+        textEl.classList.add('urgent');
+      }
+      if (remaining <= 0) {
+        clearInterval(timerInterval);
+        resolveQuiz(false, true);
+      }
+    }, 1000);
+  }
+
+  function resolveQuiz(isCorrect, timedOut) {
+    if (quizResolved) return;
+    quizResolved = true;
+    clearInterval(timerInterval);
+
+    document.getElementById('quiz-area').style.display = 'none';
+    const logText = document.getElementById('log-text');
+    const elapsed = (Date.now() - quizStartTime) / 1000;
+
+    if (isCorrect) {
+      let stars;
+      if (eventActive) stars = 3;
+      else if (elapsed <= currentTimeLimit * 0.5) stars = 3;
+      else stars = 2;
+
+      houseStars[playerPosition] = Math.max(houseStars[playerPosition] || 0, stars);
+      updateScoreDisplay();
+
+      logText.className = 'log-box state-good';
+      logText.innerHTML = `✓ Resposta correta! Você ganhou ${'⭐'.repeat(stars)} nesta casa. Avance para a próxima.`;
+      document.getElementById('roll-btn').disabled = false;
+      if (playerPosition === 24) endGame();
+    } else {
+      const before = playerPosition;
+      playerPosition = getCheckpoint(playerPosition);
+      updatePlayerPosition();
+      const sentBack = playerPosition < before;
+
+      logText.className = 'log-box state-bad';
+      if (timedOut) {
+        logText.innerHTML = sentBack
+          ? `⏱️ Tempo esgotado! Você foi enviado de volta ao último marco seguro: 🚩 Casa ${playerPosition}.`
+          : `⏱️ Tempo esgotado! Você já está no marco seguro (🚩 Casa ${playerPosition}) — tente novamente.`;
+      } else {
+        logText.innerHTML = sentBack
+          ? `✗ Resposta errada! Os capitães-do-mato interceptaram sua fuga. Você voltou ao último marco seguro: 🚩 Casa ${playerPosition}.`
+          : `✗ Resposta errada! Você já está no marco seguro (🚩 Casa ${playerPosition}) — tente novamente.`;
+      }
+      document.getElementById('roll-btn').disabled = false;
+
+      const failedData = boardData[before - 1];
+      if (failedData) {
+        setTimeout(() => openModal(failedData), 700);
+      }
+    }
+  }
+
+  function endGame() {
+    const total = updateScoreDisplay();
+    const maxScore = 24 * 3;
+    const pct = total / maxScore;
+    const rank = pct >= 0.9 ? 'Ouro 🥇' : pct >= 0.7 ? 'Prata 🥈' : 'Bronze 🥉';
+
+    const logText = document.getElementById('log-text');
+    logText.className = 'log-box state-good';
+    logText.innerHTML = `🎉 Vitória absoluta! A Lei Áurea foi assinada. Você resistiu aos contragolpes históricos e conquistou o desafio de ser livre.<br><br>Pontuação final: <strong>${total} / ${maxScore} ⭐</strong> — Classificação ${rank}`;
+    document.getElementById('reset-btn').style.display = 'block';
+    document.getElementById('roll-btn').style.display = 'none';
+    document.getElementById('cert-block').style.display = 'block';
+  }
+
+  function generateCertificate() {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF({ orientation: 'landscape', unit: 'mm', format: 'a4' });
+    const pageW = doc.internal.pageSize.getWidth();
+    const pageH = doc.internal.pageSize.getHeight();
+
+    // Fundo e molduras decorativas
+    doc.setFillColor(247, 237, 214);
+    doc.rect(0, 0, pageW, pageH, 'F');
+    doc.setDrawColor(169, 122, 47);
+    doc.setLineWidth(1.2);
+    doc.rect(8, 8, pageW - 16, pageH - 16);
+    doc.setLineWidth(0.4);
+    doc.rect(11, 11, pageW - 22, pageH - 22);
+
+    // Selo
+    doc.setDrawColor(169, 122, 47);
+    doc.setFillColor(247, 237, 214);
+    doc.setLineWidth(1);
+    doc.circle(pageW / 2, 30, 12);
+    doc.setFont('times', 'bold');
+    doc.setFontSize(14);
+    doc.setTextColor(169, 122, 47);
+    doc.text('1888', pageW / 2, 33, { align: 'center' });
+
+    // Título
+    doc.setFont('times', 'bold');
+    doc.setFontSize(30);
+    doc.setTextColor(36, 18, 9);
+    doc.text('CARTA DE ALFORRIA', pageW / 2, 58, { align: 'center' });
+
+    doc.setFont('times', 'italic');
+    doc.setFontSize(12);
+    doc.setTextColor(61, 36, 20);
+    doc.text('A Trilha da Abolição — O Desafio de Ser Livre', pageW / 2, 66, { align: 'center' });
+
+    doc.setDrawColor(169, 122, 47);
+    doc.setLineWidth(0.4);
+    doc.line(pageW / 2 - 40, 71, pageW / 2 + 40, 71);
+
+    // Corpo do texto
+    doc.setFont('times', 'normal');
+    doc.setFontSize(13);
+    doc.setTextColor(36, 18, 9);
+    doc.text('Certificamos que', pageW / 2, 88, { align: 'center' });
+
+    doc.setFont('times', 'bold');
+    doc.setFontSize(22);
+    doc.text(studentName, pageW / 2, 100, { align: 'center' });
+
+    doc.setFont('times', 'normal');
+    doc.setFontSize(13);
+    doc.text(`da turma ${studentClass},`, pageW / 2, 109, { align: 'center' });
+
+    const paragraph = 'percorreu com coragem e conhecimento os 24 marcos da luta pela abolição da escravidão no Brasil, respondendo corretamente a todos os desafios até a assinatura da Lei Áurea, em 13 de maio de 1888. Esta é sua Carta de Alforria simbólica: o reconhecimento de que a liberdade se conquista com estudo, memória e consciência histórica.';
+    const wrapped = doc.splitTextToSize(paragraph, pageW - 90);
+    doc.setFontSize(11.5);
+    doc.text(wrapped, pageW / 2, 122, { align: 'center' });
+
+    // Nota educativa
+    doc.setFont('times', 'italic');
+    doc.setFontSize(9);
+    doc.setTextColor(120, 95, 60);
+    const note = '*Diferente desta carta, a Lei Áurea real não garantiu terra, trabalho ou reparação aos libertos — a luta por igualdade e dignidade seguiu muito além de 1888.';
+    const wrappedNote = doc.splitTextToSize(note, pageW - 100);
+    doc.text(wrappedNote, pageW / 2, pageH - 36, { align: 'center' });
+
+    // Rodapé
+    const today = new Date().toLocaleDateString('pt-BR');
+    const totalScore = updateScoreDisplay();
+    const maxScore = 24 * 3;
+    const scorePct = totalScore / maxScore;
+    const rank = scorePct >= 0.9 ? 'Ouro' : scorePct >= 0.7 ? 'Prata' : 'Bronze';
+
+    doc.setFont('times', 'bold');
+    doc.setFontSize(11);
+    doc.setTextColor(36, 18, 9);
+    doc.text(`Desempenho: ${totalScore} / ${maxScore} estrelas  ·  Classificação ${rank}`, pageW / 2, pageH - 20, { align: 'center' });
+
+    doc.setFont('times', 'normal');
+    doc.setFontSize(9.5);
+    doc.setTextColor(61, 36, 20);
+    doc.text(`Emitido em ${today}  ·  Jogo educativo: A Trilha da Abolição`, pageW / 2, pageH - 13, { align: 'center' });
+
+    const safeName = studentName.replace(/[^a-zA-Z0-9À-ÿ ]/g, '').trim().replace(/\s+/g, '_') || 'Aluno';
+    doc.save(`Carta_de_Alforria_${safeName}.pdf`);
+  }
+
+  function resetGame() { location.reload(); }
+
+  window.onload = function() {
+    document.body.style.overflow = 'hidden';
+    createBoard();
+  };
+</script>
+</body>
+</html>

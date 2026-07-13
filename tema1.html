@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tema 1 — Independência e Nação</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;900&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#F4EEDD; --paper:#FFFDF6; --ink:#2B2118; --ink-soft:#5b4c3a;
+    --verde:#1B4332; --verde-2:#2D6A4F; --dourado:#C9A227; --dourado-2:#E9D27A;
+    --bordo:#7A2E2E; --linha:#D8CBA8; --certo:#2D6A4F; --errado:#8C2F2F;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--bg); color:var(--ink); font-family:'Source Serif 4',serif; line-height:1.65;
+    -webkit-touch-callout:none; -webkit-user-select:none; user-select:none;
+  }
+  a{color:var(--bordo);}
+  .eyebrow{font-family:'Inter',sans-serif; font-weight:600; letter-spacing:.12em; text-transform:uppercase; font-size:.68rem; color:var(--bordo);}
+  .mini-trilha{
+    position:relative;
+    display:flex; justify-content:space-between; align-items:flex-start;
+    gap:4px; max-width:900px; margin:0 auto;
+    padding:20px 20px 14px; background:var(--bg); border-bottom:1px solid var(--linha);
+    font-family:'Inter',sans-serif; overflow-x:auto; -webkit-overflow-scrolling:touch;
+  }
+  .mini-trilha::before{
+    content:""; position:absolute; top:34px; left:60px; right:60px; height:3px;
+    background:repeating-linear-gradient(90deg, var(--dourado) 0 8px, transparent 8px 13px);
+    z-index:0;
+  }
+  .mini-trilha a{
+    position:relative; z-index:1;
+    display:flex; flex-direction:column; align-items:center;
+    text-decoration:none; color:var(--ink); width:120px; flex:none;
+  }
+  .mini-trilha a .medalhao{
+    width:46px; height:46px; border-radius:50%; background:var(--paper); border:3px solid var(--verde-2);
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Playfair Display',serif; font-weight:700; font-size:1.05rem; color:var(--verde);
+    box-shadow:0 2px 6px rgba(43,33,24,.12);
+  }
+  .mini-trilha a .rotulo{ margin-top:7px; font-size:.66rem; font-weight:600; text-align:center; line-height:1.2; color:var(--ink-soft); max-width:110px; }
+  .mini-trilha a .codigo{ font-size:.58rem; color:var(--bordo); font-weight:600; margin-top:2px; }
+  .mini-trilha a.ativo .medalhao{ background:var(--verde); border-color:var(--dourado); color:var(--dourado-2); box-shadow:0 4px 12px rgba(27,67,50,.35); }
+  .mini-trilha a.ativo .rotulo{ color:var(--verde); }
+  main{max-width:820px; margin:0 auto; padding:28px 20px 60px; user-select:text;}
+  .hero-tema{ display:flex; gap:18px; align-items:center; margin-bottom:22px;}
+  .medalhao-grande{flex:none; width:64px; height:64px; border-radius:50%; background:var(--verde); color:var(--dourado-2); border:3px solid var(--dourado); display:flex; align-items:center; justify-content:center; font-family:'Playfair Display',serif; font-weight:900; font-size:1.7rem;}
+  h1{font-family:'Playfair Display',serif; font-weight:900; color:var(--verde); font-size:clamp(1.5rem,3vw,2.1rem); margin:.1em 0 0;}
+  .objetivos{background:var(--paper); border:1px solid var(--linha); border-left:5px solid var(--dourado); border-radius:10px; padding:18px 20px; margin:0 0 26px;}
+  .objetivos h2{font-family:'Inter',sans-serif; font-size:.82rem; text-transform:uppercase; letter-spacing:.08em; color:var(--bordo); margin:0 0 10px;}
+  .objetivos ul{margin:0; padding-left:1.2em;}
+  .objetivos li{margin-bottom:6px;}
+  .objetivos .bncc{font-family:'Inter',sans-serif; font-size:.72rem; color:var(--ink-soft); margin:10px 0 0; padding-top:10px; border-top:1px dashed var(--linha);}
+  .video-simples{display:flex; align-items:center; gap:14px; background:var(--verde); color:#fff; text-decoration:none; border-radius:12px; padding:16px 22px; margin:0 0 26px; border:1px solid var(--dourado); box-shadow:0 6px 20px rgba(43,33,24,.12); transition:transform .15s ease, box-shadow .15s ease;}
+  .video-simples:hover{transform:translateY(-2px); box-shadow:0 10px 26px rgba(43,33,24,.2);}
+  .video-simples:focus-visible{outline:3px solid var(--dourado); outline-offset:2px;}
+  .video-simples-icone{flex:none; width:38px; height:38px; border-radius:50%; background:var(--dourado); color:var(--verde); display:flex; align-items:center; justify-content:center; font-size:.95rem;}
+  .video-simples-texto{flex:1; font-family:'Inter',sans-serif; font-weight:600; font-size:.95rem; color:#fff;}
+  .video-simples-seta{flex:none; font-size:1.1rem; color:var(--dourado-2);}
+  h2.secao{font-family:'Playfair Display',serif; color:var(--verde); font-size:1.25rem; border-bottom:2px solid var(--dourado-2); padding-bottom:6px; margin:34px 0 14px;}
+  details.acordeao{background:var(--paper); border:1px solid var(--linha); border-radius:10px; margin-bottom:12px; padding:14px 18px;}
+  details.acordeao summary{font-family:'Playfair Display',serif; font-weight:700; color:var(--verde); cursor:pointer; font-size:1.02rem; list-style:none; display:flex; align-items:center; gap:8px;}
+  details.acordeao summary::-webkit-details-marker{display:none;}
+  details.acordeao summary::before{content:"›"; transition:transform .15s ease; font-size:1.3rem; color:var(--dourado);}
+  details.acordeao[open] summary::before{transform:rotate(90deg);}
+  details.acordeao p, details.acordeao ul{margin:12px 0 4px;}
+  .destaque{background:linear-gradient(0deg, rgba(201,162,39,.16), rgba(201,162,39,.16)); padding:0 4px; border-radius:3px;}
+  blockquote{border-left:4px solid var(--bordo); margin:14px 0; padding:6px 16px; font-style:italic; color:var(--ink-soft); background:rgba(122,46,46,.05);}
+  cite.fonte{display:block; font-style:normal; font-family:'Inter',sans-serif; font-size:.7rem; color:var(--ink-soft); margin-top:6px; text-align:right;}
+  .engrenagens{display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:10px; margin:14px 0;}
+  .engrenagens .peca{border:1px solid var(--linha); border-radius:10px; padding:14px; background:var(--paper); text-align:center;}
+  .engrenagens .peca strong{display:block; font-family:'Playfair Display',serif; color:var(--verde); font-size:1.02rem; margin-bottom:6px;}
+  .engrenagens .peca p{font-size:.86rem; color:var(--ink-soft); margin:0;}
+  table.revoltas{width:100%; border-collapse:collapse; margin:0; font-size:.9rem; min-width:420px;}
+  .tabela-scroll{overflow-x:auto; -webkit-overflow-scrolling:touch; margin:14px 0; border-radius:8px;}
+  table.revoltas th, table.revoltas td{border:1px solid var(--linha); padding:8px 10px; text-align:left;}
+  table.revoltas th{background:var(--verde); color:var(--dourado-2); font-family:'Inter',sans-serif; font-weight:600; font-size:.78rem;}
+  table.revoltas tr:nth-child(even){background:rgba(216,203,168,.25);}
+  .mapa-lutas{display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:10px; margin:14px 0;}
+  .lugar{background:var(--paper); border:1px solid var(--linha); border-left:4px solid var(--verde-2); border-radius:8px; padding:10px 14px;}
+  .lugar h4{margin:0 0 4px; font-family:'Playfair Display',serif; color:var(--verde); font-size:.98rem;}
+  .lugar p{margin:0; font-size:.86rem; color:var(--ink-soft);}
+  .equacao{background:var(--paper); border:2px solid var(--dourado); border-radius:10px; padding:18px; margin:14px 0; text-align:center;}
+  .equacao .formula{font-family:'Inter',sans-serif; font-weight:700; color:var(--verde); font-size:1rem; line-height:2.2;}
+  .equacao .formula .op{color:var(--dourado); font-size:1.2rem; margin:0 6px;}
+  .equacao .formula .resultado{color:var(--bordo);}
+  .equacao p.legenda{font-size:.86rem; color:var(--ink-soft); margin:10px 0 0; text-align:left;}
+  .linha-tempo{list-style:none; margin:14px 0; padding:0; border-left:3px solid var(--dourado);}
+  .linha-tempo li{position:relative; padding:2px 0 16px 22px; margin-left:2px;}
+  .linha-tempo li::before{content:""; position:absolute; left:-8px; top:6px; width:12px; height:12px; border-radius:50%; background:var(--verde); border:2px solid var(--dourado);}
+  .linha-tempo strong{color:var(--verde);}
+  .sintese-passos{display:flex; flex-direction:column; gap:10px; margin:14px 0;}
+  .sintese-passos .passo{display:flex; gap:12px; align-items:flex-start; background:var(--paper); border:1px solid var(--linha); border-radius:10px; padding:12px 16px;}
+  .sintese-passos .num{flex:none; width:30px; height:30px; border-radius:50%; background:var(--verde); color:var(--dourado-2); font-family:'Inter',sans-serif; font-weight:700; display:flex; align-items:center; justify-content:center; font-size:.9rem;}
+  .sintese-passos p{margin:0; font-size:.94rem;}
+  .leitura-complementar{background:var(--paper); border:2px solid var(--dourado); border-radius:12px; padding:20px 22px; margin:20px 0;}
+  .leitura-eyebrow{font-family:'Inter',sans-serif; font-weight:700; letter-spacing:.1em; text-transform:uppercase; font-size:.68rem; color:var(--bordo); margin-bottom:6px;}
+  .leitura-complementar h3{font-family:'Playfair Display',serif; color:var(--verde); margin:0 0 12px; font-size:1.1rem;}
+  .leitura-complementar p{margin:0 0 12px;}
+  .referencias{margin-top:16px; padding-top:14px; border-top:1px dashed var(--linha);}
+  .referencias p.ref-titulo{font-family:'Inter',sans-serif; font-weight:700; font-size:.72rem; text-transform:uppercase; letter-spacing:.06em; color:var(--bordo); margin:0 0 8px;}
+  .referencias p.ref-item{font-size:.8rem; color:var(--ink-soft); margin:0 0 8px; line-height:1.5;}
+  .grade-termos{display:grid; grid-template-columns:repeat(auto-fill, minmax(220px,1fr)); gap:10px;}
+  details.termo{background:var(--paper); border:1px solid var(--linha); border-radius:8px; padding:10px 14px;}
+  details.termo summary{font-family:'Inter',sans-serif; font-weight:600; cursor:pointer; color:var(--bordo); font-size:.92rem;}
+  details.termo p{font-size:.88rem; margin:8px 0 2px; color:var(--ink-soft);}
+  .pergunta{background:var(--paper); border:1px solid var(--linha); border-radius:10px; padding:16px 18px; margin-bottom:14px;}
+  .pergunta p.enunciado{font-weight:600; margin:0 0 12px;}
+  .opcoes{display:flex; flex-direction:column; gap:8px;}
+  .opcoes button{font-family:'Source Serif 4',serif; font-size:.96rem; text-align:left; padding:9px 14px; border-radius:8px; border:1px solid var(--linha); background:#fff; cursor:pointer; transition:background .15s ease, border-color .15s ease;}
+  .opcoes button:hover{border-color:var(--verde-2);}
+  .opcoes button.certo{background:rgba(45,106,79,.15); border-color:var(--certo); font-weight:600;}
+  .opcoes button.errado{background:rgba(140,47,47,.12); border-color:var(--errado);}
+  .opcoes button:disabled{cursor:default;}
+  .feedback{margin-top:10px; font-size:.88rem; font-family:'Inter',sans-serif; color:var(--ink-soft); min-height:1em;}
+  .rodape-nav{display:flex; justify-content:space-between; align-items:center; gap:10px; max-width:820px; margin:10px auto 40px; padding:14px 20px; font-family:'Inter',sans-serif; font-size:.86rem; flex-wrap:wrap;}
+  .rodape-nav a{text-decoration:none; color:var(--verde); font-weight:600;}
+  .rodape-nav a.central{color:var(--bordo);}
+
+  /* ── Cartão de atividade complementar (PDF externo) ─────────────── */
+  .atv-card{display:flex; align-items:center; gap:14px; background:var(--paper); border:1px solid var(--linha); border-left:5px solid var(--verde-2); border-radius:10px; padding:14px 16px; margin:18px 0;}
+  .atv-card-icone{font-size:1.7rem; flex:none; line-height:1;}
+  .atv-card-texto{flex:1; min-width:0;}
+  .atv-card-eyebrow{font-family:'Inter',sans-serif; font-weight:700; letter-spacing:.08em; text-transform:uppercase; font-size:.66rem; color:var(--bordo);}
+  .atv-card-titulo{font-family:'Playfair Display',serif; font-weight:700; color:var(--verde); font-size:.98rem; margin-top:2px;}
+  .atv-card-desc{font-family:'Inter',sans-serif; font-size:.8rem; color:var(--ink-soft); margin-top:3px; line-height:1.4;}
+  .atv-card-btn{flex:none; font-family:'Inter',sans-serif; font-weight:600; font-size:.78rem; color:var(--dourado-2); background:var(--verde); padding:9px 16px; border-radius:20px; text-decoration:none; white-space:nowrap; transition:background .15s ease;}
+  .atv-card-btn:hover{background:var(--verde-2);}
+  @media (max-width:520px){
+    .atv-card{flex-wrap:wrap;}
+    .atv-card-btn{width:100%; text-align:center;}
+  }
+
+  /* ── Jogo da memória ─────────────────────────────────────────── */
+  .jm-wrap{background:var(--paper); border:1px solid var(--linha); border-radius:14px; padding:22px 22px 26px; margin:34px 0 0;}
+  .jm-instru{font-size:.88rem; color:var(--ink-soft); margin:-6px 0 16px;}
+  .jm-status{display:flex; align-items:center; gap:18px; flex-wrap:wrap; font-family:'Inter',sans-serif; font-size:.82rem; color:var(--ink-soft); margin-bottom:18px; padding-bottom:14px; border-bottom:1px dashed var(--linha);}
+  .jm-status strong{color:var(--verde); font-size:.95rem;}
+  .jm-btn-restart{margin-left:auto; font-family:'Inter',sans-serif; font-weight:600; font-size:.78rem; color:var(--verde); background:#fff; border:2px solid var(--verde-2); border-radius:30px; padding:7px 16px; cursor:pointer; transition:background .15s ease,color .15s ease;}
+  .jm-btn-restart:hover{background:var(--verde-2); color:#fff;}
+  .jm-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:10px;}
+  .jm-card{aspect-ratio:1/1; perspective:700px; cursor:pointer;}
+  .jm-card.encontrada{cursor:default;}
+  .jm-card-inner{position:relative; width:100%; height:100%; transition:transform .5s cubic-bezier(.4,.2,.2,1); transform-style:preserve-3d;}
+  .jm-card.virada .jm-card-inner, .jm-card.encontrada .jm-card-inner{transform:rotateY(180deg);}
+  .jm-face{position:absolute; inset:0; backface-visibility:hidden; border-radius:10px; display:flex; align-items:center; justify-content:center; text-align:center; padding:6px 8px;}
+  .jm-face.verso{background:linear-gradient(145deg,var(--verde),#12291d); border:2px solid var(--dourado); color:var(--dourado-2); font-family:'Playfair Display',serif; font-weight:900; font-size:1.5rem;}
+  .jm-face.frente{background:#fff; border:2px solid var(--linha); transform:rotateY(180deg); font-family:'Inter',sans-serif; font-size:.72rem; line-height:1.35; color:var(--ink);}
+  .jm-card.termo .jm-face.frente{font-family:'Playfair Display',serif; font-weight:700; font-size:.92rem; color:var(--verde); border-color:var(--verde-2);}
+  .jm-card.encontrada .jm-face.frente{background:#eaf6ee; border-color:var(--certo); color:var(--certo);}
+  .jm-card.erro .jm-face.frente{background:#fbeaea; border-color:var(--errado);}
+  .jm-vitoria{display:none; margin-top:18px; background:rgba(201,162,39,.14); border:2px solid var(--dourado); border-radius:10px; padding:14px 18px; text-align:center; font-family:'Playfair Display',serif; font-weight:700; color:var(--verde); font-size:1rem;}
+  .jm-vitoria.mostrar{display:block;}
+  @media (max-width:560px){
+    .jm-grid{grid-template-columns:repeat(3,1fr); gap:8px;}
+    .jm-face.frente{font-size:.66rem;}
+    .jm-card.termo .jm-face.frente{font-size:.8rem;}
+  }
+  @media (max-width:380px){
+    .jm-grid{grid-template-columns:repeat(2,1fr);}
+  }
+
+  @media (max-width:480px){
+    main{padding:20px 14px 50px;}
+    .hero-tema{gap:12px;}
+    .medalhao-grande{width:52px; height:52px; font-size:1.3rem;}
+    h1{font-size:1.3rem;}
+    .mini-trilha{ padding:14px 10px 10px; }
+    .mini-trilha::before{ left:34px; right:34px; top:26px; }
+    .mini-trilha a{ width:70px; }
+    .mini-trilha a .medalhao{ width:36px; height:36px; font-size:.85rem; }
+    .mini-trilha a .rotulo{ font-size:.56rem; margin-top:5px; }
+    .mini-trilha a .codigo{ display:none; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="mini-trilha">
+  <a class="ativo" href="tema1.html" target="_parent">
+    <span class="medalhao">1</span>
+    <span class="rotulo">Independência e Nação</span>
+    <span class="codigo">GO-EF08HI15-A</span>
+  </a>
+  <a href="tema2.html" target="_parent">
+    <span class="medalhao">2</span>
+    <span class="rotulo">Primeiro Reinado e Período Regencial</span>
+    <span class="codigo">GO-EF08HI16-A</span>
+  </a>
+  <a href="tema3.html" target="_parent">
+    <span class="medalhao">3</span>
+    <span class="rotulo">Segundo Reinado</span>
+    <span class="codigo">GO-EF08HI17-A</span>
+  </a>
+  <a href="tema4.html" target="_parent">
+    <span class="medalhao">4</span>
+    <span class="rotulo">Escravidão e Acesso à Terra</span>
+    <span class="codigo">GO-EF08HI18-B</span>
+  </a>
+  <a href="tema5.html" target="_parent">
+    <span class="medalhao">5</span>
+    <span class="rotulo">Origens Históricas do Racismo</span>
+    <span class="codigo">GO-EF08HI20-A</span>
+  </a>
+</nav>
+
+<main>
+  <div class="eyebrow">GO-EF08HI15-A</div>
+  <div class="hero-tema">
+    <div class="medalhao-grande">1</div>
+    <h1>Independência e Nação</h1>
+  </div>
+
+  <div class="objetivos">
+    <h2>O que você vai aprender</h2>
+    <ul>
+      <li>Definir o conceito de <strong>nação</strong> e refletir sobre o processo de Independência do Brasil, analisando contradições, interesses e significados desses movimentos para a construção da nação.</li>
+      <li>Analisar o contexto político, social e econômico do Brasil durante o <strong>Primeiro Reinado (1822–1831)</strong>.</li>
+      <li>Compreender como esse período moldou a trajetória do Brasil como nação independente.</li>
+    </ul>
+    <p class="bncc">Alinhado à habilidade da BNCC EF08HI15: definir o conceito de nação e analisar o processo de Independência do Brasil, identificando contradições e sujeitos envolvidos.</p>
+  </div>
+
+  <a class="video-simples" href="https://youtu.be/G-kZF7glKCo" target="_blank" rel="noopener">
+    <span class="video-simples-icone">▶</span>
+    <span class="video-simples-texto">Assista à vídeo-aula resumo no YouTube</span>
+    <span class="video-simples-seta">↗</span>
+  </a>
+
+  <div class="atv-card">
+    <div class="atv-card-icone">📊</div>
+    <div class="atv-card-texto">
+      <div class="atv-card-eyebrow">Material de apoio</div>
+      <div class="atv-card-titulo">Slides desta aula: "O Quebra-Cabeça do Brasil"</div>
+      <div class="atv-card-desc"></div>
+    </div>
+    <a class="atv-card-btn" href="https://drive.google.com/file/d/1UREfzoWyBp4kknhOUE5FfVpJX6yNx10N/view?usp=sharing" target="_blank" rel="noopener">Abrir slides →</a>
+  </div>
+
+  <h2 class="secao">1. Afinal, o que é uma nação?</h2>
+  <p>Uma <span class="destaque">nação</span> é formada por pessoas que compartilham uma história, uma cultura, tradições e o sentimento de pertencer ao mesmo povo. Em geral, uma nação procura organizar-se em um <strong>Estado</strong>, com governo, leis e território próprios.</p>
+  <p>Mas será que o Brasil, entre 1500 e 1822, já era uma nação?</p>
+  <details class="acordeao">
+    <summary>O Brasil colônia era uma nação?</summary>
+    <p>Não. Nesse período, o território fazia parte do Império Português e era governado a partir de Portugal. As principais decisões políticas e econômicas eram tomadas na Europa, e a colônia existia, sobretudo, para fornecer riquezas à metrópole.</p>
+    <p>Além disso, a maior parte da população — indígenas, africanos escravizados, mestiços e pessoas pobres — não participava das decisões políticas e não se reconhecia como parte de um único povo brasileiro. A sociedade era marcada pela escravidão, pelos privilégios e por grandes desigualdades.</p>
+    <blockquote>Uma colônia sem autogoverno, sem território reconhecido como país e sem um povo que se veja como unidade política ainda não é uma nação — é, antes de tudo, uma extensão da metrópole.</blockquote>
+  </details>
+
+  <div class="atv-card">
+    <div class="atv-card-icone">📄</div>
+    <div class="atv-card-texto">
+      <div class="atv-card-eyebrow">Atividade 1 · Vozes do passado</div>
+      <div class="atv-card-titulo">Pernambuco 1817 e a troca de sobrenome</div>
+      <div class="atv-card-desc">Uma proclamação da Revolução Pernambucana de 1817 e o caso real de um brasileiro que trocou o sobrenome português por um "bem brasileiro" após a Independência — dois registros do sentimento de pertencer a uma nação.</div>
+    </div>
+    <a class="atv-card-btn" href="https://drive.google.com/file/d/1r121_UWYpugBD55F5pUr9M1qXGy0Obhj/view?usp=sharing" target="_blank" rel="noopener">Abrir atividade →</a>
+  </div>
+
+  <h2 class="secao">2. As três peças que formam um país</h2>
+  <p>Para existir como país soberano, não basta um pedaço de terra: é preciso reunir três engrenagens diferentes, funcionando ao mesmo tempo.</p>
+  <div class="engrenagens">
+    <div class="peca"><strong>Nação</strong><p>O sentimento e o destino comum. Uma sociedade unida por cultura, tradições, história e objetivos parecidos.</p></div>
+    <div class="peca"><strong>Estado</strong><p>A máquina burocrática: a organização formada por políticos, burocratas e militares, com poder para criar leis e cobrar impostos.</p></div>
+    <div class="peca"><strong>Território</strong><p>O palco geográfico: o espaço físico delimitado por fronteiras onde essa autoridade é exercida.</p></div>
+  </div>
+
+  <h2 class="secao">3. Nação e Estado: em que se diferenciam</h2>
+  <p>É comum confundir esses dois conceitos, mas eles não são a mesma coisa:</p>
+  <div class="tabela-scroll">
+  <table class="revoltas">
+    <tr><th></th><th>Nação</th><th>Estado</th></tr>
+    <tr><td>O que une as pessoas?</td><td>Cultura, história, pertencimento e memória.</td><td>Leis, impostos, obrigações jurídicas.</td></tr>
+    <tr><td>Natureza principal</td><td>Uma ideia coletiva, fluida e identitária.</td><td>Uma estrutura organizacional, política e armada.</td></tr>
+    <tr><td>Podem existir isolados?</td><td>Sim — existem nações inteiras sem um país próprio.</td><td>Sim — impérios podem governar colônias onde não há identidade nacional comum.</td></tr>
+  </table>
+  </div>
+
+  <details class="acordeao">
+    <summary>Nações que existem além das fronteiras de um Estado</summary>
+    <div class="mapa-lutas">
+      <div class="lugar"><h4>Curdos</h4><p>Vivem divididos pelo Oriente Médio. Uma cultura rica e unida, mas sem um país só seu.</p></div>
+      <div class="lugar"><h4>Ciganos</h4><p>Espalhados globalmente, preservam sua identidade milenar sem buscar um território fixo.</p></div>
+      <div class="lugar"><h4>Judeus</h4><p>Até 1948, formavam uma nação vibrante e unida pela fé e pela história, mas sem território ou Estado próprio.</p></div>
+      <div class="lugar"><h4>Palestinos</h4><p>Uma nação com forte identidade que reivindica ativamente a formação da estrutura política do seu próprio Estado.</p></div>
+    </div>
+  </details>
+
+  <h2 class="secao">4. Estado e Governo também não são sinônimos</h2>
+  <p>O Estado é o edifício; o governo é apenas quem o administra por um tempo. O <strong>Estado</strong> é a estrutura permanente que mantém instituições, leis e exército. Já o <strong>governo</strong> é o grupo que comanda o Estado por um período específico, mudando conforme eleições ou regimes políticos.</p>
+  <blockquote>"Enquanto o Estado é permanente, o governo é transitório e varia conforme os regimes políticos."<cite class="fonte">Braick; Mota, 2017</cite></blockquote>
+
+  <h2 class="secao">5. Da colônia ao Reino Unido: 1808</h2>
+  <p>Em 1808, fugindo das tropas de Napoleão Bonaparte, a família real portuguesa e toda a Corte desembarcam no Rio de Janeiro. Esse acontecimento muda profundamente o Brasil: pela primeira vez, a sede do governo português passa a funcionar em território colonial.</p>
+  <details class="acordeao">
+    <summary>O que mudou com a chegada da Corte?</summary>
+    <ul>
+      <li><strong>Abertura dos portos às nações amigas (1808):</strong> o Brasil deixa de comercializar exclusivamente com Portugal.</li>
+      <li><strong>Criação de instituições:</strong> Banco do Brasil, bibliotecas, academias militares, imprensa régia — estruturas típicas de uma capital, não de uma colônia.</li>
+      <li><strong>Elevação a Reino Unido de Portugal, Brasil e Algarves (1815):</strong> o Brasil deixa juridicamente de ser colônia e passa a ter status de reino.</li>
+    </ul>
+    <p>Esse processo aproxima o Brasil, na prática, de uma futura separação política — mesmo sem que isso fosse a intenção original de Dom João VI.</p>
+  </details>
+
+  <h2 class="secao">6. O processo de Independência (1822)</h2>
+  <p>Com o retorno de Dom João VI a Portugal em 1821, seu filho Dom Pedro permanece como príncipe regente do Brasil. As Cortes portuguesas tentam recolonizar o Brasil, exigindo o retorno de Dom Pedro. Diante da pressão de grupos locais — sobretudo a elite proprietária de terras — Dom Pedro decide romper com Portugal.</p>
+  <blockquote>7 de setembro de 1822 — às margens do rio Ipiranga, em São Paulo, Dom Pedro proclama a Independência do Brasil.</blockquote>
+  <p>É importante notar que essa independência foi conduzida <strong>pelas elites</strong>, sem ruptura da estrutura social: a escravidão continuou, a monarquia foi mantida e grande parte da população não participou da decisão.</p>
+
+  <div class="atv-card">
+    <div class="atv-card-icone">📄</div>
+    <div class="atv-card-texto">
+      <div class="atv-card-eyebrow">Atividade 2 · Para refletir</div>
+      <div class="atv-card-titulo">Duas interpretações sobre a Independência</div>
+      <div class="atv-card-desc">Compare os textos das historiadoras Emilia Viotti da Costa e Cecilia Helena de S. Oliveira: por que dois estudos sérios podem enxergar o mesmo acontecimento de formas tão diferentes?</div>
+    </div>
+    <a class="atv-card-btn" href="https://drive.google.com/file/d/1mn-_WiZiEGAb6PMnQN2MVw1X5WAz5X6M/view?usp=sharing" target="_blank" rel="noopener">Abrir atividade →</a>
+  </div>
+
+  <h2 class="secao">7. O Primeiro Reinado (1822–1831)</h2>
+  <p>Dom Pedro I torna-se Imperador do Brasil. Seu governo enfrenta desafios constantes: reconhecimento internacional da independência, conflitos com a Assembleia Constituinte, guerra pela região do Prata (Cisplatina) e forte oposição política — assuntos que você vai aprofundar no Tema 2.</p>
+
+  <h2 class="secao">8. A Constituição de 1824</h2>
+  <details class="acordeao" open>
+    <summary>Uma Constituição outorgada</summary>
+    <p>Após dissolver a Assembleia Constituinte de 1823, Dom Pedro I <strong>outorga</strong> (impõe, sem consulta popular) a primeira Constituição brasileira, em 1824. Ela estabelece:</p>
+    <ul>
+      <li>Uma monarquia constitucional e hereditária;</li>
+      <li>Quatro poderes: Executivo, Legislativo, Judiciário e o <strong>Poder Moderador</strong> — exclusivo do Imperador, que podia dissolver a Câmara e nomear ou destituir ministros;</li>
+      <li>O <strong>voto censitário</strong>: só podiam votar (e ser votados) homens livres com determinada renda mínima.</li>
+    </ul>
+  </details>
+
+  <div class="atv-card">
+    <div class="atv-card-icone">📄</div>
+    <div class="atv-card-texto">
+      <div class="atv-card-eyebrow">Atividade 3 · Fontes primárias</div>
+      <div class="atv-card-titulo">A Constituição de 1824 e o manifesto de Frei Caneca</div>
+      <div class="atv-card-desc">Leia trechos originais dos artigos da primeira Constituição brasileira e um manifesto de Frei Caneca sobre a Confederação do Equador (1824).</div>
+    </div>
+    <a class="atv-card-btn" href="https://drive.google.com/file/d/16Aih1amgX7b4gU2MY6oZ94NG1aGyZ-TQ/view?usp=sharing" target="_blank" rel="noopener">Abrir atividade →</a>
+  </div>
+
+  <h2 class="secao">9. Quem ficou de fora da nação?</h2>
+  <p>A Constituição de 1824 separava dois grupos que, muitas vezes, confundimos hoje: a <strong>população</strong> — todas as pessoas que simplesmente viviam no território — e o <strong>"povo"</strong> — o conjunto restrito de cidadãos reconhecidos, com voz ativa na vida pública. Nem todo habitante era, oficialmente, parte do "povo".</p>
+  <p>O voto censitário marginalizava mulheres, negros escravizados, indígenas e a maior parte dos homens pobres e livres do processo de decisão política. Ou seja: a "nação" que nascia em 1822 incluía juridicamente apenas uma pequena parcela da população — a elite proprietária de terras e de pessoas escravizadas.</p>
+  <p>Economicamente, o país seguia dependente: a economia agroexportadora (açúcar, algodão e, cada vez mais, café) sustentava-se no trabalho escravo, e o Brasil mantinha forte dependência comercial e financeira em relação à Inglaterra.</p>
+
+  <div class="atv-card">
+    <div class="atv-card-icone">📄</div>
+    <div class="atv-card-texto">
+      <div class="atv-card-eyebrow">Atividade 4 · Vozes do passado</div>
+      <div class="atv-card-titulo">Manifesto das Mulheres de Goiana (1824)</div>
+      <div class="atv-card-desc">Um documento em que mulheres pernambucanas criticam Dom Pedro I e reivindicam seu direito de participar da política, num momento em que isso era considerado "matéria alheia ao sexo feminino".</div>
+    </div>
+    <a class="atv-card-btn" href="https://drive.google.com/file/d/13w3XkC4E70e1qBdocANyjOLRMCtcee9E/view?usp=sharing" target="_blank" rel="noopener">Abrir atividade →</a>
+  </div>
+
+  <h2 class="secao">10. A equação de um país soberano</h2>
+  <div class="equacao">
+    <div class="formula">NAÇÃO <span class="op">+</span> ESTADO <span class="op">+</span> TERRITÓRIO <span class="op">=</span> <span class="resultado">PAÍS SOBERANO</span></div>
+    <p class="legenda">Quando a identidade de um povo (Nação) encontra uma organização de leis (Estado), dentro de um espaço geográfico delimitado (Território), nasce um país soberano. <strong>Soberania</strong> é a capacidade desse país de tomar suas próprias decisões, sem se submeter a nenhuma potência estrangeira.</p>
+  </div>
+
+  <h2 class="secao">11. Nações vivas dentro do Estado brasileiro</h2>
+  <p>Os povos indígenas são o exemplo mais direto de nações sem Estado próprio operando dentro das fronteiras do Brasil. Eles possuem identidades, línguas e organizações sociais seculares, muito anteriores à formação jurídica do Estado brasileiro. Estão submetidos às leis do Estado, mas lutam ativamente pelo reconhecimento de seus territórios — as demarcações — para proteger sua existência enquanto povos e culturas.</p>
+
+  <h2 class="secao">12. 1822 resolveu a soberania, mas não formou a nação</h2>
+  <ul class="linha-tempo">
+    <li><strong>1500–1822:</strong> o Brasil é colônia — nem Estado soberano, nem nação unificada.</li>
+    <li><strong>1822:</strong> a Independência cria o Estado soberano — leis, governo e símbolos próprios nascem quase da noite para o dia.</li>
+    <li><strong>Ao longo do século XIX:</strong> a identidade de "povo brasileiro" segue em construção lenta, dificultada pela manutenção da escravidão e das desigualdades sociais.</li>
+  </ul>
+  <p>Criar leis é rápido; forjar uma identidade comum é lento — e é exatamente essa diferença de ritmo que explica por que 1822 resolveu a soberania do país, mas não completou, sozinho, a construção da nação brasileira.</p>
+
+  <div class="atv-card">
+    <div class="atv-card-icone">📄</div>
+    <div class="atv-card-texto">
+      <div class="atv-card-eyebrow">Atividade 5 · Vozes do presente</div>
+      <div class="atv-card-titulo">Por que o Brasil manteve a unidade territorial?</div>
+      <div class="atv-card-desc">Enquanto a América espanhola se dividiu em vários países, o Brasil permaneceu unido. Compare as explicações dos historiadores José Murilo de Carvalho e Luís Felipe de Alencastro para esse fenômeno.</div>
+    </div>
+    <a class="atv-card-btn" href="https://drive.google.com/file/d/181z8N93GClZGx437CFzBFYA6jpXzsHVS/view?usp=sharing" target="_blank" rel="noopener">Abrir atividade →</a>
+  </div>
+
+  <h2 class="secao">Síntese: a nação é um verbo em construção</h2>
+  <div class="sintese-passos">
+    <div class="passo"><span class="num">1</span><p>O Brasil Colônia não era uma nação, apenas uma extensão extrativista do Estado português.</p></div>
+    <div class="passo"><span class="num">2</span><p>A Independência fundou a estrutura política — o Estado soberano —, mas deixou uma sociedade fraturada.</p></div>
+    <div class="passo"><span class="num">3</span><p>A nação brasileira — que exige a garantia de direitos plenos aos cidadãos, o respeito às nações indígenas e a construção de uma identidade justa — é um projeto histórico inacabado, que continuamos erguendo todos os dias.</p></div>
+  </div>
+
+  <div class="leitura-complementar">
+    <div class="leitura-eyebrow">Leitura complementar</div>
+    <h3>"Eu sou brasileiro": o grito da torcida e o sentimento de pertencer a uma nação</h3>
+    <p>Esse projeto inacabado de nação também aparece hoje, de formas inesperadas — como no grito de uma torcida de futebol. Quando a Seleção entra em campo, um canto atravessa gerações nas arquibancadas e nas ruas: "Eu sou brasileiro, com muito orgulho, com muito amor". O refrão nasceu como um jingle das transmissões da TV Globo e virou um canto obrigatório nos estádios, representando a paixão incondicional do torcedor pela seleção.</p>
+    <p>Mas por que milhões de pessoas, que nunca se encontraram pessoalmente, cantam a mesma frase, ao mesmo tempo, com o mesmo sentimento? Pesquisadores que estudam a linguagem das torcidas mostram que esse grito não fala só de futebol. Ele funciona como uma espécie de "grito de guerra" coletivo, no qual o torcedor reafirma seu orgulho de pertencer ao mesmo povo que a Seleção representa em campo.</p>
+    <p>É exatamente esse sentimento que os historiadores chamam de <strong>nação</strong>: um grupo de pessoas que não se conhece pessoalmente, mas que se reconhece como parte do mesmo povo, unido por uma história, uma cultura e símbolos compartilhados — a bandeira, o hino, a camisa amarela e, também, um grito de torcida cantado em coro.</p>
+    <p>Por isso, da próxima vez que você ouvir (ou cantar) esse refrão, vale parar e pensar: esse orgulho de ser brasileiro existe só quando o time vence? Ou ele diz respeito a algo mais profundo — o sentimento de pertencer a um povo, mesmo nos momentos difíceis?</p>
+    <div class="referencias">
+      <p class="ref-titulo">Referências</p>
+      <p class="ref-item">CAIXETA, Schneider Pereira; PAULA, Luciane de. <strong>O orgulho de ser brasileiro</strong>: significação e tema. Grupo de Estudos Discursivos (GED), 6 jul. 2014. Disponível em: https://gediscursivos.wordpress.com/2014/07/06/o-orgulho-de-ser-brasileiro-significacao-e-tema/. Acesso em: 6 jul. 2026.</p>
+      <p class="ref-item">7 MÚSICAS que viraram hinos da torcida brasileira em Copas do Mundo. <strong>Estado de Minas</strong>, 2026. Disponível em: https://www.em.com.br/trends/2026/07/7453560-7-musicas-que-viraram-hinos-da-torcida-brasileira-em-copas-do-mundo.html. Acesso em: 6 jul. 2026.</p>
+    </div>
+  </div>
+
+  <h2 class="secao">Termos-chave desta aula</h2>
+  <div class="grade-termos">
+    <details class="termo"><summary>Nação</summary><p>Grupo humano que compartilha história, cultura e o sentimento de pertencimento a um mesmo povo, geralmente organizado em Estado, com governo, leis e território próprios.</p></details>
+    <details class="termo"><summary>Colônia</summary><p>Território sem autonomia política, administrativa e econômica, dominado por uma metrópole, com economia voltada à exportação de matérias-primas.</p></details>
+    <details class="termo"><summary>Cidadania (filtro imperial)</summary><p>Titularidade de direitos civis, políticos e sociais. No Primeiro Reinado, passou por um forte filtro socioeconômico: o voto censitário da Constituição de 1824.</p></details>
+    <details class="termo"><summary>Anacronismo histórico</summary><p>Julgar ou representar um período histórico usando valores e conceitos de outra época — geralmente do presente. Um erro comum ao analisar o passado.</p></details>
+    <details class="termo"><summary>Poder Moderador</summary><p>Quarto poder, previsto na Constituição de 1824, exclusivo do Imperador. Permitia dissolver a Câmara e nomear/destituir ministros — hoje não existe no sistema político brasileiro.</p></details>
+    <details class="termo"><summary>Povo x População</summary><p>População é todo mundo que vive no território; povo, na Constituição de 1824, era apenas o grupo restrito com direitos políticos reconhecidos.</p></details>
+    <details class="termo"><summary>Soberania</summary><p>Capacidade de um país tomar suas próprias decisões dentro do seu território, sem se submeter a nenhuma potência estrangeira.</p></details>
+  </div>
+
+  <h2 class="secao">Verifique se você entendeu</h2>
+
+  <div class="pergunta">
+    <p class="enunciado">1. O que é necessário, segundo o Tema 1, para que exista um país soberano?</p>
+    <div class="opcoes" data-correta="B">
+      <button data-opt="A">Apenas ter um território reconhecido internacionalmente, independente de cultura ou governo.</button>
+      <button data-opt="B">A união de três elementos: um povo com identidade comum (Nação), uma organização de leis (Estado) e um espaço geográfico delimitado (Território).</button>
+      <button data-opt="C">A existência de um exército permanente capaz de garantir suas fronteiras.</button>
+      <button data-opt="D">A adoção de uma língua oficial única, sem qualquer outra estrutura política.</button>
+    </div>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="pergunta">
+    <p class="enunciado">2. Qual é a principal diferença entre Nação e Estado?</p>
+    <div class="opcoes" data-correta="C">
+      <button data-opt="A">São sinônimos e podem ser usados sem distinção.</button>
+      <button data-opt="B">O Estado é uma ideia coletiva e fluida; a Nação é uma estrutura organizacional e armada.</button>
+      <button data-opt="C">A Nação é uma ideia coletiva de identidade e cultura; o Estado é uma estrutura organizacional, com leis e poder para cobrar impostos.</button>
+      <button data-opt="D">O Estado só existe em monarquias, e a Nação é exclusiva de repúblicas.</button>
+    </div>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="pergunta">
+    <p class="enunciado">3. Por que a Constituição de 1824 é chamada de "outorgada"?</p>
+    <div class="opcoes" data-correta="D">
+      <button data-opt="A">Porque foi aprovada por votação popular direta em todas as províncias.</button>
+      <button data-opt="B">Porque foi escrita inteiramente pela Assembleia Constituinte, sem qualquer interferência do imperador.</button>
+      <button data-opt="C">Porque valia apenas para os habitantes da província do Rio de Janeiro.</button>
+      <button data-opt="D">Porque foi imposta por Dom Pedro I, sem consulta popular, depois de ele dissolver a Assembleia Constituinte de 1823.</button>
+    </div>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="pergunta">
+    <p class="enunciado">4. O que o voto censitário estabelecia, segundo a Constituição de 1824?</p>
+    <div class="opcoes" data-correta="A">
+      <button data-opt="A">Que só podiam votar e ser votados homens livres com renda mínima, excluindo mulheres, escravizados, indígenas e a maioria dos homens pobres livres.</button>
+      <button data-opt="B">Que todos os brasileiros adultos podiam votar, sem qualquer restrição.</button>
+      <button data-opt="C">Que apenas estrangeiros residentes no Brasil tinham direito ao voto.</button>
+      <button data-opt="D">Que o voto era obrigatório para toda a população, incluindo pessoas escravizadas.</button>
+    </div>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="pergunta">
+    <p class="enunciado">5. Por que os povos indígenas são citados, no Tema 1, como exemplo de "nações sem Estado próprio" dentro do Brasil?</p>
+    <div class="opcoes" data-correta="C">
+      <button data-opt="A">Porque não possuem organização social ou cultura própria reconhecida.</button>
+      <button data-opt="B">Porque vivem exclusivamente fora do território brasileiro atual.</button>
+      <button data-opt="C">Porque têm identidades, línguas e organizações sociais anteriores ao Estado brasileiro, mas estão submetidos às leis desse Estado.</button>
+      <button data-opt="D">Porque decidiram, voluntariamente, abrir mão de qualquer forma de organização política.</button>
+    </div>
+    <div class="feedback"></div>
+  </div>
+
+  <h2 class="secao">Jogo da memória — Glossário</h2>
+  <div class="jm-wrap">
+    <p class="jm-instru">Clique em duas cartas para tentar formar o par entre o <strong>termo</strong> e o seu <strong>significado</strong>. Encontre os 7 pares!</p>
+    <div class="jm-status">
+      <span>Pares encontrados: <strong id="jm-pares">0</strong>/7</span>
+      <span>Tentativas: <strong id="jm-tentativas">0</strong></span>
+      <button class="jm-btn-restart" onclick="iniciarJogoMemoria()">↺ Reiniciar</button>
+    </div>
+    <div class="jm-grid" id="jm-grid"></div>
+    <div class="jm-vitoria" id="jm-vitoria"></div>
+  </div>
+
+</main>
+
+<nav class="rodape-nav">
+  <span></span>
+  <a class="central" href="index.html" target="_parent">↑ Voltar ao início da trilha</a>
+  <a href="tema2.html" target="_parent">Próximo: Primeiro Reinado e Regência →</a>
+</nav>
+
+<div style="max-width:820px; margin:0 auto 40px; padding:0 20px; text-align:center;">
+  <a href="atividade-tema1.html" target="_blank" style="display:inline-block; font-family:'Inter',sans-serif; font-weight:600; font-size:.88rem; color:var(--dourado-2); background:var(--verde); padding:12px 28px; border-radius:30px; text-decoration:none; box-shadow:0 4px 14px rgba(27,67,50,.3);">
+    📝 Fazer a atividade avaliativa (5 objetivas + 5 dissertativas)
+  </a>
+</div>
+
+<div style="max-width:820px; margin:0 auto 40px; padding:0 20px; text-align:center;">
+  <a href="glossario.html" target="_parent" style="display:inline-block; font-family:'Inter',sans-serif; font-weight:600; font-size:.88rem; color:var(--dourado-2); background:var(--bordo); padding:12px 28px; border-radius:30px; text-decoration:none; box-shadow:0 4px 14px rgba(122,46,46,.3);">
+    📖 Consultar o Glossário
+  </a>
+</div>
+
+<script>
+  document.querySelectorAll('.pergunta').forEach(bloco => {
+    const correta = bloco.querySelector('.opcoes').dataset.correta;
+    const feedback = bloco.querySelector('.feedback');
+    bloco.querySelectorAll('.opcoes button').forEach(btn => {
+      btn.addEventListener('click', () => {
+        bloco.querySelectorAll('.opcoes button').forEach(b => b.disabled = true);
+        if (btn.dataset.opt === correta) {
+          btn.classList.add('certo');
+          feedback.textContent = 'Correto!';
+        } else {
+          btn.classList.add('errado');
+          bloco.querySelector(`[data-opt="${correta}"]`).classList.add('certo');
+          feedback.textContent = 'Reveja o trecho acima — a resposta certa está destacada.';
+        }
+      });
+    });
+  });
+</script>
+
+<script>
+(function(){
+  const PARES = [
+    { termo:'Nação', def:'Povo que compartilha história, cultura e o sentimento de pertencer a um mesmo grupo.' },
+    { termo:'Colônia', def:'Território sem autonomia, dominado por uma metrópole, voltado à exportação de riquezas.' },
+    { termo:'Cidadania (filtro imperial)', def:'Direitos políticos limitados pelo voto censitário da Constituição de 1824.' },
+    { termo:'Anacronismo histórico', def:'Julgar o passado usando valores e conceitos de outra época — geralmente do presente.' },
+    { termo:'Poder Moderador', def:'Quarto poder da Constituição de 1824, exclusivo do Imperador, hoje inexistente.' },
+    { termo:'Povo x População', def:'População é todo mundo no território; povo era só quem tinha direitos políticos.' },
+    { termo:'Soberania', def:'Capacidade de um país decidir sozinho, sem se submeter a nenhuma outra potência.' }
+  ];
+
+  let cartas = [], viradas = [], paresEncontrados = 0, tentativas = 0, bloqueado = false;
+
+  function embaralhar(arr){
+    const a = arr.slice();
+    for (let i = a.length - 1; i > 0; i--){
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  }
+
+  function montarBaralho(){
+    let baralho = [];
+    PARES.forEach((p, idx) => {
+      baralho.push({ parId: idx, tipo:'termo', texto: p.termo });
+      baralho.push({ parId: idx, tipo:'def', texto: p.def });
+    });
+    return embaralhar(baralho);
+  }
+
+  window.iniciarJogoMemoria = function(){
+    cartas = montarBaralho();
+    viradas = [];
+    paresEncontrados = 0;
+    tentativas = 0;
+    bloqueado = false;
+    document.getElementById('jm-pares').textContent = '0';
+    document.getElementById('jm-tentativas').textContent = '0';
+    const vitoria = document.getElementById('jm-vitoria');
+    vitoria.classList.remove('mostrar');
+    vitoria.textContent = '';
+
+    const grid = document.getElementById('jm-grid');
+    grid.innerHTML = '';
+    cartas.forEach((c, i) => {
+      const el = document.createElement('div');
+      el.className = 'jm-card' + (c.tipo === 'termo' ? ' termo' : '');
+      el.dataset.index = i;
+      el.innerHTML = `
+        <div class="jm-card-inner">
+          <div class="jm-face verso">§</div>
+          <div class="jm-face frente">${c.texto}</div>
+        </div>`;
+      el.addEventListener('click', () => virarCarta(i));
+      grid.appendChild(el);
+    });
+  };
+
+  function virarCarta(i){
+    if (bloqueado) return;
+    const el = document.querySelector(`.jm-card[data-index="${i}"]`);
+    if (!el || el.classList.contains('virada') || el.classList.contains('encontrada')) return;
+
+    el.classList.add('virada');
+    viradas.push(i);
+
+    if (viradas.length === 2){
+      bloqueado = true;
+      tentativas++;
+      document.getElementById('jm-tentativas').textContent = tentativas;
+      const [i1, i2] = viradas;
+      const c1 = cartas[i1], c2 = cartas[i2];
+      const el1 = document.querySelector(`.jm-card[data-index="${i1}"]`);
+      const el2 = document.querySelector(`.jm-card[data-index="${i2}"]`);
+
+      if (c1.parId === c2.parId && c1.tipo !== c2.tipo){
+        setTimeout(() => {
+          el1.classList.add('encontrada');
+          el2.classList.add('encontrada');
+          paresEncontrados++;
+          document.getElementById('jm-pares').textContent = paresEncontrados;
+          viradas = [];
+          bloqueado = false;
+          if (paresEncontrados === PARES.length){
+            const vitoria = document.getElementById('jm-vitoria');
+            vitoria.textContent = '🎉 Parabéns! Você encontrou todos os pares em ' + tentativas + ' tentativa(s).';
+            vitoria.classList.add('mostrar');
+          }
+        }, 500);
+      } else {
+        el1.classList.add('erro');
+        el2.classList.add('erro');
+        setTimeout(() => {
+          el1.classList.remove('virada', 'erro');
+          el2.classList.remove('virada', 'erro');
+          viradas = [];
+          bloqueado = false;
+        }, 1000);
+      }
+    }
+  }
+
+  iniciarJogoMemoria();
+})();
+</script>
+
+</body>
+</html>

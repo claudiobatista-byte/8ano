@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Atividade — Segundo Reinado</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Serif+4:wght@300;400;600&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --verde:#1a6b4a;--verde2:#0f8c6e;--dourado:#c9a227;--bordo:#a83232;
+  --escuro:#1f2a20;--medio:#5b4c3a;--claro:#f4eedd;
+  --sombra:0 4px 24px rgba(27,67,50,.12);--radius:12px
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"Source Serif 4",Georgia,serif;background:var(--claro);color:var(--escuro);line-height:1.7;
+  -webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;
+  -webkit-touch-callout:none;-webkit-tap-highlight-color:transparent}
+#capa{min-height:100vh;background:linear-gradient(145deg,#12291d 0%,#1a6b4a 55%,#0f8c6e 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 20px;position:relative;overflow:hidden}
+#capa::before{content:"";position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none'%3E%3Cg fill='%23ffffff' fill-opacity='.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")}
+.cbox{background:rgba(255,255,255,.12);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.25);border-radius:20px;padding:48px 56px;max-width:640px;width:100%;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.3)}
+.cbox-titulo{font-family:"Playfair Display",serif;font-size:2rem;font-weight:900;color:white;margin-bottom:8px;line-height:1.2}
+.cbox-sub{font-size:.9rem;color:rgba(255,255,255,.75);font-style:italic;margin-bottom:10px}
+.cbox-disc{background:var(--verde2);color:white;border-radius:40px;padding:6px 24px;display:inline-block;font-size:.88rem;font-weight:600;letter-spacing:.04em;margin-bottom:22px}
+.chips{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:28px}
+.chip{background:rgba(255,255,255,.15);color:rgba(255,255,255,.9);border-radius:20px;padding:.3rem .85rem;font-size:.77rem;font-weight:600;font-family:"JetBrains Mono",monospace}
+.campo-label{display:block;color:rgba(255,255,255,.8);font-size:.8rem;text-transform:uppercase;letter-spacing:.12em;margin-bottom:10px;text-align:left}
+.campo-nome{width:100%;padding:14px 18px;border:2px solid rgba(255,255,255,.35);border-radius:10px;background:rgba(255,255,255,.15);color:white;font-size:1.05rem;font-family:"Playfair Display",serif;outline:none;transition:border .2s;margin-bottom:22px}
+.campo-nome::placeholder{color:rgba(255,255,255,.45)}
+.campo-nome:focus{border-color:var(--verde2);background:rgba(255,255,255,.2)}
+.btn-start{padding:14px 48px;background:var(--verde2);color:white;border:none;border-radius:50px;font-size:1rem;font-family:"Source Serif 4",serif;font-weight:600;cursor:pointer;box-shadow:0 8px 24px rgba(15,140,110,.4);transition:transform .2s,box-shadow .2s;letter-spacing:.04em;width:100%}
+.btn-start:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 12px 32px rgba(15,140,110,.5)}
+.btn-start:disabled{opacity:.45;cursor:default}
+.capa-note{font-size:.72rem;color:rgba(255,255,255,.55);margin-top:.9rem}
+.seduc-bar{position:absolute;bottom:0;left:0;right:0;background:rgba(255,255,255,.07);padding:12px;text-align:center;color:rgba(255,255,255,.55);font-size:.78rem;letter-spacing:.1em;text-transform:uppercase}
+#conteudo{display:none}
+.hdr-top{background:linear-gradient(90deg,var(--verde) 0%,var(--escuro) 100%);color:white;padding:12px 28px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;box-shadow:0 2px 16px rgba(0,0,0,.2)}
+.hdr-nome{font-family:"JetBrains Mono",monospace;font-size:.82rem;color:rgba(255,255,255,.75)}
+.hdr-nome span{color:#d9c46a;font-weight:600}
+.hdr-prog{font-size:.78rem;color:rgba(255,255,255,.7);font-family:"JetBrains Mono",monospace}
+.hdr-prog span{color:#ffd700;font-weight:700}
+.bprog-wrap{height:4px;background:rgba(255,255,255,.15);position:sticky;top:48px;z-index:99}
+.bprog{height:4px;background:var(--verde2);transition:width .4s;width:0%}
+.container{max-width:900px;margin:0 auto;padding:32px 20px 80px}
+.fonte-titulo{font-family:"Playfair Display",serif;font-size:1.15rem;font-weight:900;color:var(--escuro);margin-bottom:4px}
+.fonte-hdr{font-family:"JetBrains Mono",monospace;font-size:.7rem;font-weight:700;color:var(--verde);text-transform:uppercase;letter-spacing:.1em;margin-bottom:10px}
+.fonte-corpo{font-size:.9rem;color:var(--escuro);line-height:1.8;text-align:justify;margin-bottom:8px}
+.fonte-cit{font-size:.86rem;color:var(--medio);font-style:italic;border-left:3px solid var(--verde2);padding-left:12px;margin:10px 0}
+.fonte-ref{font-size:.69rem;color:#999;font-style:italic;display:block;margin-top:10px;line-height:1.6}
+.bloco-grupo{background:white;border-radius:var(--radius);box-shadow:var(--sombra);margin-bottom:28px;overflow:hidden}
+.bloco-fonte{border-top:4px solid var(--verde);padding:28px 36px 22px}
+.bloco-questoes{border-top:2px solid var(--claro)}
+.sec-head{display:flex;align-items:center;gap:14px;margin:32px 0 0}
+.sec-head .sec-tag{font-family:"JetBrains Mono",monospace;font-size:.7rem;font-weight:700;background:var(--verde);color:white;border-radius:20px;padding:5px 14px;letter-spacing:.1em;white-space:nowrap}
+.sec-head .sec-txt{font-family:"Playfair Display",serif;font-size:1.15rem;font-weight:700;color:var(--escuro)}
+.sec-head .sec-line{flex:1;height:2px;background:linear-gradient(90deg,var(--verde),transparent)}
+.q-card{background:white;padding:22px 32px;margin:0;transition:border-color .3s}
+.q-card.respondida{background:#f6faf7}
+.q-card.acerto{background:#f0fdf7}
+.q-card.erro{background:#fdf2f2}
+.q-card.preenchida{background:#f6faf7}
+.q-card+.q-card{border-top:1px solid #eeeef5}
+.q-num{font-family:"JetBrains Mono",monospace;font-size:.7rem;text-transform:uppercase;letter-spacing:.15em;color:var(--medio);margin-bottom:8px;display:flex;align-items:center;gap:8px}
+.q-badge{font-size:.65rem;color:white;border-radius:20px;padding:2px 10px;font-weight:700;display:none}
+.q-badge.b-ok{background:var(--verde2);display:inline-block}
+.q-badge.b-no{background:var(--bordo);display:inline-block}
+.q-badge.b-fill{background:var(--verde2)}
+.q-enunc{font-size:.95rem;color:var(--escuro);line-height:1.7;font-weight:600;margin-bottom:14px}
+.opt{display:flex;gap:12px;align-items:flex-start;padding:10px 14px;border:2px solid #e3e0d0;border-radius:8px;margin-bottom:8px;cursor:pointer;transition:all .15s;background:#fdfdfa}
+.opt:hover{border-color:var(--verde);background:#f4faf6}
+.opt.sel{border-color:var(--verde);background:#e9f4ec}
+.opt.correta{border-color:var(--verde2);background:#e9faf3}
+.opt.errada{border-color:var(--bordo);background:#fdeeee}
+.opt.travada{cursor:default}
+.opt.travada:hover{border-color:#e3e0d0;background:#fdfdfa}
+.opt.travada.sel:hover{border-color:var(--verde);background:#e9f4ec}
+.opt.travada.correta:hover{border-color:var(--verde2);background:#e9faf3}
+.opt.travada.errada:hover{border-color:var(--bordo);background:#fdeeee}
+.opt-letra{flex:0 0 auto;width:26px;height:26px;border-radius:50%;background:var(--claro);color:var(--medio);font-family:"JetBrains Mono",monospace;font-weight:700;font-size:.8rem;display:flex;align-items:center;justify-content:center;transition:all .15s}
+.opt.sel .opt-letra{background:var(--verde);color:white}
+.opt.correta .opt-letra{background:var(--verde2);color:white}
+.opt.errada .opt-letra{background:var(--bordo);color:white}
+.opt-txt{font-size:.9rem;color:var(--escuro);line-height:1.6;padding-top:2px}
+.opt-mark{margin-left:auto;font-size:1rem;align-self:center;display:none}
+.textarea-wrap{position:relative}
+.q-textarea{width:100%;min-height:120px;padding:14px 16px;border:2px solid #e0ddc8;border-radius:8px;font-family:"Source Serif 4",Georgia,serif;font-size:.92rem;line-height:1.7;color:var(--escuro);resize:vertical;background:#fdfdfa;outline:none;transition:border .2s;-webkit-user-select:text;-moz-user-select:text;-ms-user-select:text;user-select:text;-webkit-touch-callout:none}
+.q-textarea:focus{border-color:var(--verde);background:white}
+.q-textarea.preenchida{border-color:var(--verde2);background:#fafff8}
+.q-textarea:disabled{background:#f5f5f5;color:#aaa;cursor:not-allowed}
+.char-count{font-family:"JetBrains Mono",monospace;font-size:.68rem;color:#bbb;text-align:right;margin-top:4px;transition:color .2s}
+.char-count.ok{color:var(--verde2)}
+.char-count.warn{color:var(--dourado)}
+#alerta-incompleto{display:none;background:#fff3cd;border:2px solid #ffc107;border-radius:10px;padding:16px 22px;margin:20px 0;color:#7d5a00;font-weight:600;font-size:.9rem}
+.btn-enviar-wrap{margin:32px 0 20px;display:flex;gap:14px;flex-wrap:wrap}
+.btn-enviar{padding:14px 44px;background:var(--verde);color:white;border:none;border-radius:50px;font-size:1rem;font-family:"Source Serif 4",serif;font-weight:600;cursor:pointer;box-shadow:0 6px 20px rgba(26,107,74,.35);transition:all .2s;letter-spacing:.03em}
+.btn-enviar:hover{transform:translateY(-2px);background:#134f38}
+#popup-resultado{display:none;position:fixed;inset:0;background:rgba(26,26,46,.85);z-index:8000;align-items:center;justify-content:center;padding:1rem}
+#popup-resultado.aberto{display:flex}
+.popup-box{background:white;border-radius:20px;padding:2.6rem 2.4rem 2rem;max-width:500px;width:100%;text-align:center;box-shadow:0 24px 80px rgba(0,0,0,.4);animation:popIn .35s cubic-bezier(.34,1.56,.64,1)}
+@keyframes popIn{from{opacity:0;transform:scale(.88) translateY(20px)}to{opacity:1;transform:scale(1) translateY(0)}}
+.pop-ico{font-size:3rem;margin-bottom:.6rem}
+.popup-box h2{font-family:"Playfair Display",serif;font-size:1.4rem;color:var(--escuro);margin-bottom:.5rem}
+.popup-aluno{font-size:.85rem;color:var(--medio);margin-bottom:.4rem}
+.popup-resp{font-size:3.6rem;font-weight:900;line-height:1;font-family:"Playfair Display",serif;color:var(--verde2)}
+.popup-resp span{font-size:1.4rem;color:var(--medio);font-weight:400}
+.popup-sub{font-size:.82rem;color:var(--medio);margin:.3rem 0 .5rem}
+.popup-diss{font-size:.78rem;color:var(--medio);margin:.1rem 0 .9rem}
+.popup-msg{font-size:.95rem;font-weight:600;color:var(--verde);margin:.3rem 0 1.4rem}
+.popup-btns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.pbtn-pdf{padding:.72rem 1.6rem;border-radius:50px;font-size:.88rem;font-family:"Source Serif 4",serif;font-weight:600;cursor:pointer;border:none;background:var(--verde);color:white;box-shadow:0 6px 20px rgba(26,107,74,.35);transition:all .2s}
+.pbtn-pdf:hover{transform:translateY(-2px);background:#134f38}
+.pbtn-restart{background:white;color:var(--verde2);border:2px solid var(--verde2);padding:.72rem 1.6rem;border-radius:50px;font-size:.88rem;font-family:"Source Serif 4",serif;font-weight:600;cursor:pointer;transition:all .2s}
+.pbtn-restart:hover{background:var(--verde2);color:white}
+#pdf-overlay{position:fixed;inset:0;background:rgba(0,0,0,.78);z-index:9999;display:flex;align-items:center;justify-content:center}
+.pdf-box{background:white;border-radius:16px;padding:44px 52px;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,.35);max-width:380px;width:90%}
+.pdf-box .ico{font-size:2.8rem;margin-bottom:12px}
+.pdf-box h4{font-family:"Playfair Display",serif;font-size:1.25rem;font-weight:700;margin-bottom:8px;color:var(--escuro)}
+.pdf-box p{color:#666;font-size:.87rem;margin-bottom:4px}
+#pdf-prog-wrap{height:6px;background:#e8e8e0;border-radius:4px;margin-top:18px;overflow:hidden}
+#pdf-prog{height:6px;background:var(--verde);border-radius:4px;width:0%;transition:width .3s}
+#pdf-prog-txt{font-size:.76rem;color:#888;margin-top:6px;font-family:"JetBrains Mono",monospace}
+.pdf-spin{width:40px;height:40px;border:4px solid #e8e8e0;border-top-color:var(--verde);border-radius:50%;animation:spin .8s linear infinite;margin:14px auto 0}
+@keyframes spin{to{transform:rotate(360deg)}}
+#toast-colar{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(20px);background:var(--bordo);color:#fff;font-family:"Source Serif 4",serif;font-size:.85rem;font-weight:600;padding:12px 22px;border-radius:30px;box-shadow:0 8px 28px rgba(168,50,50,.4);z-index:9500;opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;max-width:90vw;text-align:center}
+#toast-colar.show{opacity:1;transform:translateX(-50%) translateY(0)}
+@media(max-width:640px){
+  .cbox{padding:30px 22px}.cbox-titulo{font-size:1.6rem}
+  .container{padding:1rem 1rem 60px}
+  .bloco-fonte,.q-card{padding:18px 16px}
+  .sec-head .sec-txt{font-size:1rem}
+}
+</style>
+</head>
+<body oncontextmenu="return false">
+
+<!-- CAPA -->
+<div id="capa">
+  <div class="cbox">
+    <div class="cbox-titulo">Segundo<br>Reinado</div>
+    <div class="cbox-sub">Parlamentarismo às Avessas · Golpe da Maioridade · Lei de Terras de 1850 · Guerra do Paraguai</div>
+    <div class="cbox-disc">Ciências Humanas · História · 8º Ano do Ensino Fundamental</div>
+    <div class="chips">
+      <span class="chip">Texto de apoio + Tema</span>
+      <span class="chip">5 objetivas</span>
+      <span class="chip">5 dissertativas</span>
+      <span class="chip">PDF ao finalizar</span>
+    </div>
+    <label class="campo-label" for="cnome">Nome completo do aluno(a)</label>
+    <input type="text" id="cnome" class="campo-nome" placeholder="Digite seu nome completo aqui…"
+      autocomplete="off" oninput="chkNome()" onkeydown="if(event.key==='Enter')iniciar()">
+    <button class="btn-start" id="bstart" onclick="iniciar()" disabled>Iniciar Atividade →</button>
+    <p class="capa-note">Leia o texto de apoio com atenção antes de responder. Mínimo de 60 caracteres por dissertativa.</p>
+  </div>
+  <div class="seduc-bar">Colégio Estadual Rodolfo de Oliveira · Goiás · 2026</div>
+</div>
+
+<!-- CONTEÚDO -->
+<div id="conteudo">
+  <div class="hdr-top">
+    <div class="hdr-nome">Aluno(a): <span id="hdr-nome">—</span></div>
+    <div class="hdr-prog">Respondidas: <span id="hdr-resp">0</span> / 10</div>
+  </div>
+  <div class="bprog-wrap"><div class="bprog" id="bprog"></div></div>
+
+  <div class="container">
+    <div id="alerta-incompleto">⚠️ Faltam <strong id="qtd-faltando"></strong> resposta(s). Responda tudo antes de finalizar.</div>
+
+    <!-- ══════════════════════════════════
+         PARTE 1 — LEITURA E REFLEXÃO
+    ══════════════════════════════════ -->
+    <div class="sec-head" style="margin-bottom:12px">
+      <span class="sec-tag">PARTE 1</span>
+      <span class="sec-txt">Leitura e Reflexão</span>
+      <span class="sec-line"></span>
+    </div>
+
+    <!-- FONTE 1 + questão D4 -->
+    <div class="bloco-grupo">
+      <div class="bloco-fonte">
+        <div class="fonte-hdr">Fonte 1 · O "parlamentarismo às avessas" (Tema 3)</div>
+        <div class="fonte-corpo">O Brasil do Segundo Reinado adotava um modelo político peculiar, conhecido como parlamentarismo às avessas: em vez de o Parlamento escolher o governo (como no parlamentarismo europeu), era o Imperador quem escolhia o Conselho de Ministros, usando o Poder Moderador — e depois esse governo organizava eleições para garantir maioria na Câmara. Apesar de disputarem o poder, Partido Liberal e Partido Conservador tinham interesses parecidos: ambos queriam manter a ordem estabelecida, a monarquia e o escravismo, além de garantir seus próprios privilégios.</div>
+        <span class="fonte-ref">Material didático — Tema 3: Segundo Reinado. Colégio Estadual Rodolfo de Oliveira, 2026.</span>
+      </div>
+      <div class="bloco-questoes" id="qs-fonte1"></div>
+    </div>
+
+    <!-- FONTE 2 + questões D1, D2, D3 -->
+    <div class="bloco-grupo">
+      <div class="bloco-fonte">
+        <div class="fonte-hdr">Fonte 2 · Texto de apoio — "A Lei de Terras de 1850"</div>
+        <div class="fonte-corpo">A partir da criação dessa lei, a terra no Brasil só poderia ser conseguida de uma forma: pela compra. Antes disso, era possível conseguir um pedaço de terra recebendo uma doação do governo (sesmaria) ou simplesmente ocupando um terreno vazio (a chamada "posse"). Com a nova lei, essas duas formas deixaram de valer, com poucas exceções.</div>
+        <div class="fonte-corpo">Quem já ocupava uma terra antes da lei (o posseiro) podia ficar com ela, mas precisava cumprir exigências, como demarcar e medir corretamente os limites do terreno dentro de um prazo. Mesmo cumprindo tudo, o posseiro recebia apenas um "título de posse", mas isso não fazia dele o dono oficial da terra. A lei também permitia que estrangeiros comprassem terras e se naturalizassem brasileiros, mas os preços altos dificultavam essa compra para imigrantes recém-chegados.</div>
+        <span class="fonte-ref">CAVALCANTE, José Luiz. A Lei de Terras de 1850 e a reafirmação do poder básico do Estado sobre a terra. Revista Histórica on-line, n. 2, jun. 2005. Adaptado.</span>
+      </div>
+      <div class="bloco-questoes" id="qs-fonte2"></div>
+    </div>
+
+    <!-- REFLEXÃO FINAL + questão D5 -->
+    <div class="bloco-grupo">
+      <div class="bloco-fonte">
+        <div class="fonte-hdr">Reflexão final · Duas formas de exclusão</div>
+        <div class="fonte-corpo">Enquanto a Lei de Terras de 1850 dificultava o acesso à terra para ex-escravizados, imigrantes pobres e trabalhadores livres sem recursos, o sistema político do Segundo Reinado — com o voto censitário e o Poder Moderador — também mantinha a maior parte da população afastada das decisões do país.</div>
+      </div>
+      <div class="bloco-questoes" id="qs-reflexao"></div>
+    </div>
+
+    <!-- ══════════════════════════════════
+         PARTE 2 — OBJETIVAS
+    ══════════════════════════════════ -->
+    <div class="sec-head" style="margin-bottom:12px;margin-top:28px">
+      <span class="sec-tag">PARTE 2</span>
+      <span class="sec-txt">Questões Objetivas (1 a 5)</span>
+      <span class="sec-line"></span>
+    </div>
+    <div id="questoes-obj"></div>
+
+    <div class="btn-enviar-wrap">
+      <button class="btn-enviar" onclick="tentarFinalizar()">✓ Finalizar e corrigir</button>
+    </div>
+  </div>
+</div>
+
+<!-- POPUP -->
+<div id="popup-resultado">
+  <div class="popup-box">
+    <div class="pop-ico" id="pop-ico">🎯</div>
+    <h2>Atividade Finalizada!</h2>
+    <p class="popup-aluno" id="pop-aluno"></p>
+    <div class="popup-resp" id="pop-resp"></div>
+    <p class="popup-sub" id="pop-sub"></p>
+    <p class="popup-diss" id="pop-diss"></p>
+    <p class="popup-msg" id="pop-msg"></p>
+    <div class="popup-btns">
+      <button class="pbtn-pdf" onclick="fecharPopupEBaixar()">📥 Baixar PDF</button>
+      <button class="pbtn-restart" onclick="location.reload()">↺ Refazer</button>
+    </div>
+  </div>
+</div>
+<div id="toast-colar"></div>
+
+<script>
+const LETRAS = ['A','B','C','D'];
+const MIN_CHARS = 60;
+let nome = '';
+let respMC = {};
+let corrigido = false;
+
+function esc(s){ return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+// ── DISSERTATIVAS ──────────────────────────────────────────────────────────────
+const DISS_GRUPOS = {
+  'qs-fonte1': [
+    { num:'d4', enunc:'A Fonte 1 mostra que, no parlamentarismo às avessas do Segundo Reinado, era o Imperador quem escolhia o governo antes das eleições — o contrário do que costuma acontecer no parlamentarismo europeu. Explique, com suas palavras, por que esse sistema dava tanto poder político a Dom Pedro II.' }
+  ],
+  'qs-fonte2': [
+    { num:'d1', enunc:'A Fonte 2 explica que, a partir de 1850, a terra no Brasil só podia ser conseguida por meio da compra. Explique por que essa mudança dificultou o acesso à terra para ex-escravizados, imigrantes pobres e trabalhadores livres sem recursos.' },
+    { num:'d2', enunc:'A Fonte 2 diz que o posseiro que já ocupava uma terra podia continuar nela, desde que cumprisse certas exigências, mas recebia apenas um "título de posse", não se tornando dono oficial. Na sua opinião, por que essa diferença entre "ocupar" e "ser dono" interessava aos grandes proprietários de terra da época?' },
+    { num:'d3', enunc:'A Fonte 2 explica que a lei permitia a estrangeiros comprar terras e se naturalizarem brasileiros, mas que os preços altos dificultavam essa compra. Relacione essa informação com a chegada de trabalhadores imigrantes às fazendas de café, estudada no Tema 3.' }
+  ],
+  'qs-reflexao': [
+    { num:'d5', enunc:'Relacione a exclusão do acesso à terra, imposta pela Lei de Terras de 1850, com a exclusão política do Segundo Reinado (voto censitário, Poder Moderador). Essas duas formas de exclusão se reforçavam mutuamente ou eram problemas independentes um do outro? Justifique.' }
+  ]
+};
+
+const COMENTARIOS_D = {
+  d1: 'Espera-se que o aluno explique que, ao transformar a terra em mercadoria só acessível por compra, a lei excluiu quem não tinha dinheiro — especialmente ex-escravizados recém-libertos e imigrantes pobres —, obrigando essas pessoas a continuarem trabalhando para os grandes proprietários em vez de se tornarem donas de terra.',
+  d2: 'Espera-se que o aluno perceba que, ao impedir que posseiros se tornassem donos legais da terra, a lei protegia os interesses dos grandes proprietários: garantia mão de obra disponível (já que ex-escravizados e pobres não conseguiam virar donos de terra) e mantinha a concentração fundiária nas mãos de poucos.',
+  d3: 'Espera-se que o aluno relacione a dificuldade de comprar terra com a necessidade dos imigrantes de trabalharem como assalariados nas fazendas de café, já que não conseguiam se tornar proprietários — um mecanismo que ajudou a garantir mão de obra barata para os cafeicultores no lugar da mão de obra escravizada.',
+  d4: 'Espera-se que o aluno explique que o Poder Moderador permitia ao Imperador escolher o Ministério antes mesmo das eleições, e que o governo então organizava as eleições para garantir maioria — invertendo a lógica usual do parlamentarismo e concentrando grande poder político nas mãos de Dom Pedro II.',
+  d5: 'Resposta pessoal fundamentada. Espera-se que o aluno identifique que as duas exclusões se reforçavam: quem estava fora da cidadania política (por causa do voto censitário) também tinha menos condições de influenciar leis como a de Terras, e quem não tinha terra própria também tinha menos autonomia econômica para participar plenamente da vida política.'
+};
+
+// ── OBJETIVAS ──────────────────────────────────────────────────────────────────
+// 5 questões — gabarito não-padronizado: B, D, A, C, B
+const QUIZ = [
+  { num:1,
+    enunc:'O que caracteriza o "parlamentarismo às avessas" do Segundo Reinado, estudado no Tema 3?',
+    alts:[
+      'A Câmara dos Deputados escolhia o Imperador a cada quatro anos.',
+      'O Imperador escolhia o governo e, depois, esse governo organizava eleições para obter maioria na Câmara.',
+      'O povo elegia diretamente o Ministério, sem participação do Imperador.',
+      'Não existiam partidos políticos durante o Segundo Reinado.'
+    ], correta:1,
+    coment:'No parlamentarismo às avessas, era o Imperador — usando o Poder Moderador — quem escolhia o Conselho de Ministros antes das eleições; depois, esse governo organizava eleições para garantir maioria na Câmara, invertendo a lógica do parlamentarismo europeu.'
+  },
+  { num:2,
+    enunc:'O que foi o "golpe da maioridade", de 1840?',
+    alts:[
+      'Um golpe militar que derrubou Dom Pedro II do trono brasileiro.',
+      'Uma lei que proibia menores de 18 anos de votar nas eleições do Império.',
+      'A reforma que criou o voto universal para todos os brasileiros.',
+      'A antecipação política da maioridade de Dom Pedro II, aos 14 anos, para encerrar a instabilidade regencial.'
+    ], correta:3,
+    coment:'Para encerrar a instabilidade da Regência, os liberais lançaram uma campanha para antecipar a maioridade do jovem Pedro de Alcântara; em julho de 1840, com apenas 14 anos, ele foi aclamado imperador — episódio conhecido como golpe da maioridade.'
+  },
+  { num:3,
+    enunc:'O que a Revolução Praieira (1848–1849), em Pernambuco, reivindicava, entre outros pontos, em seu Manifesto ao Mundo?',
+    alts:[
+      'O voto livre e universal, a liberdade de imprensa e o fim do Poder Moderador.',
+      'A volta do domínio português sobre o Brasil.',
+      'A criação de uma nova monarquia independente em Pernambuco.',
+      'A manutenção do voto censitário como estava.'
+    ], correta:0,
+    coment:'O Manifesto ao Mundo, redigido por Borges da Fonseca em 1849, exigia, entre outros pontos, o voto livre e universal, a plena liberdade de imprensa e a extinção do Poder Moderador.'
+  },
+  { num:4,
+    enunc:'Segundo a Fonte 2 (texto de apoio sobre a Lei de Terras de 1850), como um posseiro poderia obter uma terra a partir dessa lei?',
+    alts:[
+      'Recebendo a terra gratuitamente do governo, como sesmaria.',
+      'Ocupando qualquer terreno vazio e passando a morar nele, sem outras exigências.',
+      'Somente através da compra — mesmo quem já ocupava uma terra precisava cumprir exigências para regularizá-la, sem se tornar automaticamente dono.',
+      'Vencendo uma disputa judicial contra o antigo proprietário.'
+    ], correta:2,
+    coment:'A partir de 1850, a terra só podia ser obtida pela compra. Quem já ocupava uma terra (o posseiro) podia continuar nela cumprindo certas exigências, mas recebia apenas um título de posse — não se tornava automaticamente o dono oficial.'
+  },
+  { num:5,
+    enunc:'Qual foi um dos fatores que motivaram a formação da Tríplice Aliança contra o Paraguai, em 1865?',
+    alts:[
+      'O desejo do Brasil de anexar definitivamente o território paraguaio.',
+      'A disputa pelo controle da navegação nos rios da bacia platina e por questões de fronteira.',
+      'Um pedido de ajuda militar feito pelos Estados Unidos.',
+      'A necessidade de proteger o comércio de café brasileiro na Europa.'
+    ], correta:1,
+    coment:'A guerra teve como pano de fundo antigas disputas entre os países da região platina: o controle da navegação pelos rios da bacia do Prata, a posse de terras férteis nas fronteiras e a liderança política sobre a região.'
+  }
+];
+
+function chkNome(){
+  const v = document.getElementById('cnome').value.trim();
+  document.getElementById('bstart').disabled = v.length < 3;
+}
+
+function iniciar(){
+  nome = document.getElementById('cnome').value.trim();
+  if (nome.length < 3) return;
+  document.getElementById('capa').style.display = 'none';
+  document.getElementById('conteudo').style.display = 'block';
+  document.getElementById('hdr-nome').textContent = nome;
+  buildDiss();
+  buildObj();
+  protegerTextareas();
+}
+
+function buildDiss(){
+  Object.entries(DISS_GRUPOS).forEach(([containerId, questoes]) => {
+    const ct = document.getElementById(containerId);
+    if (!ct) return;
+    questoes.forEach((q) => {
+      ct.innerHTML += `
+        <div class="q-card" id="qcard-${q.num}">
+          <div class="q-num">Questão <span class="q-badge b-fill" id="badge-${q.num}">✓ respondida</span></div>
+          <div class="q-enunc">${q.enunc}</div>
+          <div class="textarea-wrap">
+            <textarea class="q-textarea" id="resp-${q.num}" placeholder="Escreva sua resposta aqui…" oninput="onType('${q.num}')"></textarea>
+            <div class="char-count" id="cc-${q.num}">0 / ${MIN_CHARS} caracteres mínimos</div>
+          </div>
+        </div>`;
+    });
+  });
+}
+
+function buildObj(){
+  const ct = document.getElementById('questoes-obj');
+  QUIZ.forEach(q => {
+    const opts = q.alts.map((a,i)=>`
+      <div class="opt" id="opt-${q.num}-${i}" onclick="marcar(${q.num},${i})">
+        <div class="opt-letra">${LETRAS[i]}</div>
+        <div class="opt-txt">${a}</div>
+        <div class="opt-mark" id="mark-${q.num}-${i}"></div>
+      </div>`).join('');
+    ct.innerHTML += `
+      <div class="q-card" id="qcard-obj-${q.num}" style="border-top:1px solid #eeeef5">
+        <div class="q-num">Questão ${q.num} <span class="q-badge" id="badge-obj-${q.num}"></span></div>
+        <div class="q-enunc">${q.enunc}</div>
+        ${opts}
+      </div>`;
+  });
+}
+
+function protegerTextareas(){
+  const tiposColar = ['insertFromPaste','insertFromPasteAsQuotation','insertFromDrop','insertFromYank'];
+  function flashAviso(){
+    let t = document.getElementById('toast-colar');
+    t.textContent = '⚠️ Colar está desativado. Digite sua resposta.';
+    t.classList.add('show');
+    clearTimeout(window.__toastT);
+    window.__toastT = setTimeout(()=>t.classList.remove('show'), 1800);
+  }
+  function numDe(ta){ return ta.id.split('-').slice(1).join('-'); }
+  function reverter(ta){
+    ta.value = ta.dataset.prev || '';
+    flashAviso();
+    onType(numDe(ta));
+  }
+  document.querySelectorAll('.q-textarea').forEach(ta => {
+    ta.dataset.prev = '';
+    ['paste','copy','cut','drop','dragstart','dragover','dragenter','contextmenu'].forEach(ev => {
+      ta.addEventListener(ev, e => { e.preventDefault(); e.stopPropagation(); return false; });
+    });
+    ta.addEventListener('beforeinput', e => {
+      if (tiposColar.includes(e.inputType)) { e.preventDefault(); flashAviso(); }
+    });
+    ta.addEventListener('input', e => {
+      if (e.inputType && tiposColar.includes(e.inputType)) { reverter(ta); return; }
+      const prev = ta.dataset.prev || '';
+      if (ta.value.length - prev.length >= 25) { reverter(ta); return; }
+      ta.dataset.prev = ta.value;
+    });
+  });
+}
+
+function marcar(num, idx){
+  if (corrigido) return;
+  respMC[num] = idx;
+  const q = QUIZ.find(x=>x.num===num);
+  q.alts.forEach((a,i)=>{
+    document.getElementById('opt-'+num+'-'+i).classList.toggle('sel', i===idx);
+  });
+  document.getElementById('qcard-obj-'+num).classList.add('respondida');
+  atualizarProgresso();
+}
+
+function onType(num){
+  if (corrigido) return;
+  const ta = document.getElementById('resp-'+num);
+  const cc = document.getElementById('cc-'+num);
+  const card = document.getElementById('qcard-'+num);
+  const badge = document.getElementById('badge-'+num);
+  const len = ta.value.length;
+  cc.textContent = len + ' caracteres' + (len < MIN_CHARS ? ' (mínimo: '+MIN_CHARS+')' : ' ✓');
+  if (len >= MIN_CHARS){
+    cc.className='char-count ok'; ta.classList.add('preenchida'); card.classList.add('preenchida'); badge.style.display='inline-block';
+  } else {
+    cc.className = len > 30 ? 'char-count warn' : 'char-count';
+    ta.classList.remove('preenchida'); card.classList.remove('preenchida'); badge.style.display='none';
+  }
+  atualizarProgresso();
+}
+
+function atualizarProgresso(){
+  let count = Object.keys(respMC).length;
+  Object.values(DISS_GRUPOS).flat().forEach(q=>{
+    const el = document.getElementById('resp-'+q.num);
+    if (el && el.value.length >= MIN_CHARS) count++;
+  });
+  const total = 10;
+  document.getElementById('hdr-resp').textContent = count;
+  document.getElementById('bprog').style.width = Math.round(count/total*100)+'%';
+}
+
+const TODAS_DISS = Object.values(DISS_GRUPOS).flat();
+
+function tentarFinalizar(){
+  const faltamD = TODAS_DISS.filter(q => {
+    const el = document.getElementById('resp-'+q.num);
+    return !el || el.value.length < MIN_CHARS;
+  });
+  const faltamMC = QUIZ.filter(q => respMC[q.num]===undefined);
+  const faltam = faltamD.map(q=>q.num).concat(faltamMC.map(q=>'obj-'+q.num));
+  if (faltam.length > 0){
+    document.getElementById('qtd-faltando').textContent = faltam.length;
+    const al = document.getElementById('alerta-incompleto');
+    al.style.display = 'block';
+    al.scrollIntoView({behavior:'smooth',block:'center'});
+    setTimeout(()=>{
+      const primeiro = faltamD.length > 0 ? 'qcard-'+faltamD[0].num : 'qcard-obj-'+faltamMC[0].num;
+      const el = document.getElementById(primeiro);
+      if (el) el.scrollIntoView({behavior:'smooth',block:'center'});
+    }, 600);
+    return;
+  }
+  document.getElementById('alerta-incompleto').style.display='none';
+  corrigir();
+}
+
+function corrigir(){
+  corrigido = true;
+  let acertos = 0;
+  QUIZ.forEach(q=>{
+    const escolha = respMC[q.num];
+    const card = document.getElementById('qcard-obj-'+q.num);
+    const badge = document.getElementById('badge-obj-'+q.num);
+    const acertou = escolha === q.correta;
+    if (acertou) acertos++;
+    q.alts.forEach((a,i)=>{
+      const opt = document.getElementById('opt-'+q.num+'-'+i);
+      const mark = document.getElementById('mark-'+q.num+'-'+i);
+      opt.classList.add('travada'); opt.classList.remove('sel');
+      if (i===q.correta){ opt.classList.add('correta'); mark.textContent='✓'; mark.style.display='block'; }
+      if (i===escolha && !acertou){ opt.classList.add('errada'); mark.textContent='✗'; mark.style.display='block'; }
+    });
+    card.classList.remove('respondida');
+    card.classList.add(acertou?'acerto':'erro');
+    badge.textContent = acertou?'✓ Acertou':'✗ Errou';
+    badge.className = 'q-badge '+(acertou?'b-ok':'b-no');
+  });
+  TODAS_DISS.forEach(q=>{ const el=document.getElementById('resp-'+q.num); if(el) el.disabled=true; });
+
+  window.__acertos = acertos;
+  const pct = Math.round(acertos/5*100);
+  document.getElementById('pop-aluno').innerHTML = 'Aluno(a): <strong>'+nome+'</strong>';
+  document.getElementById('pop-resp').innerHTML = acertos+'<span>/5</span>';
+  document.getElementById('pop-sub').textContent = 'Objetivas — aproveitamento: '+pct+'%';
+  document.getElementById('pop-diss').textContent = '5 questões dissertativas registradas para correção do professor.';
+  let msg, ico;
+  if (pct>=80){ msg='Excelente desempenho nas objetivas!'; ico='🏆'; }
+  else if (pct>=60){ msg='Bom trabalho — revise os pontos que errou.'; ico='🎯'; }
+  else if (pct>=40){ msg='Atenção: retome o texto de apoio e o Tema 3.'; ico='📚'; }
+  else { msg='Vamos revisar o conteúdo com calma.'; ico='📖'; }
+  document.getElementById('pop-ico').textContent = ico;
+  document.getElementById('pop-msg').textContent = msg;
+  setTimeout(()=>{ document.getElementById('popup-resultado').classList.add('aberto'); }, 300);
+}
+
+function fecharPopupEBaixar(){
+  document.getElementById('popup-resultado').classList.remove('aberto');
+  setTimeout(()=>gerarPDF(), 350);
+}
+document.getElementById('popup-resultado').addEventListener('click', function(e){
+  if (e.target===this) this.classList.remove('aberto');
+});
+
+// ── GERAR PDF ──────────────────────────────────────────────────────────────────
+function sleep(ms){ return new Promise(r=>setTimeout(r,ms)); }
+
+async function gerarPDF(){
+  const overlay = document.createElement('div');
+  overlay.id = 'pdf-overlay';
+  overlay.innerHTML = `<div class="pdf-box"><div class="ico">📄</div><h4>Gerando PDF…</h4><p>Aguarde alguns instantes.</p><div class="pdf-spin"></div><div id="pdf-prog-wrap"><div id="pdf-prog"></div></div><div id="pdf-prog-txt">0%</div></div>`;
+  document.body.appendChild(overlay);
+  await sleep(80);
+  const setP=(pct,msg)=>{const pp=document.getElementById('pdf-prog'),pt=document.getElementById('pdf-prog-txt');if(pp)pp.style.width=pct+'%';if(pt)pt.textContent=msg||pct+'%';};
+
+  try{
+    const {jsPDF}=window.jspdf;
+    const pdf=new jsPDF({orientation:'portrait',unit:'px',format:'a4',hotfixes:['px_scaling']});
+    const PW=pdf.internal.pageSize.getWidth(), PH=pdf.internal.pageSize.getHeight();
+    const ML=28, CW=PW-ML*2; let y=ML;
+
+    const addImg=async(el)=>{
+      const canvas=await html2canvas(el,{scale:2,useCORS:true,logging:false,backgroundColor:'#ffffff',scrollX:0,scrollY:0,windowWidth:900});
+      const imgW=CW, imgH=(canvas.height/canvas.width)*imgW;
+      const dataUrl=canvas.toDataURL('image/jpeg',.92), avail=PH-ML*2;
+      if(imgH<=avail){
+        if(y+imgH>PH-ML){pdf.addPage();y=ML;}
+        pdf.addImage(dataUrl,'JPEG',ML,y,imgW,imgH);y+=imgH+8;
+      } else {
+        const pxPerPdfPt=canvas.width/imgW;let srcY=0;
+        while(srcY<canvas.height){
+          const availPt=PH-y-ML,sliceH_pt=Math.min(availPt,avail);
+          const sliceH_px=Math.round(sliceH_pt*pxPerPdfPt),actualH_px=Math.min(sliceH_px,canvas.height-srcY);
+          const tmp=document.createElement('canvas');tmp.width=canvas.width;tmp.height=actualH_px;
+          tmp.getContext('2d').drawImage(canvas,0,srcY,canvas.width,actualH_px,0,0,canvas.width,actualH_px);
+          const sliceUrl=tmp.toDataURL('image/jpeg',.92),slicePt=(actualH_px/canvas.width)*imgW;
+          pdf.addImage(sliceUrl,'JPEG',ML,y,imgW,slicePt);
+          srcY+=actualH_px;y+=slicePt;
+          if(srcY<canvas.height){pdf.addPage();y=ML;}
+        }
+        y+=8;
+      }
+    };
+    const band=async(tag,txt)=>{
+      const b=document.createElement('div');
+      b.style.cssText='width:860px;font-family:Arial,sans-serif;position:absolute;left:-9999px;top:0';
+      b.innerHTML=`<div style="background:linear-gradient(90deg,#1a6b4a,#1f2a20);border-radius:8px;padding:12px 22px;display:flex;align-items:center;gap:12px"><span style="background:rgba(255,255,255,.2);color:#fff;font-weight:700;font-size:12px;letter-spacing:1px;border-radius:20px;padding:3px 12px">${tag}</span><span style="color:#fff;font-size:15px;font-weight:700">${txt}</span></div>`;
+      document.body.appendChild(b);await sleep(20);await addImg(b);document.body.removeChild(b);
+    };
+
+    const acertos=window.__acertos||0, pct=Math.round(acertos/5*100);
+    const now=new Date();
+    const dtStr=now.toLocaleDateString('pt-BR')+' às '+now.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});
+
+    setP(4,'Preparando capa…');await sleep(40);
+    const coverEl=document.createElement('div');
+    coverEl.style.cssText='width:860px;font-family:Arial,sans-serif;overflow:hidden;position:absolute;left:-9999px;top:0';
+    coverEl.innerHTML=`
+      <div style="background:linear-gradient(135deg,#12291d 0%,#1a6b4a 60%,#0f8c6e 100%);padding:32px 48px 28px;color:white">
+        <div style="font-size:10px;letter-spacing:3px;text-transform:uppercase;opacity:.7;font-weight:700;margin-bottom:6px">Ciências Humanas · História · 8º Ano do Ensino Fundamental</div>
+        <div style="font-size:26px;font-weight:900;line-height:1.2;margin-bottom:5px">Segundo Reinado</div>
+        <div style="font-size:13px;opacity:.8;font-style:italic">Parlamentarismo às Avessas · Lei de Terras de 1850 · Guerra do Paraguai · 5 objetivas + 5 dissertativas</div>
+      </div>
+      <div style="background:#f5f5ee;padding:22px 48px 26px;border-bottom:3px solid #d8cba8">
+        <div style="font-size:9px;text-transform:uppercase;letter-spacing:2px;color:#1a6b4a;font-weight:700;margin-bottom:5px">Aluno(a)</div>
+        <div style="font-size:20px;font-weight:700;color:#1f2a20;border-bottom:2.5px solid #1a6b4a;padding-bottom:6px;display:inline-block;margin-bottom:16px">${nome}</div>
+        <div style="display:flex;gap:12px;flex-wrap:wrap">
+          <div style="background:white;border-radius:8px;padding:12px 18px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.07);min-width:84px">
+            <div style="font-size:22px;font-weight:900;color:#0f8c6e">${acertos}/5</div>
+            <div style="font-size:9px;text-transform:uppercase;letter-spacing:1px;color:#888;margin-top:2px">Objetivas</div></div>
+          <div style="background:white;border-radius:8px;padding:12px 18px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.07);min-width:84px">
+            <div style="font-size:22px;font-weight:900;color:#1a6b4a">${pct}%</div>
+            <div style="font-size:9px;text-transform:uppercase;letter-spacing:1px;color:#888;margin-top:2px">Aproveitamento</div></div>
+          <div style="background:white;border-radius:8px;padding:12px 18px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.07);min-width:84px">
+            <div style="font-size:22px;font-weight:900;color:#c9a227">5</div>
+            <div style="font-size:9px;text-transform:uppercase;letter-spacing:1px;color:#888;margin-top:2px">Dissertativas</div></div>
+          <div style="background:white;border-radius:8px;padding:12px 18px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.07);min-width:140px">
+            <div style="font-size:13px;font-weight:700;color:#333">${dtStr}</div>
+            <div style="font-size:9px;text-transform:uppercase;letter-spacing:1px;color:#888;margin-top:2px">Enviado em</div></div>
+        </div>
+        <div style="font-size:9px;color:#bbb;margin-top:14px">Colégio Estadual Rodolfo de Oliveira · Goiás · 2026</div>
+      </div>`;
+    document.body.appendChild(coverEl);await sleep(60);await addImg(coverEl);document.body.removeChild(coverEl);
+
+    // DISSERTATIVAS
+    await band('DISSERTATIVAS','Questões Dissertativas — Respostas e Orientações');
+    let dk=0;
+    for(const q of TODAS_DISS){
+      const resp=document.getElementById('resp-'+q.num)?.value||'';
+      const coment=COMENTARIOS_D[q.num]||'';
+      setP(8+Math.round(dk/TODAS_DISS.length*50),'Dissertativa '+(dk+1)+'/5…');await sleep(12);
+      const qEl=document.createElement('div');
+      qEl.style.cssText='width:860px;font-family:Arial,sans-serif;background:white;overflow:hidden;border:1px solid #e0ddc8;border-radius:10px;position:absolute;left:-9999px;top:0';
+      qEl.innerHTML=`
+        <div style="background:linear-gradient(90deg,#1a6b4a,#134f38);padding:10px 22px;display:flex;justify-content:space-between;align-items:center">
+          <span style="color:white;font-weight:700;font-size:13px;letter-spacing:.8px">QUESTÃO ${String(q.num).toUpperCase()}</span>
+          <span style="background:rgba(255,255,255,.15);color:rgba(255,255,255,.9);font-size:11px;padding:3px 12px;border-radius:20px;font-weight:600">Dissertativa</span></div>
+        <div style="padding:18px 24px 16px;background:#fdfdfa">
+          <div style="font-size:13px;font-weight:700;color:#1f2a20;line-height:1.6;margin-bottom:14px;padding-bottom:12px;border-bottom:1px solid #eee">${q.enunc}</div>
+          <div style="margin-bottom:12px">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:7px">
+              <div style="width:4px;height:15px;background:#1a6b4a;border-radius:2px"></div>
+              <div style="font-size:10px;font-weight:700;color:#1a6b4a;text-transform:uppercase;letter-spacing:1.5px">Resposta do Aluno(a)</div></div>
+            <div style="background:#f0f7f1;border:1.5px solid #a8cfb0;border-radius:8px;padding:13px 16px;min-height:50px">
+              <div style="font-size:12.5px;color:#1f2a20;line-height:1.8;white-space:pre-wrap">${esc(resp)}</div></div>
+          </div>
+          <div>
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:7px">
+              <div style="width:4px;height:15px;background:#0f8c6e;border-radius:2px"></div>
+              <div style="font-size:10px;font-weight:700;color:#0a6e57;text-transform:uppercase;letter-spacing:1.5px">Orientação do Professor</div></div>
+            <div style="background:#e8f9f0;border:1.5px solid #8ed8b8;border-radius:8px;padding:13px 16px">
+              <div style="font-size:12.5px;color:#0d3025;line-height:1.8">${coment}</div></div>
+          </div>
+        </div>`;
+      document.body.appendChild(qEl);await sleep(12);await addImg(qEl);document.body.removeChild(qEl);
+      dk++;
+    }
+
+    // OBJETIVAS
+    await band('OBJETIVAS','Questões Objetivas — Gabarito Comentado');
+    for(let k=0;k<QUIZ.length;k++){
+      const q=QUIZ[k],escolha=respMC[q.num],acertou=escolha===q.correta;
+      setP(60+Math.round(k/QUIZ.length*34),'Objetiva '+(k+1)+'/5…');await sleep(12);
+      const altsHTML=q.alts.map((a,i)=>{
+        let bg='#fdfdfa',bd='#e3e0d0',cor='#2d2d20',tag='';
+        if(i===q.correta){bg='#e9faf3';bd='#8ed8b8';cor='#0d3025';tag='<span style="color:#0a6e57;font-weight:700"> ✓ correta</span>';}
+        if(i===escolha&&!acertou){bg='#fdeeee';bd='#e3a3a3';cor='#7a1f1f';tag='<span style="color:#a83232;font-weight:700"> ✗ sua resposta</span>';}
+        else if(i===escolha&&acertou){tag='<span style="color:#0a6e57;font-weight:700"> ← sua resposta</span>';}
+        return `<div style="display:flex;gap:9px;align-items:flex-start;background:${bg};border:1px solid ${bd};border-radius:6px;padding:8px 12px;margin-bottom:6px"><div style="flex:0 0 auto;font-weight:700;color:#1a6b4a;font-size:12px">${LETRAS[i]})</div><div style="font-size:12px;color:${cor};line-height:1.55">${a}${tag}</div></div>`;
+      }).join('');
+      const headBg=acertou?'linear-gradient(90deg,#0f8c6e,#0a6e57)':'linear-gradient(90deg,#a83232,#7a1f1f)';
+      const qEl=document.createElement('div');
+      qEl.style.cssText='width:860px;font-family:Arial,sans-serif;background:white;overflow:hidden;border:1px solid #e0ddc8;border-radius:10px;position:absolute;left:-9999px;top:0';
+      qEl.innerHTML=`
+        <div style="background:${headBg};padding:10px 22px;display:flex;justify-content:space-between;align-items:center">
+          <span style="color:white;font-weight:700;font-size:13px;letter-spacing:.8px">QUESTÃO ${q.num}</span>
+          <span style="background:rgba(255,255,255,.2);color:white;font-size:11px;padding:3px 12px;border-radius:20px;font-weight:700">${acertou?'ACERTOU':'ERROU'}</span></div>
+        <div style="padding:16px 24px 14px;background:#fdfdfa">
+          <div style="font-size:13px;font-weight:700;color:#1f2a20;line-height:1.6;margin-bottom:12px">${q.enunc}</div>
+          ${altsHTML}
+          <div style="margin-top:10px;background:#e8f9f0;border:1px solid #8ed8b8;border-radius:6px;padding:10px 14px">
+            <span style="font-size:10px;font-weight:700;color:#0a6e57;text-transform:uppercase;letter-spacing:1px">Gabarito: ${LETRAS[q.correta]} · </span>
+            <span style="font-size:12px;color:#0d3025;line-height:1.6">${q.coment}</span></div>
+        </div>`;
+      document.body.appendChild(qEl);await sleep(12);await addImg(qEl);document.body.removeChild(qEl);
+    }
+
+    // RODAPÉ
+    setP(96,'Finalizando…');await sleep(30);
+    const totalPages=pdf.getNumberOfPages();
+    for(let p=1;p<=totalPages;p++){
+      pdf.setPage(p);
+      const fEl=document.createElement('div');
+      fEl.style.cssText=`width:${Math.round(CW)}px;height:22px;background:#f5f5ee;display:flex;align-items:center;justify-content:space-between;padding:0 28px;font-size:10px;color:#888;font-family:Arial,sans-serif;position:absolute;left:-9999px;top:0`;
+      fEl.innerHTML=`<span>Segundo Reinado · ${nome} · Objetivas: ${acertos}/5</span><span>Página ${p} de ${totalPages}</span>`;
+      document.body.appendChild(fEl);
+      const fc=await html2canvas(fEl,{scale:2,logging:false,backgroundColor:'#f5f5ee'});
+      document.body.removeChild(fEl);
+      const fUrl=fc.toDataURL('image/jpeg',.9),fH=(fc.height/fc.width)*CW;
+      pdf.setFillColor(245,245,238);pdf.rect(ML,PH-fH,CW,fH,'F');
+      pdf.addImage(fUrl,'JPEG',ML,PH-fH,CW,fH);
+    }
+    setP(100,'Salvando…');await sleep(200);
+    const safeName=nome.replace(/[^a-zA-Z0-9_\-]/g,'_');
+    pdf.save('Segundo_Reinado_'+safeName+'.pdf');
+
+  } catch(err){
+    console.error(err);
+    alert('Erro ao gerar PDF: '+err.message);
+  } finally {
+    const ov=document.getElementById('pdf-overlay');
+    if(ov) document.body.removeChild(ov);
+  }
+}
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</body>
+</html>

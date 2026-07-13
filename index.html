@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Independência e Nação — 8º Ano | História CERO</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;900&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { 
+            font-family: 'Source Serif 4', serif; 
+            /* Degradê invertido: começa mais escuro no topo e clareia levemente na base */
+            background: linear-gradient(to bottom, #0D2118, #143326, #1E4B38);
+            min-height: 100vh;
+        }
+        
+        /* Contêiner da grade posicionado apenas no meio da tela */
+        .grade-centralizada {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 896px; /* Limita os quadrados apenas na área central (max-w-4xl) */
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0.08;
+            background: repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(255,255,255,0.5) 39px, rgba(255,255,255,0.5) 40px),
+                        repeating-linear-gradient(90deg, transparent, transparent 39px, rgba(255,255,255,0.5) 39px, rgba(255,255,255,0.5) 40px);
+            background-size: 40px 40px;
+        }
+
+        .font-titulo{ font-family:'Playfair Display', serif; }
+        .bg-brand-verde{ background-color:#1B4332; }
+        .text-brand-verde{ color:#1B4332; }
+        .bg-brand-dourado{ background-color:#C9A227; }
+        .text-brand-dourado{ color:#E9D27A; }
+        .border-brand-dourado{ border-color:#C9A227; }
+
+        /* Estilo da linha pontilhada que serpenteia ao fundo no desktop */
+        @media (min-width: 768px) {
+            .trilha-vertical::before {
+                content: "";
+                position: absolute;
+                top: 0;
+                bottom: 0;
+                left: 50%;
+                width: 4px;
+                transform: translateX(-50%);
+                background: repeating-linear-gradient(to bottom, #C9A227 0, #C9A227 10px, transparent 10px, transparent 20px);
+                z-index: 0;
+                opacity: 0.4;
+            }
+        }
+        /* No mobile a linha fica encostada na esquerda */
+        @media (max-width: 767px) {
+            .trilha-vertical::before {
+                content: "";
+                position: absolute;
+                top: 0;
+                bottom: 0;
+                left: 32px;
+                width: 4px;
+                background: repeating-linear-gradient(to bottom, #C9A227 0, #C9A227 10px, transparent 10px, transparent 20px);
+                z-index: 0;
+                opacity: 0.3;
+            }
+        }
+    </style>
+</head>
+<body class="text-white flex flex-col min-h-screen antialiased selection:bg-[#C9A227] selection:text-[#1B4332] relative">
+
+    <!-- Elemento que renderiza os quadrados grandes somente no meio -->
+    <div class="grade-centralizada"></div>
+
+    <!-- Cabeçalho de Apresentação (Hero) integrado -->
+    <section class="text-center pt-16 pb-8 px-4 relative z-10">
+        <div class="max-w-3xl mx-auto">
+            <span class="bg-brand-dourado text-brand-verde text-[10px] md:text-xs font-bold uppercase px-3 py-1 rounded-full inline-block mb-4 shadow">
+                3º Bimestre
+            </span>
+            <h2 class="text-3xl md:text-5xl font-titulo font-extrabold mb-4 leading-tight">
+                Independência e Nação: a formação do Brasil imperial
+            </h2>
+            <p class="text-sm md:text-lg text-gray-300 max-w-xl mx-auto font-sans font-light">
+                Toque em uma das estações abaixo para abrir o conteúdo e iniciar sua jornada pela história.
+            </p>
+        </div>
+    </section>
+
+    <!-- Seção da Trilha Serpenteante -->
+    <main class="container mx-auto px-4 py-12 flex-grow max-w-4xl relative z-10">
+        <div class="trilha-vertical relative space-y-12 md:space-y-20">
+
+            <!-- Estação 1 (Esquerda) -->
+            <div class="flex flex-col md:flex-row items-start md:items-center relative z-10 w-full md:w-1/2 mr-auto md:pr-8 md:text-right">
+                <div class="flex items-center gap-4 md:flex-row-reverse w-full">
+                    <a href="tema1.html" target="_blank" class="w-16 h-16 rounded-full bg-[#FFFDF6] border-4 border-[#2D6A4F] flex items-center justify-center text-[#1B4332] font-titulo font-black text-xl shadow-xl flex-none transform hover:scale-110 active:scale-95 transition-all duration-200 ring-4 ring-[#C9A227]">
+                        1
+                    </a>
+                    <div class="space-y-1">
+                        <span class="font-sans text-[10px] bg-[#2D6A4F] text-[#E9D27A] px-2 py-0.5 rounded font-bold tracking-wider uppercase">GO-EF08HI15-A</span>
+                        <h3 class="text-lg font-titulo font-bold text-[#E9D27A]">
+                            <a href="tema1.html" target="_blank" class="hover:underline">Tema 1 — Independência e Nação</a>
+                        </h3>
+                        <p class="text-xs text-gray-300 max-w-sm font-sans font-light">Do rompimento com Portugal à formação do Estado brasileiro — nação, cidadania e o legado colonial.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Estação 2 (Direita) -->
+            <div class="flex flex-col md:flex-row items-start md:items-center relative z-10 w-full md:w-1/2 ml-auto md:pl-8">
+                <div class="flex items-center gap-4 w-full">
+                    <a href="tema2.html" target="_blank" class="w-14 h-14 rounded-full bg-[#FFFDF6] border-4 border-[#2D6A4F] flex items-center justify-center text-[#1B4332] font-titulo font-bold text-lg shadow-xl flex-none transform hover:scale-110 active:scale-95 transition-all duration-200 hover:ring-4 hover:ring-[#C9A227]/50">
+                        2
+                    </a>
+                    <div class="space-y-1">
+                        <span class="font-sans text-[10px] bg-[#2D6A4F] text-[#E9D27A] px-2 py-0.5 rounded font-bold tracking-wider uppercase">GO-EF08HI16-A</span>
+                        <h3 class="text-lg font-titulo font-bold text-white">
+                            <a href="tema2.html" target="_blank" class="hover:text-[#E9D27A] transition-colors">Tema 2 — Primeiro Reinado e Regência</a>
+                        </h3>
+                        <p class="text-xs text-gray-300 max-w-sm font-sans font-light">O governo de Dom Pedro I, sua abdicação e as revoltas do período regencial (1831–1840).</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Estação 3 (Esquerda) -->
+            <div class="flex flex-col md:flex-row items-start md:items-center relative z-10 w-full md:w-1/2 mr-auto md:pr-8 md:text-right">
+                <div class="flex items-center gap-4 md:flex-row-reverse w-full">
+                    <a href="tema3.html" target="_blank" class="w-14 h-14 rounded-full bg-[#FFFDF6] border-4 border-[#2D6A4F] flex items-center justify-center text-[#1B4332] font-titulo font-bold text-lg shadow-xl flex-none transform hover:scale-110 active:scale-95 transition-all duration-200 hover:ring-4 hover:ring-[#C9A227]/50">
+                        3
+                    </a>
+                    <div class="space-y-1">
+                        <span class="font-sans text-[10px] bg-[#2D6A4F] text-[#E9D27A] px-2 py-0.5 rounded font-bold tracking-wider uppercase">GO-EF08HI17-A</span>
+                        <h3 class="text-lg font-titulo font-bold text-white">
+                            <a href="tema3.html" target="_blank" class="hover:text-[#E9D27A] transition-colors">Tema 3 — Segundo Reinado</a>
+                        </h3>
+                        <p class="text-xs text-gray-300 max-w-sm font-sans font-light">O longo reinado de Dom Pedro II, o parlamentarismo às avessas e a Guerra do Paraguai.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Estação 4 (Direita) -->
+            <div class="flex flex-col md:flex-row items-start md:items-center relative z-10 w-full md:w-1/2 ml-auto md:pl-8">
+                <div class="flex items-center gap-4 w-full">
+                    <a href="tema4.html" target="_blank" class="w-14 h-14 rounded-full bg-[#FFFDF6] border-4 border-[#2D6A4F] flex items-center justify-center text-[#1B4332] font-titulo font-bold text-lg shadow-xl flex-none transform hover:scale-110 active:scale-95 transition-all duration-200 hover:ring-4 hover:ring-[#C9A227]/50">
+                        4
+                    </a>
+                    <div class="space-y-1">
+                        <span class="font-sans text-[10px] bg-[#2D6A4F] text-[#E9D27A] px-2 py-0.5 rounded font-bold tracking-wider uppercase">GO-EF08HI18-B</span>
+                        <h3 class="text-lg font-titulo font-bold text-white">
+                            <a href="tema4.html" target="_blank" class="hover:text-[#E9D27A] transition-colors">Tema 4 — Escravidão e Acesso à Terra</a>
+                        </h3>
+                        <p class="text-xs text-gray-300 max-w-sm font-sans font-light">Da Lei de Terras à Lei Áurea — abolição, resistência e concentração fundiária.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Estação 5 (Esquerda) -->
+            <div class="flex flex-col md:flex-row items-start md:items-center relative z-10 w-full md:w-1/2 mr-auto md:pr-8 md:text-right">
+                <div class="flex items-center gap-4 md:flex-row-reverse w-full">
+                    <a href="tema5.html" target="_blank" class="w-14 h-14 rounded-full bg-[#FFFDF6] border-4 border-[#2D6A4F] flex items-center justify-center text-[#1B4332] font-titulo font-bold text-lg shadow-xl flex-none transform hover:scale-110 active:scale-95 transition-all duration-200 hover:ring-4 hover:ring-[#C9A227]/50">
+                        5
+                    </a>
+                    <div class="space-y-1">
+                        <span class="font-sans text-[10px] bg-[#2D6A4F] text-[#E9D27A] px-2 py-0.5 rounded font-bold tracking-wider uppercase">GO-EF08HI20-A</span>
+                        <h3 class="text-lg font-titulo font-bold text-white">
+                            <a href="tema5.html" target="_blank" class="hover:text-[#E9D27A] transition-colors">Tema 5 — Origens Históricas do Racismo</a>
+                        </h3>
+                        <p class="text-xs text-gray-300 max-w-sm font-sans font-light">Racismo científico, branqueamento e o mito da democracia racial no Brasil pós-abolição.</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Botão do Glossário Unificado -->
+        <div class="mt-20 text-center relative z-20">
+            <a href="glossario.html" target="_blank" class="inline-flex items-center gap-2 bg-[#C9A227] text-[#1B4332] font-sans font-bold text-xs uppercase tracking-wider py-3 px-6 rounded-full hover:bg-[#E9D27A] transition-colors shadow-lg">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
+                Consultar Glossário Unificado
+            </a>
+        </div>
+    </main>
+
+    <!-- Rodapé integrado -->
+    <footer class="py-6 text-center text-xs relative z-10 mt-8">
+        <div class="container mx-auto px-4 font-sans opacity-80 space-y-1">
+            <p class="font-medium text-white">Colégio Estadual Rodolfo de Oliveira</p>
+            <p class="text-[11px] text-[#E9D27A] opacity-70">SEDUC-GO · Material de apoio — uso em sala de aula</p>
+        </div>
+    </footer>
+
+</body>
+</html>
