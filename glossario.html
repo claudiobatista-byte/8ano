@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Glossário — Trilha Temática 8º Ano</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;900&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#F4EEDD; --paper:#FFFDF6; --ink:#2B2118; --ink-soft:#5b4c3a;
+    --verde:#1B4332; --verde-2:#2D6A4F; --dourado:#C9A227; --dourado-2:#E9D27A;
+    --bordo:#7A2E2E; --linha:#D8CBA8;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{background:var(--bg); color:var(--ink); font-family:'Source Serif 4',serif; line-height:1.6;}
+  a{color:var(--bordo);}
+  .mini-trilha{
+    position:relative;
+    display:flex; justify-content:space-between; align-items:flex-start;
+    gap:4px; max-width:900px; margin:0 auto;
+    padding:20px 20px 14px; background:var(--bg); border-bottom:1px solid var(--linha);
+    font-family:'Inter',sans-serif; overflow-x:auto; -webkit-overflow-scrolling:touch;
+  }
+  .mini-trilha::before{
+    content:""; position:absolute; top:34px; left:60px; right:60px; height:3px;
+    background:repeating-linear-gradient(90deg, var(--dourado) 0 8px, transparent 8px 13px);
+    z-index:0;
+  }
+  .mini-trilha a{
+    position:relative; z-index:1;
+    display:flex; flex-direction:column; align-items:center;
+    text-decoration:none; color:var(--ink); width:120px; flex:none;
+  }
+  .mini-trilha a .medalhao{
+    width:46px; height:46px; border-radius:50%; background:var(--paper); border:3px solid var(--verde-2);
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Playfair Display',serif; font-weight:700; font-size:1.05rem; color:var(--verde);
+    box-shadow:0 2px 6px rgba(43,33,24,.12);
+  }
+  .mini-trilha a .rotulo{ margin-top:7px; font-size:.66rem; font-weight:600; text-align:center; line-height:1.2; color:var(--ink-soft); max-width:110px; }
+  .mini-trilha a .codigo{ font-size:.58rem; color:var(--bordo); font-weight:600; margin-top:2px; }
+  .mini-trilha a.ativo .medalhao{ background:var(--verde); border-color:var(--dourado); color:var(--dourado-2); box-shadow:0 4px 12px rgba(27,67,50,.35); }
+  .mini-trilha a.ativo .rotulo{ color:var(--verde); }
+
+  main{max-width:820px; margin:0 auto; padding:28px 20px 60px;}
+  .eyebrow{font-family:'Inter',sans-serif; font-weight:600; letter-spacing:.12em; text-transform:uppercase; font-size:.68rem; color:var(--bordo);}
+  h1{font-family:'Playfair Display',serif; font-weight:900; color:var(--verde); font-size:clamp(1.5rem,3vw,2.1rem); margin:.1em 0 .3em;}
+  .lead{color:var(--ink-soft); max-width:600px; margin:0 0 20px;}
+
+  .busca-wrap{position:sticky; top:0; background:var(--bg); padding:10px 0 16px; z-index:5;}
+  #busca{
+    width:100%; padding:12px 16px; border-radius:30px; border:2px solid var(--linha);
+    font-family:'Inter',sans-serif; font-size:.95rem; background:var(--paper); color:var(--ink);
+  }
+  #busca:focus{outline:none; border-color:var(--dourado);}
+  #contagem{font-family:'Inter',sans-serif; font-size:.72rem; color:var(--ink-soft); margin-top:6px;}
+
+  .letra{
+    font-family:'Playfair Display',serif; font-weight:900; color:var(--dourado);
+    font-size:1.6rem; margin:28px 0 10px; border-bottom:2px solid var(--linha); padding-bottom:2px;
+  }
+  .verbete{
+    background:var(--paper); border:1px solid var(--linha); border-left:4px solid var(--verde-2);
+    border-radius:10px; padding:14px 18px; margin-bottom:10px;
+  }
+  .verbete h3{font-family:'Playfair Display',serif; color:var(--verde); margin:0 0 6px; font-size:1.05rem;}
+  .verbete .tema-tag{
+    font-family:'Inter',sans-serif; font-size:.62rem; text-transform:uppercase; letter-spacing:.06em;
+    color:var(--bordo); font-weight:600; margin-left:8px;
+  }
+  .verbete p{margin:0 0 6px;}
+  .verbete .contexto{font-size:.9rem; font-style:italic; color:var(--ink-soft); margin:0;}
+  .oculto{display:none;}
+  .sem-resultado{font-family:'Inter',sans-serif; color:var(--ink-soft); text-align:center; padding:30px 0;}
+
+  .rodape-nav{
+    display:flex; justify-content:space-between; align-items:center; gap:10px;
+    max-width:820px; margin:10px auto 40px; padding:14px 20px;
+    font-family:'Inter',sans-serif; font-size:.86rem; flex-wrap:wrap;
+  }
+  .rodape-nav a{text-decoration:none; color:var(--verde); font-weight:600;}
+  .rodape-nav a.central{color:var(--bordo);}
+
+  @media (max-width:480px){
+    main{padding:20px 14px 50px;}
+    h1{font-size:1.3rem;}
+    .mini-trilha{ padding:14px 10px 10px; }
+    .mini-trilha::before{ left:34px; right:34px; top:26px; }
+    .mini-trilha a{ width:70px; }
+    .mini-trilha a .medalhao{ width:36px; height:36px; font-size:.85rem; }
+    .mini-trilha a .rotulo{ font-size:.56rem; margin-top:5px; }
+    .mini-trilha a .codigo{ display:none; }
+    #busca{padding:10px 14px; font-size:.88rem;}
+  }
+</style>
+</head>
+<body>
+
+<nav class="mini-trilha">
+  <a href="tema1.html" target="_parent">
+    <span class="medalhao">1</span>
+    <span class="rotulo">Independência e Nação</span>
+    <span class="codigo">GO-EF08HI15-A</span>
+  </a>
+  <a href="tema2.html" target="_parent">
+    <span class="medalhao">2</span>
+    <span class="rotulo">Primeiro Reinado e Período Regencial</span>
+    <span class="codigo">GO-EF08HI16-A</span>
+  </a>
+  <a href="tema3.html" target="_parent">
+    <span class="medalhao">3</span>
+    <span class="rotulo">Segundo Reinado</span>
+    <span class="codigo">GO-EF08HI17-A</span>
+  </a>
+  <a href="tema4.html" target="_parent">
+    <span class="medalhao">4</span>
+    <span class="rotulo">Escravidão e Acesso à Terra</span>
+    <span class="codigo">GO-EF08HI18-B</span>
+  </a>
+  <a href="tema5.html" target="_parent">
+    <span class="medalhao">5</span>
+    <span class="rotulo">Origens Históricas do Racismo</span>
+    <span class="codigo">GO-EF08HI20-A</span>
+  </a>
+</nav>
+
+<main>
+  <div class="eyebrow">Material de apoio</div>
+  <h1>Glossário Unificado</h1>
+  <p class="lead">Conceitos históricos que atravessam os cinco temas — da Independência às origens do racismo. Use a busca para localizar um termo rapidamente. <strong>60+ termos</strong> organizados alfabeticamente.</p>
+
+  <div class="busca-wrap">
+    <input type="text" id="busca" placeholder="Buscar termo… (ex.: voto, racismo, lei, quilombo)" autocomplete="off">
+    <div id="contagem"></div>
+  </div>
+
+  <div id="lista">
+
+    <h2 class="letra">A</h2>
+    <div class="verbete" data-termo="abdicação dom pedro i">
+      <h3>Abdicação de Dom Pedro I <span class="tema-tag">Tema 2</span></h3>
+      <p>Ato pelo qual, em 7 de abril de 1831, Dom Pedro I renuncia ao trono brasileiro em favor de seu filho, então com 5 anos de idade, dando início ao Período Regencial.</p>
+      <p class="contexto">Contexto: resultado do desgaste político por seu autoritarismo, dos conflitos com a Câmara e da desconfiança sobre suas prioridades em relação a Portugal.</p>
+    </div>
+    <div class="verbete" data-termo="abertura dos portos 1808">
+      <h3>Abertura dos Portos às Nações Amigas (1808) <span class="tema-tag">Tema 1</span></h3>
+      <p>Decreto assinado por Dom João VI logo após a chegada da Corte portuguesa ao Brasil, permitindo que o país comercializasse diretamente com outras nações, encerrando o monopólio comercial exclusivo de Portugal.</p>
+    </div>
+    <div class="verbete" data-termo="ações afirmativas">
+      <h3>Ações Afirmativas <span class="tema-tag">Tema 5</span></h3>
+      <p>Políticas públicas que visam combater desigualdades históricas e estruturais, reservando oportunidades (cotas em universidades, concursos públicos, etc.) para grupos historicamente discriminados, como a população negra.</p>
+      <p class="contexto">Contexto: reconhecem que a igualdade formal de direitos não elimina desigualdades reais criadas ao longo de séculos de escravidão e exclusão.</p>
+    </div>
+    <div class="verbete" data-termo="abolição gradual">
+      <h3>Abolição Gradual <span class="tema-tag">Tema 4</span></h3>
+      <p>Processo de extinção da escravidão no Brasil ao longo de décadas (1850–1888), por meio de leis sucessivas — Eusébio de Queirós, Ventre Livre, Sexagenários e, por fim, a Lei Áurea — em vez de uma ruptura única e imediata.</p>
+    </div>
+    <div class="verbete" data-termo="abolicionismo">
+      <h3>Abolicionismo <span class="tema-tag">Tema 3 · Tema 4</span></h3>
+      <p>Movimento social e político que defendia o fim da escravidão no Brasil, ganhando força crescente nas últimas décadas do Segundo Reinado até a Lei Áurea, em 1888.</p>
+    </div>
+    <div class="verbete" data-termo="aldeamento">
+      <h3>Aldeamento <span class="tema-tag">Tema 4</span></h3>
+      <p>Política do Império que reunia populações indígenas em núcleos controlados pelo Estado, com o objetivo de integrá-las forçadamente à sociedade nacional, enquanto suas terras eram ocupadas pela expansão agrícola.</p>
+    </div>
+    <div class="verbete" data-termo="anacronismo histórico">
+      <h3>Anacronismo Histórico <span class="tema-tag">Tema 1</span></h3>
+      <p>Consiste em julgar, avaliar ou representar acontecimentos, hábitos, sentimentos ou tecnologias de uma determinada época utilizando valores, termos ou conceitos pertencentes a outro período histórico (geralmente o presente).</p>
+      <p class="contexto">Exemplo didático: uma charge que mostra indígenas em 1500 alertando uns aos outros sobre a necessidade de "usar máscara" e praticar "isolamento social" — medidas do século XXI aplicadas, de forma crítica, ao século XVI.</p>
+    </div>
+    <div class="verbete" data-termo="assembleia constituinte de 1823">
+      <h3>Assembleia Constituinte de 1823 <span class="tema-tag">Tema 1</span></h3>
+      <p>Assembleia eleita para redigir a primeira Constituição do Brasil independente, dissolvida por Dom Pedro I após conflitos políticos — o que levou à outorga unilateral da Constituição de 1824.</p>
+    </div>
+
+    <h2 class="letra">B</h2>
+    <div class="verbete" data-termo="balaiada">
+      <h3>Balaiada <span class="tema-tag">Tema 2</span></h3>
+      <p>Revolta regencial ocorrida no Maranhão entre 1838 e 1841, protagonizada por sertanejos pobres, vaqueiros e escravizados contra a elite local e as condições de miséria da população.</p>
+    </div>
+    <div class="verbete" data-termo="barão de mauá">
+      <h3>Barão de Mauá <span class="tema-tag">Tema 3</span></h3>
+      <p>Título nobiliárquico de Irineu Evangelista de Souza, empresário responsável por importantes iniciativas de modernização do Império, como a construção de ferrovias, a fundação de bancos e o investimento em indústria.</p>
+    </div>
+    <div class="verbete" data-termo="branqueamento ideologia do">
+      <h3>Branqueamento (ideologia do) <span class="tema-tag">Tema 5</span></h3>
+      <p>Projeto defendido por parte da elite brasileira entre o fim do século XIX e o início do XX, que buscava alterar a composição racial da população por meio do incentivo à imigração europeia, associando "progresso" a uma população mais branca.</p>
+      <p class="contexto">Contexto: coexistiu com a ausência de políticas de inclusão para a população negra recém-liberta após 1888.</p>
+    </div>
+
+    <h2 class="letra">C</h2>
+    <div class="verbete" data-termo="cabanagem">
+      <h3>Cabanagem <span class="tema-tag">Tema 2</span></h3>
+      <p>Revolta regencial ocorrida na província do Grão-Pará entre 1835 e 1840, envolvendo população pobre, indígena e mestiça em disputa pelo poder provincial e contra a miséria.</p>
+    </div>
+    <div class="verbete" data-termo="cafeicultura">
+      <h3>Cafeicultura <span class="tema-tag">Tema 3 · Tema 4</span></h3>
+      <p>Cultivo do café, principal produto de exportação do Brasil durante o Segundo Reinado, expandido do Vale do Paraíba ao Oeste Paulista, sustentado primeiro pelo trabalho escravizado e depois pela mão de obra imigrante.</p>
+    </div>
+    <div class="verbete" data-termo="cidadania filtro imperial">
+      <h3>Cidadania (e o Filtro Imperial) <span class="tema-tag">Tema 1</span></h3>
+      <p>Status jurídico e político que garante a um indivíduo a titularidade de direitos civis, políticos e sociais dentro de um Estado. No século XIX (Primeiro Reinado), a cidadania passou por um forte filtro socioeconômico excludente.</p>
+      <p class="contexto">Contexto histórico: a primeira Constituição do Brasil (outorgada em 1824) estabeleceu o voto censitário (baseado na renda), marginalizando mulheres, negros escravizados, indígenas e brancos pobres do processo de decisão política.</p>
+    </div>
+    <div class="verbete" data-termo="colônia">
+      <h3>Colônia <span class="tema-tag">Tema 1</span></h3>
+      <p>Território geograficamente desprovido de autonomia política, administrativa e econômica, que se encontra sob a dominação, controle e exploração sistemática de uma metrópole estrangeira. Sua economia é estruturada para a exportação de matérias-primas e o enriquecimento da potência dominante.</p>
+      <p class="contexto">Contexto histórico: o Brasil de 1500 a 1822 era uma colônia de Portugal, cuja economia baseava-se em ciclos de exploração (pau-brasil, açúcar, ouro e diamantes) e na ausência completa de autogoverno.</p>
+    </div>
+    <div class="verbete" data-termo="colonato">
+      <h3>Colonato <span class="tema-tag">Tema 4</span></h3>
+      <p>Regime de trabalho que substituiu o sistema de parceria a partir de 1870, com salário anual fixo pago aos imigrantes e permissão para o cultivo de subsistência dentro das fazendas de café.</p>
+    </div>
+    <div class="verbete" data-termo="conceito de país">
+      <h3>Conceito de País <span class="tema-tag">Tema 1</span></h3>
+      <p>Conceito espacial e humano completo que engloba a existência de uma estrutura jurídica de controle (Estado), uma base espacial delimitada (Território) e uma população permanente que reside sob uma ordem de convivência comum. É a materialização física e visível de um Estado soberano.</p>
+    </div>
+    <div class="verbete" data-termo="confederação abolicionista">
+      <h3>Confederação Abolicionista <span class="tema-tag">Tema 4</span></h3>
+      <p>Organização fundada em 1883 e liderada por José do Patrocínio, que defendia a abolição da escravidão sem indenização aos senhores e com doação de terras às pessoas libertas.</p>
+    </div>
+    <div class="verbete" data-termo="confederação do equador">
+      <h3>Confederação do Equador <span class="tema-tag">Tema 2</span></h3>
+      <p>Movimento republicano e separatista de 1824, liderado por Pernambuco com adesão de outras províncias do Nordeste, duramente reprimido pelo governo de Dom Pedro I.</p>
+    </div>
+    <div class="verbete" data-termo="concentração fundiária">
+      <h3>Concentração Fundiária <span class="tema-tag">Tema 4</span></h3>
+      <p>Acúmulo da posse de terras nas mãos de poucos proprietários, em detrimento do acesso da maioria da população. No Brasil, aprofundou-se a partir da Lei de Terras de 1850.</p>
+    </div>
+    <div class="verbete" data-termo="constituição federal de 1988">
+      <h3>Constituição Federal de 1988 <span class="tema-tag">Tema 5</span></h3>
+      <p>Constituição que estabeleceu o regime democrático moderno no Brasil, reconhecendo pela primeira vez formalmente que o racismo é crime inafiançável e imprescritível, abrindo caminhos para políticas de reparação histórica.</p>
+    </div>
+    <div class="verbete" data-termo="constituição de 1824 outorgada">
+      <h3>Constituição de 1824 (Outorgada) <span class="tema-tag">Tema 1</span></h3>
+      <p>Primeira Constituição do Brasil, imposta por Dom Pedro I sem consulta popular após a dissolução da Assembleia Constituinte. Instituiu a monarquia constitucional hereditária, o Poder Moderador e o voto censitário.</p>
+    </div>
+    <div class="verbete" data-termo="cotas raciais">
+      <h3>Cotas Raciais <span class="tema-tag">Tema 5</span></h3>
+      <p>Políticas de ação afirmativa adotadas a partir dos anos 2000 em universidades e concursos públicos brasileiros, reservando parte das vagas para pessoas negras, como forma de enfrentar desigualdades raciais históricas.</p>
+    </div>
+
+    <h2 class="letra">D</h2>
+    <div class="verbete" data-termo="democracia racial mito da">
+      <h3>Democracia Racial (mito da) <span class="tema-tag">Tema 5</span></h3>
+      <p>Ideia difundida a partir da década de 1930 de que o Brasil seria um país livre de racismo relevante, graças à mestiçagem. Pesquisas históricas e sociológicas mostraram que essa ideia funcionou, na prática, para silenciar o debate sobre desigualdades raciais reais.</p>
+    </div>
+    <div class="verbete" data-termo="dependência econômica">
+      <h3>Dependência Econômica <span class="tema-tag">Tema 1</span></h3>
+      <p>Situação em que a economia brasileira, mesmo após a Independência política de 1822, permaneceu fortemente atrelada ao comércio e às finanças de potências estrangeiras, sobretudo a Inglaterra.</p>
+    </div>
+    <div class="verbete" data-termo="discriminação racial">
+      <h3>Discriminação Racial <span class="tema-tag">Tema 5</span></h3>
+      <p>Tratamento desigual e prejudicial de pessoas baseado em sua raça ou etnia, praticado tanto por indivíduos quanto institucionalizado em sistemas e estruturas sociais — raiz histórica das desigualdades contemporâneas.</p>
+    </div>
+    <div class="verbete" data-termo="dom pedro i">
+      <h3>Dom Pedro I <span class="tema-tag">Tema 1 · Tema 2</span></h3>
+      <p>Príncipe regente que proclama a Independência do Brasil em 1822, tornando-se o primeiro Imperador. Governa de forma centralizadora até abdicar em 1831.</p>
+    </div>
+    <div class="verbete" data-termo="dom pedro ii">
+      <h3>Dom Pedro II <span class="tema-tag">Tema 3</span></h3>
+      <p>Segundo Imperador do Brasil, declarado maior de idade em 1840 (Golpe da Maioridade) e que governa até a Proclamação da República, em 1889 — o mais longo reinado da história do país.</p>
+    </div>
+    <div class="verbete" data-termo="doutrina monroe">
+      <h3>Doutrina Monroe <span class="tema-tag">Tema 2</span></h3>
+      <p>Política diplomática dos EUA de 1823 que estabelecia oposição à interferência europeia nas Américas com o lema "América para os americanos". Influenciou posições diplomáticas brasileiras durante o Período Regencial.</p>
+    </div>
+
+    <h2 class="letra">E</h2>
+    <div class="verbete" data-termo="estado">
+      <h3>Estado <span class="tema-tag">Tema 1</span></h3>
+      <p>Estrutura jurídica e política de controle sobre um território e uma população, dotada de governo, leis e soberania próprios — condição que o Brasil só passa a reunir plenamente após a Independência de 1822.</p>
+    </div>
+    <div class="verbete" data-termo="estatuto da igualdade racial 2010">
+      <h3>Estatuto da Igualdade Racial (2010) <span class="tema-tag">Tema 5</span></h3>
+      <p>Lei brasileira que reúne um conjunto de garantias e políticas voltadas a promover a igualdade racial e combater a discriminação étnico-racial no país, criando mecanismos institucionais para reparação histórica.</p>
+    </div>
+    <div class="verbete" data-termo="estatuto da terra">
+      <h3>Estatuto da Terra <span class="tema-tag">Tema 4</span></h3>
+      <p>Legislação que regulava a posse e o uso da terra no Brasil, particularmente a Lei de Terras de 1850, que instituiu a compra como único meio legal de adquirir propriedade fundiária.</p>
+    </div>
+
+    <h2 class="letra">F</h2>
+    <div class="verbete" data-termo="farroupilha">
+      <h3>Farroupilha (Guerra dos Farrapos) <span class="tema-tag">Tema 2</span></h3>
+      <p>Revolta regencial no Rio Grande do Sul (1835–1845), liderada pela elite pecuarista gaúcha contra impostos e políticas do governo central. Foi a mais longa das revoltas regenciais.</p>
+    </div>
+    <div class="verbete" data-termo="fenótipo">
+      <h3>Fenótipo <span class="tema-tag">Tema 5</span></h3>
+      <p>Características físicas visíveis de um organismo, resultado da interação entre genética e ambiente. No contexto do racismo, fenótipos (cor de pele, textura de cabelo) foram usados para criar categorias de "raça" sem base biológica.</p>
+    </div>
+    <div class="verbete" data-termo="frente negra brasileira">
+      <h3>Frente Negra Brasileira <span class="tema-tag">Tema 5</span></h3>
+      <p>Uma das primeiras organizações políticas negras de massa do Brasil, fundada em 1931, voltada à defesa de direitos civis e sociais da população negra.</p>
+    </div>
+
+    <h2 class="letra">G</h2>
+    <div class="verbete" data-termo="golpe da maioridade">
+      <h3>Golpe da Maioridade <span class="tema-tag">Tema 2 · Tema 3</span></h3>
+      <p>Antecipação política da maioridade de Dom Pedro II, então com 14 anos, em 1840, sob o lema "a maioridade resolverá tudo" — encerrando o instável Período Regencial e iniciando seu longo reinado.</p>
+    </div>
+    <div class="verbete" data-termo="grilagem terras devolutas">
+      <h3>Grilagem de Terras <span class="tema-tag">Tema 4</span></h3>
+      <p>Apropriação ilegal ou fraudulenta de terras devolutas ou indígenas, favorecida pela Lei de Terras de 1850 ao restringir o acesso legal à terra à compra formal.</p>
+    </div>
+    <div class="verbete" data-termo="grito do ipiranga proclamação independência 1822">
+      <h3>Grito do Ipiranga <span class="tema-tag">Tema 1</span></h3>
+      <p>Episódio em que, às margens do rio Ipiranga, em São Paulo, Dom Pedro rompe formalmente com Portugal, em 7 de setembro de 1822, proclamando a Independência do Brasil.</p>
+    </div>
+    <div class="verbete" data-termo="guerra da cisplatina">
+      <h3>Guerra da Cisplatina <span class="tema-tag">Tema 1 · Tema 2</span></h3>
+      <p>Conflito (1825–1828) que resultou na perda da província Cisplatina pelo Império brasileiro e na criação do Uruguai como país independente — um dos fatores de desgaste do governo de Dom Pedro I.</p>
+    </div>
+    <div class="verbete" data-termo="guerra do paraguai tríplice aliança">
+      <h3>Guerra do Paraguai <span class="tema-tag">Tema 3</span></h3>
+      <p>Conflito armado (1864–1870) entre a Tríplice Aliança (Brasil, Argentina e Uruguai) e o Paraguai de Solano López — o maior conflito armado da história da América do Sul. Fortaleceu politicamente o Exército brasileiro e gerou forte endividamento externo.</p>
+    </div>
+
+    <h2 class="letra">I</h2>
+    <div class="verbete" data-termo="ideologia do branqueamento">
+      <h3>Ideologia do Branqueamento <span class="tema-tag">Tema 5</span></h3>
+      <p>Ver "Branqueamento (ideologia do)".</p>
+    </div>
+    <div class="verbete" data-termo="imigração europeia">
+      <h3>Imigração Europeia <span class="tema-tag">Tema 4 · Tema 5</span></h3>
+      <p>Fluxo migratório de europeus (italianos, espanhóis, portugueses, etc.) para o Brasil, especialmente entre 1870 e 1930, subsidiado pelo Estado como alternativa à mão de obra escravizada pós-abolição, refletindo a ideologia do branqueamento.</p>
+    </div>
+    <div class="verbete" data-termo="independência do brasil 1822">
+      <h3>Independência do Brasil (1822) <span class="tema-tag">Tema 1</span></h3>
+      <p>Separação política do Brasil de Portugal, formalmente proclamada no Grito do Ipiranga (7 de setembro de 1822). Marca o fim da colonia e o início da construção de um Estado-Nação, embora em continuidade com as estruturas coloniais de poder.</p>
+    </div>
+
+    <h2 class="letra">L</h2>
+    <div class="verbete" data-termo="lei áurea 1888">
+      <h3>Lei Áurea (1888) <span class="tema-tag">Tema 4 · Tema 5</span></h3>
+      <p>Lei que aboliu totalmente a escravidão no Brasil, em 13 de maio de 1888, sem qualquer política de inclusão social, terra ou trabalho para os libertos — a abolição mais recente das Américas.</p>
+    </div>
+    <div class="verbete" data-termo="lei do ventre livre 1871">
+      <h3>Lei do Ventre Livre (1871) <span class="tema-tag">Tema 4</span></h3>
+      <p>Lei que declarava livres os filhos de mulheres escravizadas nascidos a partir de sua promulgação, mas mantinha-os sob tutela do senhor até os 21 anos — representando um passo muito lento na abolição.</p>
+    </div>
+    <div class="verbete" data-termo="lei dos sexagenários 1885">
+      <h3>Lei dos Sexagenários (1885) <span class="tema-tag">Tema 4</span></h3>
+      <p>Lei que libertava pessoas escravizadas com mais de 60 anos, sem garantias de subsistência — uma medida que beneficiava poucos, já que poucos escravizados alcançavam essa idade.</p>
+    </div>
+    <div class="verbete" data-termo="lei eusébio de queirós 1850">
+      <h3>Lei Eusébio de Queirós (1850) <span class="tema-tag">Tema 4</span></h3>
+      <p>Lei que proibiu definitivamente o tráfico transatlântico de pessoas escravizadas para o Brasil, sem libertar quem já estava escravizado e levando ao aumento de preços da mão de obra escravizada domesticamente.</p>
+    </div>
+    <div class="verbete" data-termo="lei nº 10.639/2003">
+      <h3>Lei nº 10.639/2003 <span class="tema-tag">Tema 5</span></h3>
+      <p>Lei que tornou obrigatório o ensino de história e cultura afro-brasileira e africana em todas as escolas brasileiras, reconhecendo a importância da narrativa negra na formação da identidade nacional.</p>
+    </div>
+    <div class="verbete" data-termo="lei de terras 1850">
+      <h3>Lei de Terras (1850) <span class="tema-tag">Tema 4</span></h3>
+      <p>Lei que estabeleceu a compra como único meio legal de adquirir propriedade fundiária no Brasil, interditando o acesso às terras para ex-escravizados, indígenas e pobres livres, aprofundando a concentração fundiária.</p>
+    </div>
+
+    <h2 class="letra">M</h2>
+    <div class="verbete" data-termo="manutenção das estruturas coloniais">
+      <h3>Manutenção das Estruturas Coloniais <span class="tema-tag">Tema 1</span></h3>
+      <p>Continuidade das hierarquias, da concentração de poder e da exploração econômica do período colonial após a Independência de 1822, com a elite local perpetuando o modelo de dominação em seu proveito.</p>
+    </div>
+
+    <h2 class="letra">N</h2>
+    <div class="verbete" data-termo="nação">
+      <h3>Nação <span class="tema-tag">Tema 1</span></h3>
+      <p>Povo que compartilha história, cultura, língua, sentimentos e memória coletiva, criando um senso de identidade e pertencimento comum — a base do Estado-Nação moderno.</p>
+    </div>
+    <div class="verbete" data-termo="noite da agonia">
+      <h3>Noite da Agonia <span class="tema-tag">Tema 2</span></h3>
+      <p>Episódio traumático da madrugada de 15 para 16 de novembro de 1889, quando a corte imperial brasileira foi deposta e forçada ao exílio, marcando o fim da Monarquia e o início da República.</p>
+    </div>
+
+    <h2 class="letra">P</h2>
+    <div class="verbete" data-termo="parlamentarismo às avessas">
+      <h3>Parlamentarismo às Avessas <span class="tema-tag">Tema 3</span></h3>
+      <p>Sistema político peculiar do Segundo Reinado em que o Imperador (Poder Moderador) mantinha verdadeiro controle sobre o governo, dissolvendo o Parlamento quando discordava — oposto ao parlamentarismo europeu onde o monarca reina mas não governa.</p>
+    </div>
+    <div class="verbete" data-termo="parceria sistema de">
+      <h3>Parceria (Sistema de) <span class="tema-tag">Tema 4</span></h3>
+      <p>Regime de trabalho pioneiro em 1847 onde famílias imigrantes dividiam com o fazendeiro o lucro da produção de café, frequentemente endividando-se pelos custos da viagem e instalação.</p>
+    </div>
+    <div class="verbete" data-termo="poder moderador">
+      <h3>Poder Moderador <span class="tema-tag">Tema 1 · Tema 2 · Tema 3</span></h3>
+      <p>Quarto poder exclusivo do Imperador, criado pela Constituição de 1824, que lhe permitia intervir em qualquer momento nos outros poderes (Legislativo, Executivo e Judiciário) — garantindo sua supremacia política.</p>
+    </div>
+    <div class="verbete" data-termo="povo x população">
+      <h3>Povo x População <span class="tema-tag">Tema 1</span></h3>
+      <p>Distinção histórica crucial: população é todo mundo que reside no território; povo, no século XIX, eram apenas aqueles com direitos políticos (homens livres e proprietários), excluindo escravizados, mulheres e pobres.</p>
+    </div>
+    <div class="verbete" data-termo="proclamação da república">
+      <h3>Proclamação da República <span class="tema-tag">Tema 3</span></h3>
+      <p>Evento de 15 de novembro de 1889 que derrubou o Império e estabeleceu a República Federativa do Brasil, encerrando o reinado de Dom Pedro II e iniciando novo regime político.</p>
+    </div>
+
+    <h2 class="letra">Q</h2>
+    <div class="verbete" data-termo="questão militar">
+      <h3>Questão Militar <span class="tema-tag">Tema 3</span></h3>
+      <p>Conflito entre Dom Pedro II e os oficiais militares, particularmente entre 1880-1889, sobre o papel e dignidade do Exército — um dos fatores que enfraqueceu a legitimidade da Monarquia e contribuiu para sua queda.</p>
+    </div>
+    <div class="verbete" data-termo="quilombo">
+      <h3>Quilombo <span class="tema-tag">Tema 4</span></h3>
+      <p>Comunidade formada por pessoas escravizadas que fugiram, organizada para resistir à escravidão e garantir liberdade coletiva — símbolo de resistência negra e autonomia contra a dominação colonial.</p>
+    </div>
+
+    <h2 class="letra">R</h2>
+    <div class="verbete" data-termo="racismo científico">
+      <h3>Racismo Científico <span class="tema-tag">Tema 5</span></h3>
+      <p>Conjunto de pseudociências dos séculos XVII-XIX que usava medições de crânios, análises de traços e comparações genéticas enviesadas para "provar" hierarquias raciais e a superioridade europeia — completamente falsas e sem base científica.</p>
+    </div>
+    <div class="verbete" data-termo="racismo estrutural">
+      <h3>Racismo Estrutural <span class="tema-tag">Tema 5</span></h3>
+      <p>Reprodução sistemática de desigualdades e discriminação através das instituições, estruturas sociais e políticas — resultado de séculos de escravidão, exclusão pós-abolição e ideologia do branqueamento, perpetuando desigualdades em saúde, educação, emprego e segurança.</p>
+    </div>
+    <div class="verbete" data-termo="regência">
+      <h3>Regência <span class="tema-tag">Tema 2</span></h3>
+      <p>Período da história do Brasil (1831-1840) em que o país foi governado por regentes em nome de Dom Pedro II, ainda criança — marcado por instabilidade política e revoltas regionais (Cabanagem, Balaiada, Farroupilha).</p>
+    </div>
+    <div class="verbete" data-termo="revolução praieira">
+      <h3>Revolução Praieira <span class="tema-tag">Tema 3</span></h3>
+      <p>Rebelião ocorrida em Pernambuco (1848-1850) contra a elite oligárquica, liderada pelo Partido Praieiro e defendendo voto universal (restrito a homens) e democracia — reprimida pelas tropas imperiais.</p>
+    </div>
+
+    <h2 class="letra">S</h2>
+    <div class="verbete" data-termo="segunda escravidão">
+      <h3>Segunda Escravidão <span class="tema-tag">Tema 4</span></h3>
+      <p>Conceito que designa o aprofundamento e intensificação da escravidão em meados do século XIX, quando a proibição do tráfico aumentou a exploração dos já-escravizados e o preço de mão de obra escravizada disparou.</p>
+    </div>
+    <div class="verbete" data-termo="segundo reinado">
+      <h3>Segundo Reinado <span class="tema-tag">Tema 3</span></h3>
+      <p>Período do reinado de Dom Pedro II (1840-1889), o mais longo da história brasileira, marcado por modernização econômica (cafeicultura, ferrovias), conflitos políticos (questão militar, abolicionismo) e transição para a República.</p>
+    </div>
+    <div class="verbete" data-termo="soberania">
+      <h3>Soberania <span class="tema-tag">Tema 1</span></h3>
+      <p>Capacidade de um país tomar suas próprias decisões dentro do seu território, sem se submeter à autoridade de nenhuma potência estrangeira — conquistada juridicamente pelo Brasil em 1822, ainda que sua consolidação prática tenha sido lenta e desigual.</p>
+    </div>
+
+    <h2 class="letra">T</h2>
+    <div class="verbete" data-termo="teatro experimental do negro 1944">
+      <h3>Teatro Experimental do Negro (1944) <span class="tema-tag">Tema 5</span></h3>
+      <p>Grupo teatral fundado por Abdias do Nascimento, voltado à valorização da cultura e da presença negra nas artes brasileiras e à crítica do racismo estrutural.</p>
+    </div>
+    <div class="verbete" data-termo="tráfico negreiro transatlântico">
+      <h3>Tráfico Negreiro (transatlântico) <span class="tema-tag">Tema 4</span></h3>
+      <p>Comércio forçado de pessoas sequestradas na África e transportadas para serem escravizadas nas Américas. Proibido definitivamente no Brasil pela Lei Eusébio de Queirós, em 1850.</p>
+    </div>
+    <div class="verbete" data-termo="tríplice aliança brasil argentina uruguai">
+      <h3>Tríplice Aliança <span class="tema-tag">Tema 3</span></h3>
+      <p>Aliança militar e política entre Brasil, Argentina e Uruguai durante a Guerra do Paraguai (1864-1870), contra o Paraguai de Solano López.</p>
+    </div>
+
+    <h2 class="letra">V</h2>
+    <div class="verbete" data-termo="voto censitário">
+      <h3>Voto Censitário <span class="tema-tag">Tema 1 · Tema 2</span></h3>
+      <p>Sistema eleitoral em que o direito de votar e ser votado dependia de uma renda mínima, estabelecido pela Constituição de 1824. Excluía mulheres, escravizados, indígenas e a maior parte dos homens pobres livres, criando uma cidadania altamente excludente.</p>
+    </div>
+
+  </div>
+
+  <p class="sem-resultado oculto" id="msg-vazio">Nenhum termo encontrado. Tente outra palavra.</p>
+</main>
+
+<nav class="rodape-nav">
+  <a href="tema5.html" target="_parent">← Tema 5: Origens do Racismo</a>
+  <a class="central" href="index.html" target="_parent">↑ Início da trilha</a>
+  <a href="tema1.html" target="_parent">Tema 1: Independência →</a>
+</nav>
+
+<script>
+  const input = document.getElementById('busca');
+  const verbetes = Array.from(document.querySelectorAll('.verbete'));
+  const letras = Array.from(document.querySelectorAll('.letra'));
+  const contagem = document.getElementById('contagem');
+  const msgVazio = document.getElementById('msg-vazio');
+
+  function filtrar() {
+    const q = input.value.trim().toLowerCase();
+    let visiveis = 0;
+
+    verbetes.forEach(v => {
+      const alvo = (v.dataset.termo + ' ' + v.textContent).toLowerCase();
+      const bate = q === '' || alvo.includes(q);
+      v.classList.toggle('oculto', !bate);
+      if (bate) visiveis++;
+    });
+
+    letras.forEach(l => {
+      let proximo = l.nextElementSibling;
+      let temVisivel = false;
+      while (proximo && proximo.classList.contains('verbete')) {
+        if (!proximo.classList.contains('oculto')) temVisivel = true;
+        proximo = proximo.nextElementSibling;
+      }
+      l.classList.toggle('oculto', !temVisivel);
+    });
+
+    msgVazio.classList.toggle('oculto', visiveis !== 0);
+    contagem.textContent = q === '' ? `${verbetes.length} termos no glossário` : `${visiveis} termo(s) encontrado(s)`;
+  }
+
+  input.addEventListener('input', filtrar);
+  filtrar();
+</script>
+
+</body>
+</html>
