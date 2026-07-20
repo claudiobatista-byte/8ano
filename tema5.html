@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tema 5 — Origens Históricas do Racismo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;900&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#F4EEDD; --paper:#FFFDF6; --ink:#2B2118; --ink-soft:#5b4c3a;
+    --verde:#1B4332; --verde-2:#2D6A4F; --dourado:#C9A227; --dourado-2:#E9D27A;
+    --bordo:#7A2E2E; --linha:#D8CBA8; --certo:#2D6A4F; --errado:#8C2F2F;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{background:var(--bg); color:var(--ink); font-family:'Source Serif 4',serif; line-height:1.65;}
+  a{color:var(--bordo);}
+  .eyebrow{font-family:'Inter',sans-serif; font-weight:600; letter-spacing:.12em; text-transform:uppercase; font-size:.68rem; color:var(--bordo);}
+  .mini-trilha{
+    position:relative;
+    display:flex; justify-content:space-between; align-items:flex-start;
+    gap:4px; max-width:900px; margin:0 auto;
+    padding:20px 20px 14px; background:var(--bg); border-bottom:1px solid var(--linha);
+    font-family:'Inter',sans-serif; overflow-x:auto; -webkit-overflow-scrolling:touch;
+  }
+  .mini-trilha::before{
+    content:""; position:absolute; top:34px; left:60px; right:60px; height:3px;
+    background:repeating-linear-gradient(90deg, var(--dourado) 0 8px, transparent 8px 13px);
+    z-index:0;
+  }
+  .mini-trilha a{
+    position:relative; z-index:1;
+    display:flex; flex-direction:column; align-items:center;
+    text-decoration:none; color:var(--ink); width:120px; flex:none;
+  }
+  .mini-trilha a .medalhao{
+    width:46px; height:46px; border-radius:50%; background:var(--paper); border:3px solid var(--verde-2);
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Playfair Display',serif; font-weight:700; font-size:1.05rem; color:var(--verde);
+    box-shadow:0 2px 6px rgba(43,33,24,.12);
+  }
+  .mini-trilha a .rotulo{ margin-top:7px; font-size:.66rem; font-weight:600; text-align:center; line-height:1.2; color:var(--ink-soft); max-width:110px; }
+  .mini-trilha a .codigo{ font-size:.58rem; color:var(--bordo); font-weight:600; margin-top:2px; }
+  .mini-trilha a.ativo .medalhao{ background:var(--verde); border-color:var(--dourado); color:var(--dourado-2); box-shadow:0 4px 12px rgba(27,67,50,.35); }
+  .mini-trilha a.ativo .rotulo{ color:var(--verde); }
+  main{max-width:820px; margin:0 auto; padding:28px 20px 60px;}
+  .hero-tema{ display:flex; gap:18px; align-items:center; margin-bottom:22px;}
+  .medalhao-grande{flex:none; width:64px; height:64px; border-radius:50%; background:var(--verde); color:var(--dourado-2); border:3px solid var(--dourado); display:flex; align-items:center; justify-content:center; font-family:'Playfair Display',serif; font-weight:900; font-size:1.7rem;}
+  h1{font-family:'Playfair Display',serif; font-weight:900; color:var(--verde); font-size:clamp(1.5rem,3vw,2.1rem); margin:.1em 0 0;}
+  .objetivos{background:var(--paper); border:1px solid var(--linha); border-left:5px solid var(--dourado); border-radius:10px; padding:18px 20px; margin:0 0 26px;}
+  .objetivos h2{font-family:'Inter',sans-serif; font-size:.82rem; text-transform:uppercase; letter-spacing:.08em; color:var(--bordo); margin:0 0 10px;}
+  .objetivos ul{margin:0; padding-left:1.2em;}
+  .objetivos li{margin-bottom:6px;}
+  h2.secao{font-family:'Playfair Display',serif; color:var(--verde); font-size:1.25rem; border-bottom:2px solid var(--dourado-2); padding-bottom:6px; margin:34px 0 14px;}
+  details.acordeao{background:var(--paper); border:1px solid var(--linha); border-radius:10px; margin-bottom:12px; padding:14px 18px;}
+  details.acordeao summary{font-family:'Playfair Display',serif; font-weight:700; color:var(--verde); cursor:pointer; font-size:1.02rem; list-style:none; display:flex; align-items:center; gap:8px;}
+  details.acordeao summary::-webkit-details-marker{display:none;}
+  details.acordeao summary::before{content:"›"; transition:transform .15s ease; font-size:1.3rem; color:var(--dourado);}
+  details.acordeao[open] summary::before{transform:rotate(90deg);}
+  details.acordeao p, details.acordeao ul{margin:12px 0 4px;}
+  .destaque{background:linear-gradient(0deg, rgba(201,162,39,.16), rgba(201,162,39,.16)); padding:0 4px; border-radius:3px;}
+  blockquote{border-left:4px solid var(--bordo); margin:14px 0; padding:6px 16px; font-style:italic; color:var(--ink-soft); background:rgba(122,46,46,.05);}
+  .linha-tempo{list-style:none; margin:14px 0; padding:0; border-left:3px solid var(--dourado);}
+  .linha-tempo li{position:relative; padding:2px 0 16px 22px; margin-left:2px;}
+  .linha-tempo li::before{content:""; position:absolute; left:-8px; top:6px; width:12px; height:12px; border-radius:50%; background:var(--verde); border:2px solid var(--dourado);}
+  .linha-tempo strong{color:var(--verde);}
+  .grade-termos{display:grid; grid-template-columns:repeat(auto-fill, minmax(220px,1fr)); gap:10px;}
+  details.termo{background:var(--paper); border:1px solid var(--linha); border-radius:8px; padding:10px 14px;}
+  details.termo summary{font-family:'Inter',sans-serif; font-weight:600; cursor:pointer; color:var(--bordo); font-size:.92rem;}
+  details.termo p{font-size:.88rem; margin:8px 0 2px; color:var(--ink-soft);}
+  .pergunta{background:var(--paper); border:1px solid var(--linha); border-radius:10px; padding:16px 18px; margin-bottom:14px;}
+  .pergunta p.enunciado{font-weight:600; margin:0 0 12px;}
+  .opcoes{display:flex; flex-direction:column; gap:8px;}
+  .opcoes button{font-family:'Source Serif 4',serif; font-size:.96rem; text-align:left; padding:9px 14px; border-radius:8px; border:1px solid var(--linha); background:#fff; cursor:pointer; transition:background .15s ease, border-color .15s ease;}
+  .opcoes button:hover{border-color:var(--verde-2);}
+  .opcoes button.certo{background:rgba(45,106,79,.15); border-color:var(--certo); font-weight:600;}
+  .opcoes button.errado{background:rgba(140,47,47,.12); border-color:var(--errado);}
+  .opcoes button:disabled{cursor:default;}
+  .feedback{margin-top:10px; font-size:.88rem; font-family:'Inter',sans-serif; color:var(--ink-soft); min-height:1em;}
+  .tabela-wrap{overflow-x:auto; margin:14px 0 22px; border:1px solid var(--linha); border-radius:10px;}
+  table.tabela-historica{width:100%; border-collapse:collapse; background:var(--paper); font-size:.92rem;}
+  table.tabela-historica caption{caption-side:top; text-align:left; font-family:'Inter',sans-serif; font-weight:600; font-size:.76rem; text-transform:uppercase; letter-spacing:.06em; color:var(--bordo); padding:10px 14px 0;}
+  table.tabela-historica th{background:var(--verde); color:var(--dourado-2); font-family:'Inter',sans-serif; font-weight:600; text-align:left; padding:10px 14px; font-size:.82rem;}
+  table.tabela-historica td{padding:10px 14px; border-top:1px solid var(--linha); vertical-align:top;}
+  table.tabela-historica tr:nth-child(even) td{background:rgba(201,162,39,.06);}
+  .rodape-nav{display:flex; justify-content:space-between; align-items:center; gap:10px; max-width:820px; margin:10px auto 40px; padding:14px 20px; font-family:'Inter',sans-serif; font-size:.86rem; flex-wrap:wrap;}
+  .rodape-nav a{text-decoration:none; color:var(--verde); font-weight:600;}
+  .rodape-nav a.central{color:var(--bordo);}
+  .bncc{font-family:'Inter',sans-serif; font-size:.72rem; color:var(--ink-soft); margin:10px 0 0; padding-top:10px; border-top:1px dashed var(--linha);}
+  blockquote{border-left:4px solid var(--bordo); margin:14px 0; padding:6px 16px; font-style:italic; color:var(--ink-soft); background:rgba(122,46,46,.05);}
+  .video-simples{display:flex; align-items:center; gap:14px; background:var(--verde); color:#fff; text-decoration:none; border-radius:12px; padding:16px 22px; margin:0 0 18px; border:1px solid var(--dourado); box-shadow:0 6px 20px rgba(43,33,24,.12); transition:transform .15s ease, box-shadow .15s ease;}
+  .video-simples:hover{transform:translateY(-2px); box-shadow:0 10px 26px rgba(43,33,24,.2);}
+  .video-simples:focus-visible{outline:3px solid var(--dourado); outline-offset:2px;}
+  .video-simples-icone{flex:none; width:38px; height:38px; border-radius:50%; background:var(--dourado); color:var(--verde); display:flex; align-items:center; justify-content:center; font-size:.95rem;}
+  .video-simples-texto{flex:1; font-family:'Inter',sans-serif; font-weight:600; font-size:.95rem; color:#fff;}
+  .video-simples-seta{flex:none; font-size:1.1rem; color:var(--dourado-2);}
+  .atv-card{display:flex; align-items:center; gap:14px; background:var(--paper); border:1px solid var(--linha); border-left:5px solid var(--verde-2); border-radius:10px; padding:14px 16px; margin:18px 0;}
+  .atv-card-icone{font-size:1.7rem; flex:none; line-height:1;}
+  .atv-card-texto{flex:1; min-width:0;}
+  .atv-card-eyebrow{font-family:'Inter',sans-serif; font-weight:700; letter-spacing:.08em; text-transform:uppercase; font-size:.66rem; color:var(--bordo);}
+  .atv-card-titulo{font-family:'Playfair Display',serif; font-weight:700; color:var(--verde); font-size:.98rem; margin-top:2px;}
+  .atv-card-desc{font-family:'Inter',sans-serif; font-size:.8rem; color:var(--ink-soft); margin-top:3px; line-height:1.4;}
+  .atv-card-btn{flex:none; font-family:'Inter',sans-serif; font-weight:600; font-size:.78rem; color:var(--dourado-2); background:var(--verde); padding:9px 16px; border-radius:20px; text-decoration:none; white-space:nowrap; transition:background .15s ease;}
+  .atv-card-btn:hover{background:var(--verde-2);}
+  .jd-wrap{background:var(--paper); border:1px solid var(--linha); border-radius:14px; padding:22px 22px 26px; margin:34px 0 0;}
+  .jd-instru{font-size:.88rem; color:var(--ink-soft); margin:-6px 0 16px;}
+  .jd-alerta{display:none; background:#fff3cd; border:2px solid #ffc107; border-radius:10px; padding:12px 18px; margin:0 0 16px; color:#7d5a00; font-weight:600; font-size:.86rem;}
+  .jd-alerta.mostrar{display:block;}
+  .jd-frase{font-size:.94rem; line-height:2; margin-bottom:14px; padding:12px 16px; background:#fff; border:1px solid var(--linha); border-radius:8px; transition:border-color .2s ease, background .2s ease;}
+  .jd-frase .num{font-family:'Inter',sans-serif; font-weight:700; color:var(--bordo); font-size:.78rem; margin-right:4px;}
+  .jd-frase.correta{border-color:var(--certo); background:rgba(45,106,79,.06);}
+  .jd-frase.incorreta{border-color:var(--errado); background:rgba(140,47,47,.05);}
+  .jd-blank{display:inline-flex; align-items:center; justify-content:center; gap:6px; min-width:170px; min-height:36px; padding:6px 14px; margin:2px; border:2px dashed var(--verde-2); border-radius:8px; font-family:'Inter',sans-serif; font-weight:600; font-size:.85rem; color:var(--ink-soft); background:rgba(45,106,79,.06); vertical-align:middle; cursor:pointer; touch-action:manipulation; transition:border-color .15s ease, background .15s ease;}
+  .jd-blank:hover{border-color:var(--dourado); background:rgba(201,162,39,.12);}
+  .jd-blank.aberto{border-color:var(--dourado); background:rgba(201,162,39,.18);}
+  .jd-blank.respondida{border-style:solid; border-color:var(--verde-2); background:#fff; color:var(--ink);}
+  .jd-blank.correta{border-color:var(--certo); background:rgba(45,106,79,.14); color:var(--verde); cursor:default;}
+  .jd-blank.incorreta{border-color:var(--errado); background:rgba(140,47,47,.12); color:var(--bordo); cursor:default;}
+  .jd-blank .jd-icone{font-size:.9rem;}
+  .jd-blank .jd-seta{font-size:.7rem; color:var(--verde-2); margin-left:2px;}
+  .jd-correcao{display:none; font-family:'Inter',sans-serif; font-size:.78rem; color:var(--bordo); margin-top:6px; padding-left:2px;}
+  .jd-frase.incorreta .jd-correcao{display:block;}
+  .jd-dropdown{position:fixed; z-index:9999; background:#fff; border:2px solid var(--dourado); border-radius:10px; box-shadow:0 14px 34px rgba(0,0,0,.28); padding:6px; max-width:280px; max-height:min(300px,60vh); overflow-y:auto;}
+  .jd-dropdown button{display:block; width:100%; text-align:left; padding:10px 14px; border:none; background:none; font-family:'Source Serif 4',serif; font-size:.88rem; color:var(--ink); border-radius:6px; cursor:pointer; touch-action:manipulation;}
+  .jd-dropdown button:hover, .jd-dropdown button:active{background:rgba(45,106,79,.14); color:var(--verde);}
+  .jd-status{display:flex; align-items:center; gap:14px; flex-wrap:wrap; font-family:'Inter',sans-serif; font-size:.82rem; color:var(--ink-soft); margin-top:18px; padding-top:16px; border-top:1px dashed var(--linha);}
+  .jd-status strong{color:var(--verde); font-size:.95rem;}
+  .jd-btn-verificar{font-family:'Inter',sans-serif; font-weight:600; font-size:.82rem; color:#fff; background:var(--verde); border:2px solid var(--verde); border-radius:30px; padding:9px 20px; cursor:pointer; transition:background .15s ease; touch-action:manipulation;}
+  .jd-btn-verificar:hover{background:var(--verde-2); border-color:var(--verde-2);}
+  .jd-btn-restart{margin-left:auto; font-family:'Inter',sans-serif; font-weight:600; font-size:.78rem; color:var(--verde); background:#fff; border:2px solid var(--verde-2); border-radius:30px; padding:9px 18px; cursor:pointer; transition:background .15s ease,color .15s ease; touch-action:manipulation;}
+  .jd-btn-restart:hover{background:var(--verde-2); color:#fff;}
+  .jd-vitoria{display:none; margin-top:18px; background:rgba(201,162,39,.14); border:2px solid var(--dourado); border-radius:10px; padding:14px 18px; text-align:center; font-family:'Playfair Display',serif; font-weight:700; color:var(--verde); font-size:1rem;}
+  .jd-vitoria.mostrar{display:block;}
+  @media (max-width:520px){
+    .jd-blank{min-width:150px; min-height:40px; font-size:.82rem;}
+  }
+
+  @media (max-width:480px){
+    main{padding:20px 14px 50px;}
+    .atv-card{flex-wrap:wrap;}
+    .atv-card-btn{width:100%; text-align:center;}
+    .hero-tema{gap:12px;}
+    .medalhao-grande{width:52px; height:52px; font-size:1.3rem;}
+    h1{font-size:1.3rem;}
+    .mini-trilha{ padding:14px 10px 10px; }
+    .mini-trilha::before{ left:34px; right:34px; top:26px; }
+    .mini-trilha a{ width:70px; }
+    .mini-trilha a .medalhao{ width:36px; height:36px; font-size:.85rem; }
+    .mini-trilha a .rotulo{ font-size:.56rem; margin-top:5px; }
+    .mini-trilha a .codigo{ display:none; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="mini-trilha">
+  <a href="tema1.html" target="_parent">
+    <span class="medalhao">1</span>
+    <span class="rotulo">Independência e Nação</span>
+    <span class="codigo">GO-EF08HI15-A</span>
+  </a>
+  <a href="tema2.html" target="_parent">
+    <span class="medalhao">2</span>
+    <span class="rotulo">Primeiro Reinado e Período Regencial</span>
+    <span class="codigo">GO-EF08HI16-A</span>
+  </a>
+  <a href="tema3.html" target="_parent">
+    <span class="medalhao">3</span>
+    <span class="rotulo">Segundo Reinado</span>
+    <span class="codigo">GO-EF08HI17-A</span>
+  </a>
+  <a href="tema4.html" target="_parent">
+    <span class="medalhao">4</span>
+    <span class="rotulo">Escravidão e Acesso à Terra</span>
+    <span class="codigo">GO-EF08HI18-B</span>
+  </a>
+  <a class="ativo" href="tema5.html" target="_parent">
+    <span class="medalhao">5</span>
+    <span class="rotulo">Origens Históricas do Racismo</span>
+    <span class="codigo">GO-EF08HI20-A</span>
+  </a>
+</nav>
+
+<main>
+  <div class="eyebrow">GO-EF08HI20-A</div>
+  <div class="hero-tema">
+    <div class="medalhao-grande">5</div>
+    <h1>As Origens Históricas do Racismo</h1>
+  </div>
+
+  <div class="objetivos">
+    <h2>O que você vai aprender</h2>
+    <ul>
+      <li>Identificar e problematizar as origens históricas do racismo, reconhecendo-o como elemento estruturante nas relações sociais e econômicas da sociedade brasileira.</li>
+      <li>Reconhecer as exclusões, violências e silêncios advindos do racismo.</li>
+      <li>Avaliar de maneira crítica o processo de abolição da escravidão no Brasil, entendendo como esse processo moldou a sociedade brasileira contemporânea.</li>
+    </ul>
+  </div>
+
+  <a class="video-simples" href="https://youtu.be/Ish7JXvURts" target="_blank" rel="noopener">
+    <span class="video-simples-icone">▶</span>
+    <span class="video-simples-texto">Assista à vídeo-aula resumo no YouTube</span>
+    <span class="video-simples-seta">↗</span>
+  </a>
+
+  <div class="atv-card">
+    <div class="atv-card-icone">📊</div>
+    <div class="atv-card-texto">
+      <div class="atv-card-eyebrow">Material de apoio</div>
+      <div class="atv-card-titulo">Slides desta aula: Origens Históricas do Racismo</div>
+      <div class="atv-card-desc"></div>
+    </div>
+    <a class="atv-card-btn" href="https://drive.google.com/file/d/1X2WANvBGLIrcnpIaaTGL16Hle_5xVfsm/view?usp=sharing" target="_blank" rel="noopener">Abrir slides →</a>
+  </div>
+
+  <h2 class="secao">1. Antes do racismo: a escravidão na Antiguidade</h2>
+  <p>Para entender que o racismo é uma construção histórica, é preciso primeiro desfazer uma confusão comum: <span class="destaque">a escravidão sempre existiu, mas nem sempre esteve ligada à cor da pele</span>. Em sociedades escravistas clássicas — Grécia, Roma, o mundo persa e islâmico — a condição de escravizado era circunstancial, ligada à derrota em guerra ou a dívidas financeiras, e não a características físicas.</p>
+
+  <div class="tabela-wrap">
+    <table class="tabela-historica">
+      <caption>Características da escravidão antiga</caption>
+      <thead>
+        <tr><th>Critério</th><th>Descrição</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Origem</td><td>Derrota em guerra ou dívidas financeiras.</td></tr>
+        <tr><td>Perfil</td><td>Na Roma Antiga, escravizados podiam ser loiros de olhos azuis, como os eslavos, ou intelectuais — o próprio filósofo Epicteto foi escravizado antes de se tornar um dos grandes nomes do estoicismo.</td></tr>
+        <tr><td>Papel da melanina</td><td>A cor da pele não era o fator definidor da subordinação.</td></tr>
+        <tr><td>Extensão</td><td>Presente em sociedades gregas, romanas, persas e no mundo islâmico, onde persistiu como instituição cultural até o século XX.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>Essa comparação é importante porque mostra que <strong>a associação entre escravidão e raça não é natural nem inevitável</strong> — ela foi construída em um momento histórico específico, a partir de interesses econômicos concretos, como você vai ver a seguir.</p>
+
+  <h2 class="secao">2. O racismo não nasceu pronto — ele foi construído</h2>
+  <p>É comum pensar que o racismo sempre existiu do mesmo jeito. Mas os historiadores mostram que, como forma de hierarquizar pessoas com base em características como cor de pele, o racismo foi <strong>construído socialmente</strong> ao longo do tempo, ganhando novas justificativas e novas formas conforme os interesses de cada época.</p>
+
+  <h2 class="secao">3. O tráfico negreiro como estrutura econômica</h2>
+  <p>A transição para o racismo moderno ocorreu quando as potências europeias passaram a precisar de mão de obra em larga escala para explorar o Novo Mundo. A escravização na África, que já existia por guerras entre povos africanos, foi transformada em uma verdadeira <span class="destaque">"máquina produtora"</span> pela demanda europeia — e o tráfico transatlântico se tornou a principal fonte de riqueza do período colonial brasileiro.</p>
+
+  <details class="acordeao">
+    <summary>Quem enriquecia com o tráfico?</summary>
+    <p>Os traficantes de pessoas escravizadas estavam entre os maiores milionários do período colonial, superando até os próprios donos de engenho. Eles funcionavam como os "emprestadores de dinheiro" da colônia, financiando a compra de mão de obra e concentrando boa parte do capital da época.</p>
+  </details>
+
+  <p>Isso também ajuda a explicar por que a escravização indígena foi mais comum em regiões pobres, como São Paulo e o Maranhão: quem escravizava povos indígenas geralmente não tinha capital para comprar pessoas africanas no mercado do tráfico internacional. Não se tratava, portanto, de uma suposta "preferência" cultural — era uma questão de <strong>lucro e acesso a capital</strong>.</p>
+
+  <p>No sistema de engenho brasileiro, a monocultura de cana-de-açúcar dependia inteiramente do trabalho escravizado. No século XVII, o padre Antonil descreveu essa dependência de forma direta:</p>
+  <blockquote>"[As pessoas escravizadas são] as mãos e os pés do senhor de engenho." — Padre André João Antonil, século XVII</blockquote>
+
+  <h2 class="secao">4. O elo direto com o Tema 4: liberdade sem cidadania</h2>
+  <p>Como você viu no tema anterior, a Lei Áurea (1888) encerrou a escravidão como instituição jurídica, mas não criou nenhuma política de terra, trabalho, moradia ou educação para as pessoas libertas. Essa ausência de inclusão social é um dos pontos de partida mais diretos para entender o racismo estrutural no Brasil: a desigualdade herdada da escravidão não foi corrigida — ela foi, em grande parte, mantida e até reforçada nas décadas seguintes.</p>
+
+  <p>Na prática, isso significou que a maior parte das pessoas que tinham vivido a experiência da escravidão não conseguiu trabalhar por conta própria nem conquistar um novo emprego. Muitas continuaram na mesma fazenda, no mesmo lugar onde antes eram cativas — só que agora sem qualquer garantia de direitos. Africanos e negros brasileiros, mesmo livres, não passaram a ser tratados como cidadãos plenos no período pós-abolição.</p>
+
+  <details class="acordeao">
+    <summary>Uma herança que ainda aparece nos números de hoje</summary>
+    <p>Mais de cem anos depois da abolição, os efeitos dessa exclusão continuam mensuráveis: pesquisas mostram que a pobreza e a violência atingem a população negra de forma desproporcional, que a taxa de desemprego entre negros é maior do que entre brancos, e que o salário médio dos trabalhadores brancos segue superior ao dos trabalhadores negros. Esses dados ajudam a entender por que o racismo estrutural não é "coisa do passado" — ele se manifesta em condições concretas de vida no presente.</p>
+  </details>
+
+  <div class="atv-card">
+    <div class="atv-card-icone">📄</div>
+    <div class="atv-card-texto">
+      <div class="atv-card-eyebrow">Atividade 1 · Educação e desigualdade</div>
+      <div class="atv-card-titulo">Desigualdade Racial na Educação Brasileira</div>
+      <div class="atv-card-desc">Análise de dados educacionais sobre negros e brancos no Brasil. Estude o texto e responda as questões sobre persistência de desigualdades.</div>
+    </div>
+    <a class="atv-card-btn" href="https://drive.google.com/file/d/1Bns8HjXMtSGIB7pt6kagFCpkbkxIo3-2/view?usp=sharing" target="_blank" rel="noopener">Abrir atividade →</a>
+  </div>
+
+  <h2 class="secao">5. O "racismo científico" do século XIX</h2>
+  <details class="acordeao" open>
+    <summary>Teorias que tentavam justificar a desigualdade</summary>
+    <p>No final do século XIX, ganharam força na Europa e nas Américas teorias pseudocientíficas que classificavam a humanidade em "raças" hierarquizadas, atribuindo características de inteligência e capacidade a partir de traços físicos — incluindo a ideia, hoje totalmente refutada, de que o tamanho do crânio indicaria o nível de inteligência de uma pessoa. Essas ideias — hoje reconhecidas como falsas e sem qualquer base científica válida — foram usadas para justificar desigualdades sociais e políticas de exclusão.</p>
+    <p>O biólogo Stephen Jay Gould dedicou parte de sua obra a desmontar esse tipo de teoria, mostrando que o tamanho do cérebro está relacionado ao tamanho do corpo — pessoas mais altas tendem a ter cérebros maiores, o que não as torna mais inteligentes, da mesma forma que um elefante não é mais inteligente do que um ser humano só por ter um cérebro maior. Do ponto de vista biológico, hoje é consenso científico que toda a humanidade pertence a uma única espécie.</p>
+  </details>
+  <p>Vale registrar que nem todo pensador europeu do período endossava essas ideias: quando visitou o Brasil em 1832, o próprio Charles Darwin manifestou indignação com a violência que presenciou contra pessoas escravizadas no Rio de Janeiro, em Recife e em Salvador. Foram outros pensadores da época — como Herbert Spencer, que aplicou noções de evolução biológica ao campo social — que ajudaram a espalhar a ideia de que desigualdades sociais seriam um resultado "natural" e inevitável, isentando de responsabilidade quem se beneficiava delas.</p>
+
+  <h2 class="secao">6. A ideologia do branqueamento</h2>
+  <p>Parte da elite brasileira do fim do século XIX e início do XX acreditava que o país precisava "branquear" sua população para se aproximar de um ideal de "progresso" associado à Europa. Isso ajuda a explicar por que o Estado imperial e depois republicano subsidiou fortemente a <strong>imigração europeia</strong> (vista no Tema 4), enquanto não criava políticas equivalentes de inclusão para a população negra recém-liberta.</p>
+
+  <h2 class="secao">7. O mito da "democracia racial"</h2>
+  <p>Nas décadas de 1930, ganhou força a ideia de que o Brasil seria uma "democracia racial" — um país onde a mestiçagem teria produzido uma convivência harmoniosa entre diferentes grupos, sem racismo relevante. Pesquisas históricas e sociológicas posteriores mostraram que essa ideia funcionou, na prática, para <strong>silenciar</strong> o debate sobre desigualdades raciais reais, dificultando o reconhecimento — e o enfrentamento — do racismo no país.</p>
+
+  <div class="atv-card">
+    <div class="atv-card-icone">📹</div>
+    <div class="atv-card-texto">
+      <div class="atv-card-eyebrow">Atividade 2 · Identidade racial</div>
+      <div class="atv-card-titulo">Afinal, Quem Somos? Identidade Racial no Brasil</div>
+      <div class="atv-card-desc">Vídeo e texto sobre autodeclaração racial, fenótipo e como a sociedade enxerga a identidade. Estude e responda as questões propostas.</div>
+    </div>
+    <a class="atv-card-btn" href="https://drive.google.com/file/d/1Mjf7vh33CWoUIF2skodQ_xl-2Y-HFD0e/view?usp=sharing" target="_blank" rel="noopener">Abrir atividade →</a>
+  </div>
+
+  <h2 class="secao">8. A mecânica do preconceito: como se convence alguém de que é inferior</h2>
+  <p>Dominar um grupo social não acontece só pela força física. Para que um sistema de dominação se sustente por gerações — inclusive sobre grupos que, em número, são maioria — é necessário construir um <span class="destaque">discurso de inferioridade</span> que convença esse grupo, e a sociedade em geral, de que sua cultura, aparência ou religião são inferiores.</p>
+
+  <details class="acordeao">
+    <summary>A piada vem antes da violência</summary>
+    <p>Historiadores costumam lembrar que, antes de Auschwitz, existiu décadas de literatura antissemita circulando livremente na Europa. Ou seja: antes do horror físico, existe a piada, o estereótipo e a prática simbólica que preparam o terreno para a violência. Reconhecer esse padrão ajuda a entender por que o combate ao preconceito não pode esperar a violência acontecer para agir.</p>
+  </details>
+
+  <p>Outro elemento central desse processo é o que se chama de <strong>controle simbólico</strong>: a dominação se mantém, sobretudo, quando o próprio grupo dominado passa a aceitar o sistema como normal. Se todas as pessoas escravizadas — ou outros grupos historicamente marginalizados, como as mulheres — tivessem plena consciência de sua força coletiva e agissem de forma organizada, o sistema de dominação entraria em colapso.</p>
+
+  <h2 class="secao">9. Preconceito além da raça: o que isso revela sobre convenções sociais</h2>
+  <p>O mesmo mecanismo de construção social do preconceito aparece em outras áreas da vida, o que ajuda a comprovar que essas hierarquias são <strong>invenções humanas</strong>, e não verdades naturais:</p>
+  <ul>
+    <li><strong>Estética e envelhecimento:</strong> a sociedade costuma ser mais tolerante com o envelhecimento e a forma física masculina do que com a feminina.</li>
+    <li><strong>Cores associadas a gênero:</strong> o uso de azul para meninos e rosa para meninas é uma convenção comercial e cultural recente, não uma regra universal ao longo da história.</li>
+    <li><strong>O vestido branco de noiva:</strong> foi popularizado pela Rainha Vitória, no século XIX — e, segundo alguns relatos, também porque a cor clara ajudava seus seguranças a localizá-la em meio à multidão, já que a rainha tinha baixa estatura.</li>
+  </ul>
+  <p>Esses exemplos mostram que aquilo que parece "natural" — seja sobre raça, gênero ou estética — costuma ter uma origem histórica concreta, criada para atender a interesses específicos de cada época.</p>
+
+  <h2 class="secao">10. Resistência e organização negra</h2>
+  <ul class="linha-tempo">
+    <li><strong>Frente Negra Brasileira (1931):</strong> uma das primeiras organizações políticas negras de massa do país.</li>
+    <li><strong>Teatro Experimental do Negro (1944):</strong> liderado por Abdias do Nascimento, valorizava a cultura e a presença negra nas artes.</li>
+    <li><strong>Movimento Negro Unificado (1978):</strong> articula, em nível nacional, a luta contra o racismo e por direitos civis.</li>
+    <li><strong>Dia Nacional da Consciência Negra (20 de novembro):</strong> data em memória de Zumbi dos Palmares, líder do Quilombo dos Palmares, marcada até hoje por atos e homenagens em todo o país, como a tradicional lavagem de sua estátua em Salvador.</li>
+  </ul>
+  <p>Essa mobilização também transformou a cultura e a presença negra no espaço público: cresceu o número de artistas e grupos musicais que tratam da luta contra o racismo, novelas passaram a mostrar famílias negras — algo raro até poucas décadas atrás — e aumentou o número de professores e pesquisadores negros dedicados a rever criticamente as antigas teorias "científicas" que serviram para justificar o racismo.</p>
+
+  <h2 class="secao">11. Marcos legais de enfrentamento ao racismo</h2>
+  <p>Ao longo das últimas décadas, o Brasil construiu instrumentos legais para reconhecer e combater o racismo:</p>
+  <ul>
+    <li><strong>Lei nº 7.716/1989:</strong> define os crimes resultantes de preconceito de raça ou cor;</li>
+    <li><strong>Constituição Federal de 1988, art. 5º:</strong> estabelece que a prática do racismo é crime inafiançável e imprescritível — ou seja, quem comete o crime não pode responder em liberdade mediante pagamento de fiança, e o crime não deixa de valer com o passar do tempo;</li>
+    <li><strong>Lei nº 10.639/2003:</strong> torna obrigatório o ensino de história e cultura afro-brasileira nas escolas;</li>
+    <li><strong>Estatuto da Igualdade Racial (2010):</strong> conjunto de garantias para promover a igualdade racial;</li>
+    <li><strong>Políticas de cotas raciais</strong> em universidades e concursos públicos, a partir dos anos 2000.</li>
+  </ul>
+
+  <details class="acordeao">
+    <summary>O que são "ações afirmativas"?</summary>
+    <p>Ações afirmativas são medidas especiais que visam combater desigualdades históricas, rompendo com discriminações raciais, étnicas, religiosas, de gênero, entre outras. As políticas de cotas raciais são um exemplo direto: elas não "criam" um privilégio, mas buscam compensar um ponto de partida desigual, herdado justamente da falta de reformas sociais após a abolição, discutida na seção 4.</p>
+    <p>O impacto dessas políticas pode ser observado em dados de acesso ao ensino superior: em 2005, apenas 5,5% dos jovens negros brasileiros cursavam uma universidade; em 2015, esse número já havia subido para 12,8%. O crescimento do número de mulheres negras chefiando seus domicílios também é apontado como um indicador do aumento da presença feminina negra no mercado de trabalho.</p>
+  </details>
+
+  <h2 class="secao">Síntese: por que isso importa hoje</h2>
+  <p>Compreender o racismo como um processo histórico — e não como algo natural ou sempre igual — permite enxergar suas raízes concretas: a diferença entre a escravidão antiga e a escravidão racializada moderna, o tráfico negreiro como estrutura econômica, a abolição sem reforma social, as teorias raciais do século XIX, o projeto de branqueamento, o silenciamento promovido pelo mito da democracia racial e os mecanismos simbólicos que sustentam qualquer sistema de dominação. Ao mesmo tempo, os dados sobre desigualdade que ainda hoje separam negros e brancos no Brasil mostram que essa não é uma história fechada no passado: é um processo que continua sendo enfrentado por meio da mobilização social e de instrumentos legais como as ações afirmativas. Reconhecer essas origens é o primeiro passo para entender as desigualdades que ainda hoje marcam a sociedade brasileira — e para valorizar as histórias de resistência que sempre existiram ao lado delas.</p>
+
+  <h2 class="secao">Termos-chave desta aula</h2>
+  <div class="grade-termos">
+    <details class="termo"><summary>Escravidão pré-moderna</summary><p>Forma de escravidão praticada na Antiguidade (Grécia, Roma, mundo persa e islâmico), baseada em derrota militar ou dívidas, e não em cor de pele.</p></details>
+    <details class="termo"><summary>Controle simbólico</summary><p>Mecanismo pelo qual um sistema de dominação se sustenta quando o próprio grupo dominado passa a aceitá-lo como normal, sem se organizar coletivamente contra ele.</p></details>
+    <details class="termo"><summary>Racismo estrutural</summary><p>Forma de racismo que está inserida no funcionamento normal das instituições e das relações sociais e econômicas, e não apenas em atitudes individuais.</p></details>
+    <details class="termo"><summary>Ações afirmativas</summary><p>Medidas especiais voltadas a combater desigualdades históricas, rompendo com discriminações raciais, étnicas, religiosas ou de gênero — as cotas raciais são um exemplo.</p></details>
+    <details class="termo"><summary>Racismo científico</summary><p>Conjunto de teorias pseudocientíficas do século XIX que hierarquizavam "raças" humanas para justificar desigualdades sociais — hoje refutadas.</p></details>
+    <details class="termo"><summary>Ideologia do branqueamento</summary><p>Projeto de parte da elite brasileira de incentivar a imigração europeia para alterar a composição racial da população, em detrimento da população negra recém-liberta.</p></details>
+    <details class="termo"><summary>Mito da democracia racial</summary><p>Ideia difundida a partir dos anos 1930 de que o Brasil seria livre de racismo relevante graças à mestiçagem — hoje criticada por mascarar desigualdades reais.</p></details>
+    <details class="termo"><summary>Movimento Negro</summary><p>Conjunto de organizações e mobilizações políticas e culturais negras ao longo do século XX e XXI voltadas ao combate ao racismo e à valorização da cultura afro-brasileira.</p></details>
+  </div>
+
+  <h2 class="secao">Verifique se você entendeu</h2>
+
+  <h2 class="secao">Glossário — complete as frases</h2>
+  <div class="jd-wrap">
+    <p class="jd-instru">Toque no espaço de cada frase para escolher o termo correto entre as opções. Quando terminar todas, toque em "Verificar respostas".</p>
+    <div class="jd-alerta" id="jd-alerta"></div>
+    <div id="jd-frases"></div>
+    <div class="jd-status">
+      <span>Respondidas: <strong id="jd-respondidas">0</strong>/8</span>
+      <button class="jd-btn-verificar" id="jd-btn-verificar" onclick="verificarRespostas()">✓ Verificar respostas</button>
+      <button class="jd-btn-restart" onclick="iniciarJogoArrastar()">↺ Reiniciar</button>
+    </div>
+    <div class="jd-vitoria" id="jd-vitoria"></div>
+  </div>
+
+  <div class="pergunta">
+    <p class="enunciado">1. Qual é a relação entre a abolição de 1888 e o racismo estrutural discutido neste tema?</p>
+    <div class="opcoes" data-correta="B">
+      <button data-opt="A">Não existe relação: são assuntos completamente separados.</button>
+      <button data-opt="B">A abolição não veio acompanhada de políticas de terra, trabalho e educação para os libertos, o que ajudou a manter desigualdades que persistem até hoje.</button>
+      <button data-opt="C">A abolição resolveu todas as desigualdades entre negros e brancos no Brasil.</button>
+      <button data-opt="D">O racismo estrutural só passou a existir depois da Constituição de 1988.</button>
+    </div>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="pergunta">
+    <p class="enunciado">2. O que o "mito da democracia racial" fez, segundo pesquisas históricas e sociológicas?</p>
+    <div class="opcoes" data-correta="C">
+      <button data-opt="A">Comprovou cientificamente que o Brasil nunca teve racismo.</button>
+      <button data-opt="B">Foi criado pelo Movimento Negro Unificado.</button>
+      <button data-opt="C">Ajudou a silenciar o debate sobre desigualdades raciais reais no país.</button>
+      <button data-opt="D">Garantiu, na prática, políticas de reparação para a população negra.</button>
+    </div>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="pergunta">
+    <p class="enunciado">3. O que a Lei nº 10.639/2003 estabeleceu?</p>
+    <div class="opcoes" data-correta="A">
+      <button data-opt="A">A obrigatoriedade do ensino de história e cultura afro-brasileira nas escolas.</button>
+      <button data-opt="B">O fim da imigração europeia para o Brasil.</button>
+      <button data-opt="C">A criação da Frente Negra Brasileira.</button>
+      <button data-opt="D">O sistema de cotas raciais em universidades públicas.</button>
+    </div>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="pergunta">
+    <p class="enunciado">4. O que caracterizava o chamado "racismo científico" do século XIX?</p>
+    <div class="opcoes" data-correta="D">
+      <button data-opt="A">Um conjunto de leis que garantia direitos iguais a todas as etnias, aprovado no século XIX.</button>
+      <button data-opt="B">Uma teoria comprovada pela biologia moderna sobre diferenças reais entre os povos.</button>
+      <button data-opt="C">Um movimento político criado pelo Movimento Negro para combater desigualdades sociais.</button>
+      <button data-opt="D">Teorias pseudocientíficas que classificavam a humanidade em "raças" hierarquizadas, hoje reconhecidas como falsas e sem base científica válida.</button>
+    </div>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="pergunta">
+    <p class="enunciado">5. O que a ideologia do branqueamento, defendida por parte da elite brasileira, buscava incentivar?</p>
+    <div class="opcoes" data-correta="A">
+      <button data-opt="A">A imigração europeia, para alterar a composição racial da população, em vez de criar políticas de inclusão para a população negra recém-liberta.</button>
+      <button data-opt="B">Políticas de cotas raciais em universidades e concursos públicos.</button>
+      <button data-opt="C">A valorização da cultura afro-brasileira no ensino escolar.</button>
+      <button data-opt="D">A criação do Estatuto da Igualdade Racial, em 2010.</button>
+    </div>
+    <div class="feedback"></div>
+  </div>
+  <div class="pergunta">
+    <p class="enunciado">6. Qual era o principal critério que definia quem era escravizado na Roma Antiga?</p>
+    <div class="opcoes" data-correta="C">
+      <button data-opt="A">A cor da pele da pessoa.</button>
+      <button data-opt="B">A religião praticada pela pessoa.</button>
+      <button data-opt="C">A derrota em guerra ou a existência de dívidas financeiras.</button>
+      <button data-opt="D">O local de nascimento dentro do território romano.</button>
+    </div>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="pergunta">
+    <p class="enunciado">7. Segundo o texto, por que a escravização indígena era mais comum em regiões pobres, como São Paulo e o Maranhão?</p>
+    <div class="opcoes" data-correta="B">
+      <button data-opt="A">Porque os povos indígenas dessas regiões eram considerados mais fortes para o trabalho.</button>
+      <button data-opt="B">Porque quem escravizava indígenas geralmente não tinha capital para comprar pessoas africanas no mercado do tráfico internacional.</button>
+      <button data-opt="C">Porque havia uma lei colonial proibindo a escravização de africanos nessas regiões.</button>
+      <button data-opt="D">Porque os povos indígenas se ofereciam voluntariamente para o trabalho escravo.</button>
+    </div>
+    <div class="feedback"></div>
+  </div>
+  <div class="pergunta">
+    <p class="enunciado">8. O que são "ações afirmativas", segundo o material estudado?</p>
+    <div class="opcoes" data-correta="D">
+      <button data-opt="A">Leis que extinguiram definitivamente o racismo no Brasil.</button>
+      <button data-opt="B">Um tipo de imposto criado para financiar universidades públicas.</button>
+      <button data-opt="C">Medidas exclusivas para o mercado financeiro.</button>
+      <button data-opt="D">Medidas especiais que visam combater desigualdades históricas, rompendo discriminações raciais, étnicas, religiosas ou de gênero.</button>
+    </div>
+    <div class="feedback"></div>
+  </div>
+
+  <div class="pergunta">
+    <p class="enunciado">9. O que estabelece o artigo 5º da Constituição Federal de 1988 sobre o racismo?</p>
+    <div class="opcoes" data-correta="A">
+      <button data-opt="A">Que a prática do racismo é crime inafiançável e imprescritível.</button>
+      <button data-opt="B">Que o racismo deixou de ser crime a partir de 1988.</button>
+      <button data-opt="C">Que apenas autoridades públicas podem ser condenadas por racismo.</button>
+      <button data-opt="D">Que o crime de racismo prescreve após cinco anos.</button>
+    </div>
+    <div class="feedback"></div>
+  </div>
+
+</main>
+
+<div style="max-width:820px; margin:0 auto 40px; padding:0 20px; text-align:center;">
+  <a href="atividade-tema5.html" target="_blank" style="display:inline-block; font-family:'Inter',sans-serif; font-weight:600; font-size:.88rem; color:var(--dourado-2); background:var(--verde); padding:12px 28px; border-radius:30px; text-decoration:none; box-shadow:0 4px 14px rgba(27,67,50,.3);">
+    📝 Fazer a atividade avaliativa (5 objetivas + 5 dissertativas)
+  </a>
+</div>
+
+<nav class="rodape-nav">
+  <a href="tema4.html" target="_parent">← Tema 4: Escravidão e Acesso à Terra</a>
+  <a class="central" href="index.html" target="_parent">↑ Início da trilha</a>
+  <span></span>
+</nav>
+
+<div style="max-width:820px; margin:0 auto 40px; padding:0 20px; text-align:center;">
+  <a href="glossario.html" target="_parent" style="display:inline-block; font-family:'Inter',sans-serif; font-weight:600; font-size:.88rem; color:var(--dourado-2); background:var(--bordo); padding:12px 28px; border-radius:30px; text-decoration:none; box-shadow:0 4px 14px rgba(122,46,46,.3);">
+    📖 Consultar o Glossário
+  </a>
+</div>
+
+<script>
+  const ITENS = [
+    { termo:'Racismo científico', frase:'Conjunto de teorias pseudocientíficas que classificava a humanidade em "raças" hierarquizadas, justificando desigualdades e dominação, era conhecido como ___.' },
+    { termo:'Ideologia do branqueamento', frase:'A política defendida por parte da elite brasileira que incentivava a imigração europeia para alterar a composição racial da população, em vez de criar políticas de inclusão para a população negra, era chamada de ___.' },
+    { termo:'Lei nº 10.639/2003', frase:'A lei que estabeleceu a obrigatoriedade do ensino de história e cultura afro-brasileira nas escolas é a ___.' },
+    { termo:'Ações afirmativas', frase:'Medidas especiais que visam combater desigualdades históricas, rompendo discriminações raciais, étnicas, religiosas ou de gênero, são conhecidas como ___.' },
+    { termo:'Estatuto da Igualdade Racial', frase:'Lei de 2010 que estabeleceu políticas, programas e ações destinados a combater a discriminação e as desigualdades étnicas no Brasil, conhecida como ___.' },
+    { termo:'Constituição Federal de 1988', frase:'A constituição que estabeleceu que a prática do racismo é crime inafiançável e imprescritível no Brasil foi a ___.' },
+    { termo:'Racismo estrutural', frase:'Forma de racismo que está enraizada nas instituições e estruturas da sociedade, reproduzindo desigualdades e discriminação de forma histórica e sistemática, chamado de ___.' },
+    { termo:'Discriminação racial', frase:'O tratamento desigual e prejudicial baseado em características relacionadas à raça ou etnia de uma pessoa é chamado de ___.' }
+  ];
+
+  let verificado = false;
+  let dropdownAberto = null;
+
+  function embaralhar(arr){
+    const a = arr.slice();
+    for (let i = a.length - 1; i > 0; i--){
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  }
+
+  function fecharDropdown(){
+    if (dropdownAberto){
+      dropdownAberto.remove();
+      dropdownAberto = null;
+    }
+    document.querySelectorAll('.jd-blank.aberto').forEach(b => b.classList.remove('aberto'));
+  }
+
+  function atualizarContador(){
+    const respondidas = document.querySelectorAll('.jd-blank[data-selecionado]').length;
+    document.getElementById('jd-respondidas').textContent = respondidas;
+    return respondidas;
+  }
+
+  function abrirDropdown(blank){
+    if (verificado) return;
+    if (dropdownAberto){
+      const jaEraEsse = dropdownAberto.dataset.para === blank.id;
+      fecharDropdown();
+      if (jaEraEsse) return;
+    }
+
+    blank.classList.add('aberto');
+    const opcoes = embaralhar(ITENS.map(it => it.termo));
+
+    const dd = document.createElement('div');
+    dd.className = 'jd-dropdown';
+    dd.dataset.para = blank.id;
+    opcoes.forEach(termo => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.textContent = termo;
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        selecionarOpcao(blank, termo);
+        fecharDropdown();
+      });
+      dd.appendChild(btn);
+    });
+
+    document.body.appendChild(dd);
+    posicionarDropdown(dd, blank);
+    dropdownAberto = dd;
+  }
+
+  function posicionarDropdown(dd, blank){
+    const r = blank.getBoundingClientRect();
+    const ddH = dd.offsetHeight, ddW = dd.offsetWidth;
+    let top = r.bottom + 6;
+    if (top + ddH > window.innerHeight - 8){
+      top = Math.max(8, r.top - ddH - 6);
+    }
+    let left = r.left;
+    if (left + ddW > window.innerWidth - 8){
+      left = Math.max(8, window.innerWidth - ddW - 8);
+    }
+    dd.style.top = top + 'px';
+    dd.style.left = left + 'px';
+  }
+
+  function selecionarOpcao(blank, termo){
+    blank.dataset.selecionado = termo;
+    blank.classList.add('respondida');
+    blank.querySelector('.jd-selecionado').textContent = termo;
+    blank.querySelector('.jd-seta').style.opacity = '0';
+    atualizarContador();
+  }
+
+  window.iniciarJogoArrastar = function(){
+    verificado = false;
+    const frasesEl = document.getElementById('jd-frases');
+    frasesEl.innerHTML = '';
+    document.getElementById('jd-vitoria').classList.remove('mostrar');
+    document.getElementById('jd-btn-verificar').textContent = '✓ Verificar respostas';
+    document.getElementById('jd-btn-verificar').disabled = false;
+    document.getElementById('jd-alerta').classList.remove('mostrar');
+
+    ITENS.forEach((item, idx) => {
+      const div = document.createElement('div');
+      div.className = 'jd-frase';
+      div.id = 'frz-' + idx;
+      div.innerHTML = '<span class="num">' + (idx + 1) + '.</span> ' + item.frase.replace('___', '<span class="jd-blank" id="blank-' + idx + '" data-termo="' + item.termo + '"><span class="jd-icone">✎</span><span class="jd-selecionado">toque para escolher</span><span class="jd-seta">∨</span></span>') + '<div class="jd-correcao"></div>';
+      frasesEl.appendChild(div);
+      const blank = div.querySelector('.jd-blank');
+      blank.addEventListener('click', (e) => {
+        e.stopPropagation();
+        abrirDropdown(blank);
+      });
+    });
+
+    atualizarContador();
+  };
+
+  window.verificarRespostas = function(){
+    if (verificado) return;
+    const blanks = Array.from(document.querySelectorAll('.jd-blank'));
+    const faltando = blanks.filter(b => !b.dataset.selecionado);
+
+    if (faltando.length > 0){
+      const alerta = document.getElementById('jd-alerta');
+      alerta.textContent = '⚠️ Faltam ' + faltando.length + ' resposta(s). Escolha um termo para cada frase antes de verificar.';
+      alerta.classList.add('mostrar');
+      faltando[0].scrollIntoView({behavior:'smooth', block:'center'});
+      return;
+    }
+
+    document.getElementById('jd-alerta').classList.remove('mostrar');
+    verificado = true;
+    fecharDropdown();
+
+    let acertos = 0;
+    blanks.forEach(blank => {
+      const certo = blank.dataset.selecionado === blank.dataset.termo;
+      const frase = blank.closest('.jd-frase');
+      if (certo){
+        acertos++;
+        blank.classList.add('correta');
+        blank.classList.remove('incorreta');
+        if (frase) frase.classList.add('correta');
+      } else {
+        blank.classList.add('incorreta');
+        blank.classList.remove('correta');
+        if (frase){
+          frase.classList.add('incorreta');
+          const corr = frase.querySelector('.jd-correcao');
+          if (corr) corr.textContent = 'Resposta certa: ' + blank.dataset.termo;
+        }
+      }
+    });
+
+    document.getElementById('jd-btn-verificar').textContent = 'Respostas verificadas';
+    document.getElementById('jd-btn-verificar').disabled = true;
+
+    const vitoria = document.getElementById('jd-vitoria');
+    if (acertos === ITENS.length){
+      vitoria.textContent = '🎉 Parabéns! Você acertou todas as ' + acertos + ' frases.';
+    } else {
+      vitoria.textContent = 'Você acertou ' + acertos + '/' + ITENS.length + '. Reveja as frases em vermelho e tente novamente!';
+    }
+    vitoria.classList.add('mostrar');
+  };
+
+  document.addEventListener('click', (e) => {
+    if (dropdownAberto && !dropdownAberto.contains(e.target)) fecharDropdown();
+  });
+  window.addEventListener('scroll', (e) => {
+    if (dropdownAberto && (e.target === dropdownAberto || (e.target.nodeType === 1 && dropdownAberto.contains(e.target)))) return;
+    fecharDropdown();
+  }, true);
+  window.addEventListener('resize', fecharDropdown);
+
+  iniciarJogoArrastar();
+</script>
+
+<script>
+  document.querySelectorAll('.pergunta').forEach(bloco => {
+    const correta = bloco.querySelector('.opcoes').dataset.correta;
+    const feedback = bloco.querySelector('.feedback');
+    bloco.querySelectorAll('.opcoes button').forEach(btn => {
+      btn.addEventListener('click', () => {
+        bloco.querySelectorAll('.opcoes button').forEach(b => b.disabled = true);
+        if (btn.dataset.opt === correta) {
+          btn.classList.add('certo');
+          feedback.textContent = 'Correto!';
+        } else {
+          btn.classList.add('errado');
+          bloco.querySelector(`[data-opt="${correta}"]`).classList.add('certo');
+          feedback.textContent = 'Reveja o trecho acima — a resposta certa está destacada.';
+        }
+      });
+    });
+  });
+</script>
+
+</body>
+</html>
