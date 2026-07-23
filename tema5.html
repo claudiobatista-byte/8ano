@@ -85,6 +85,21 @@
   table.tabela-historica th{background:var(--verde); color:var(--dourado-2); font-family:'Inter',sans-serif; font-weight:600; text-align:left; padding:10px 14px; font-size:.82rem;}
   table.tabela-historica td{padding:10px 14px; border-top:1px solid var(--linha); vertical-align:top;}
   table.tabela-historica tr:nth-child(even) td{background:rgba(201,162,39,.06);}
+  /* ───── Galeria de Imagens com Zoom ───── */
+  .figura-charge{background:var(--paper); border:1px solid var(--linha); border-radius:12px; padding:16px 16px 14px; margin:18px 0;}
+  .figura-charge img{display:block; width:100%; max-width:500px; height:auto; margin:0 auto; border-radius:8px; border:1px solid var(--linha); cursor:zoom-in; transition:opacity .15s ease;}
+  .figura-charge img:hover{opacity:.85;}
+  .figura-charge figcaption{margin-top:10px; text-align:center; font-family:'Inter',sans-serif; font-size:.78rem; color:var(--ink-soft); font-style:italic;}
+  .lightbox-overlay{display:none; position:fixed; inset:0; z-index:9999; background:rgba(20,14,8,.86); align-items:center; justify-content:center; padding:24px; cursor:zoom-out;}
+  .lightbox-overlay.aberto{display:flex;}
+  .lightbox-conteudo{max-width:min(90vw,720px); max-height:90vh; display:flex; flex-direction:column; align-items:center; cursor:default;}
+  .lightbox-conteudo img{max-width:100%; max-height:78vh; width:auto; border-radius:8px; border:2px solid var(--dourado); box-shadow:0 20px 50px rgba(0,0,0,.5); cursor:zoom-in; transition:max-width .2s ease, max-height .2s ease;}
+  .lightbox-conteudo.zoom-ativo{max-width:94vw; max-height:94vh; overflow:auto; align-items:flex-start; justify-content:flex-start; cursor:auto;}
+  .lightbox-conteudo.zoom-ativo img{max-width:none; max-height:none; width:1400px; cursor:zoom-out;}
+  .lightbox-legenda{margin-top:12px; text-align:center; font-family:'Inter',sans-serif; font-size:.82rem; color:#fff; font-style:italic; max-width:600px;}
+  .lightbox-fechar{position:absolute; top:18px; right:22px; width:40px; height:40px; border-radius:50%; background:var(--paper); border:2px solid var(--dourado); color:var(--verde); font-size:1.3rem; font-weight:700; cursor:pointer; display:flex; align-items:center; justify-content:center; line-height:1;}
+  .lightbox-dica{margin-top:6px; font-family:'Inter',sans-serif; font-size:.7rem; color:var(--dourado-2); text-align:center;}
+
   .rodape-nav{display:flex; justify-content:space-between; align-items:center; gap:10px; max-width:820px; margin:10px auto 40px; padding:14px 20px; font-family:'Inter',sans-serif; font-size:.86rem; flex-wrap:wrap;}
   .rodape-nav a{text-decoration:none; color:var(--verde); font-weight:600;}
   .rodape-nav a.central{color:var(--bordo);}
@@ -215,6 +230,11 @@
     <a class="atv-card-btn" href="https://drive.google.com/file/d/1X2WANvBGLIrcnpIaaTGL16Hle_5xVfsm/view?usp=sharing" target="_blank" rel="noopener">Abrir slides →</a>
   </div>
 
+  <figure class="figura-charge">
+    <img src="tema5/img1.jpeg" alt="A Arquitetura do Racismo: o preconceito não nasceu pronto, foi projetado, construído e financiado" onclick="abrirLightbox(this)" style="max-width:100%;">
+    <figcaption>A arquitetura do racismo: o preconceito não nasceu pronto — ele foi projetado, construído e financiado</figcaption>
+  </figure>
+
   <h2 class="secao">1. Antes do racismo: a escravidão na Antiguidade</h2>
   <p>Para entender que o racismo é uma construção histórica, é preciso primeiro desfazer uma confusão comum: <span class="destaque">a escravidão sempre existiu, mas nem sempre esteve ligada à cor da pele</span>. Em sociedades escravistas clássicas — Grécia, Roma, o mundo persa e islâmico — a condição de escravizado era circunstancial, ligada à derrota em guerra ou a dívidas financeiras, e não a características físicas.</p>
 
@@ -235,8 +255,18 @@
 
   <p>Essa comparação é importante porque mostra que <strong>a associação entre escravidão e raça não é natural nem inevitável</strong> — ela foi construída em um momento histórico específico, a partir de interesses econômicos concretos, como você vai ver a seguir.</p>
 
+  <figure class="figura-charge">
+    <img src="tema5/img4.jpeg" alt="A grande mudança de paradigma: critérios de escravização em Roma e Grécia Antiga comparados ao Brasil Colonial" onclick="abrirLightbox(this)" style="max-width:100%;">
+    <figcaption>A grande mudança de paradigma: de guerras e dívidas, em Roma e na Grécia, à cor da pele, no Brasil colonial</figcaption>
+  </figure>
+
   <h2 class="secao">2. O racismo não nasceu pronto — ele foi construído</h2>
   <p>É comum pensar que o racismo sempre existiu do mesmo jeito. Mas os historiadores mostram que, como forma de hierarquizar pessoas com base em características como cor de pele, o racismo foi <strong>construído socialmente</strong> ao longo do tempo, ganhando novas justificativas e novas formas conforme os interesses de cada época.</p>
+
+  <figure class="figura-charge">
+    <img src="tema5/img3.jpeg" alt="Mito: a escravidão e o racismo sempre existiram desse jeito" onclick="abrirLightbox(this)" style="max-width:100%;">
+    <figcaption>Mito: "a escravidão e o racismo sempre existiram desse jeito" — historiadores provam que essa hierarquia foi construída socialmente</figcaption>
+  </figure>
 
   <h2 class="secao">3. O tráfico negreiro como estrutura econômica</h2>
   <p>A transição para o racismo moderno ocorreu quando as potências europeias passaram a precisar de mão de obra em larga escala para explorar o Novo Mundo. A escravização na África, que já existia por guerras entre povos africanos, foi transformada em uma verdadeira <span class="destaque">"máquina produtora"</span> pela demanda europeia — e o tráfico transatlântico se tornou a principal fonte de riqueza do período colonial brasileiro.</p>
@@ -251,10 +281,20 @@
   <p>No sistema de engenho brasileiro, a monocultura de cana-de-açúcar dependia inteiramente do trabalho escravizado. No século XVII, o padre Antonil descreveu essa dependência de forma direta:</p>
   <blockquote>"[As pessoas escravizadas são] as mãos e os pés do senhor de engenho." — Padre André João Antonil, século XVII</blockquote>
 
+  <figure class="figura-charge">
+    <img src="tema5/img5.jpeg" alt="Siga o dinheiro: o verdadeiro motor da colônia — cana-de-açúcar, mão de obra indígena e o tráfico atlântico" onclick="abrirLightbox(this)" style="max-width:100%;">
+    <figcaption>Siga o dinheiro: o verdadeiro motor da colônia era o tráfico atlântico, a maior fonte de lucro do período</figcaption>
+  </figure>
+
   <h2 class="secao">4. O elo direto com o Tema 4: liberdade sem cidadania</h2>
   <p>Como você viu no tema anterior, a Lei Áurea (1888) encerrou a escravidão como instituição jurídica, mas não criou nenhuma política de terra, trabalho, moradia ou educação para as pessoas libertas. Essa ausência de inclusão social é um dos pontos de partida mais diretos para entender o racismo estrutural no Brasil: a desigualdade herdada da escravidão não foi corrigida — ela foi, em grande parte, mantida e até reforçada nas décadas seguintes.</p>
 
   <p>Na prática, isso significou que a maior parte das pessoas que tinham vivido a experiência da escravidão não conseguiu trabalhar por conta própria nem conquistar um novo emprego. Muitas continuaram na mesma fazenda, no mesmo lugar onde antes eram cativas — só que agora sem qualquer garantia de direitos. Africanos e negros brasileiros, mesmo livres, não passaram a ser tratados como cidadãos plenos no período pós-abolição.</p>
+
+  <figure class="figura-charge">
+    <img src="tema5/img7.jpeg" alt="1888: uma fundação rachada — sem terra, sem trabalho, sem educação" onclick="abrirLightbox(this)" style="max-width:100%;">
+    <figcaption>1888: uma fundação rachada — a Lei Áurea encerrou a escravidão no papel, mas não criou terra, trabalho nem educação para os libertos</figcaption>
+  </figure>
 
   <details class="acordeao">
     <summary>Uma herança que ainda aparece nos números de hoje</summary>
@@ -279,11 +319,31 @@
   </details>
   <p>Vale registrar que nem todo pensador europeu do período endossava essas ideias: quando visitou o Brasil em 1832, o próprio Charles Darwin manifestou indignação com a violência que presenciou contra pessoas escravizadas no Rio de Janeiro, em Recife e em Salvador. Foram outros pensadores da época — como Herbert Spencer, que aplicou noções de evolução biológica ao campo social — que ajudaram a espalhar a ideia de que desigualdades sociais seriam um resultado "natural" e inevitável, isentando de responsabilidade quem se beneficiava delas.</p>
 
+  <figure class="figura-charge">
+    <img src="tema5/img8.jpeg" alt="Século XIX: os pilares da pseudociência — o racismo científico refutado" onclick="abrirLightbox(this)" style="max-width:100%;">
+    <figcaption>Século XIX: os pilares da pseudociência — teorias hoje refutadas, criadas para justificar politicamente a exclusão da população negra</figcaption>
+  </figure>
+
   <h2 class="secao">6. A ideologia do branqueamento</h2>
   <p>Parte da elite brasileira do fim do século XIX e início do XX acreditava que o país precisava "branquear" sua população para se aproximar de um ideal de "progresso" associado à Europa. Isso ajuda a explicar por que o Estado imperial e depois republicano subsidiou fortemente a <strong>imigração europeia</strong> (vista no Tema 4), enquanto não criava políticas equivalentes de inclusão para a população negra recém-liberta.</p>
 
+  <figure class="figura-charge">
+    <img src="tema5/img9.jpeg" alt="Política de Estado: a ideologia do branqueamento" onclick="abrirLightbox(this)" style="max-width:100%;">
+    <figcaption>Política de Estado: o governo subsidiava a imigração europeia enquanto ignorava a população negra recém-liberta</figcaption>
+  </figure>
+
   <h2 class="secao">7. O mito da "democracia racial"</h2>
   <p>Nas décadas de 1930, ganhou força a ideia de que o Brasil seria uma "democracia racial" — um país onde a mestiçagem teria produzido uma convivência harmoniosa entre diferentes grupos, sem racismo relevante. Pesquisas históricas e sociológicas posteriores mostraram que essa ideia funcionou, na prática, para <strong>silenciar</strong> o debate sobre desigualdades raciais reais, dificultando o reconhecimento — e o enfrentamento — do racismo no país.</p>
+
+  <figure class="figura-charge">
+    <img src="tema5/img10.jpeg" alt="A fachada: o mito da democracia racial" onclick="abrirLightbox(this)" style="max-width:100%;">
+    <figcaption>A fachada: o mito da "democracia racial" funcionou como cortina de fumaça para mascarar desigualdades raciais reais</figcaption>
+  </figure>
+
+  <figure class="figura-charge">
+    <img src="tema5/img11.jpeg" alt="A planta baixa do racismo estrutural" onclick="abrirLightbox(this)" style="max-width:100%;">
+    <figcaption>A planta baixa do racismo estrutural: o alicerce da abolição sem cidadania, os pilares do racismo científico e do branqueamento, e a fachada do mito da democracia racial</figcaption>
+  </figure>
 
   <div class="atv-card">
     <div class="atv-card-icone">📹</div>
@@ -297,6 +357,11 @@
 
   <h2 class="secao">8. A mecânica do preconceito: como se convence alguém de que é inferior</h2>
   <p>Dominar um grupo social não acontece só pela força física. Para que um sistema de dominação se sustente por gerações — inclusive sobre grupos que, em número, são maioria — é necessário construir um <span class="destaque">discurso de inferioridade</span> que convença esse grupo, e a sociedade em geral, de que sua cultura, aparência ou religião são inferiores.</p>
+
+  <figure class="figura-charge">
+    <img src="tema5/img6.jpeg" alt="Como justificar o injustificável: as engrenagens da ganância, do discurso e da opressão" onclick="abrirLightbox(this)" style="max-width:100%;">
+    <figcaption>Como justificar o injustificável: a ganância econômica, o discurso de inferiorização e a opressão institucional funcionando juntos</figcaption>
+  </figure>
 
   <details class="acordeao">
     <summary>A piada vem antes da violência</summary>
@@ -314,6 +379,11 @@
   </ul>
   <p>Esses exemplos mostram que aquilo que parece "natural" — seja sobre raça, gênero ou estética — costuma ter uma origem histórica concreta, criada para atender a interesses específicos de cada época.</p>
 
+  <figure class="figura-charge">
+    <img src="tema5/img2.jpeg" alt="Como normalizamos o absurdo: as convenções sobre cor de bebê e vestido de noiva" onclick="abrirLightbox(this)" style="max-width:100%;">
+    <figcaption>Como normalizamos o absurdo: a cor do bebê e o vestido da noiva mostram que a sociedade cria regras artificiais o tempo todo</figcaption>
+  </figure>
+
   <h2 class="secao">10. Resistência e organização negra</h2>
   <ul class="linha-tempo">
     <li><strong>Frente Negra Brasileira (1931):</strong> uma das primeiras organizações políticas negras de massa do país.</li>
@@ -322,6 +392,11 @@
     <li><strong>Dia Nacional da Consciência Negra (20 de novembro):</strong> data em memória de Zumbi dos Palmares, líder do Quilombo dos Palmares, marcada até hoje por atos e homenagens em todo o país, como a tradicional lavagem de sua estátua em Salvador.</li>
   </ul>
   <p>Essa mobilização também transformou a cultura e a presença negra no espaço público: cresceu o número de artistas e grupos musicais que tratam da luta contra o racismo, novelas passaram a mostrar famílias negras — algo raro até poucas décadas atrás — e aumentou o número de professores e pesquisadores negros dedicados a rever criticamente as antigas teorias "científicas" que serviram para justificar o racismo.</p>
+
+  <figure class="figura-charge">
+    <img src="tema5/img12.jpeg" alt="A equipe de desconstrução: o Movimento Negro" onclick="abrirLightbox(this)" style="max-width:100%;">
+    <figcaption>A equipe de desconstrução: Frente Negra Brasileira (1931), Teatro Experimental do Negro (1944) e Movimento Negro Unificado (1978)</figcaption>
+  </figure>
 
   <h2 class="secao">11. Marcos legais de enfrentamento ao racismo</h2>
   <p>Ao longo das últimas décadas, o Brasil construiu instrumentos legais para reconhecer e combater o racismo:</p>
@@ -333,6 +408,11 @@
     <li><strong>Políticas de cotas raciais</strong> em universidades e concursos públicos, a partir dos anos 2000.</li>
   </ul>
 
+  <figure class="figura-charge">
+    <img src="tema5/img13.jpeg" alt="As ferramentas de demolição: marcos legais no combate ao racismo" onclick="abrirLightbox(this)" style="max-width:100%;">
+    <figcaption>As ferramentas de demolição: os marcos legais que tornaram o racismo crime e ampliaram o acesso à educação e à universidade</figcaption>
+  </figure>
+
   <details class="acordeao">
     <summary>O que são "ações afirmativas"?</summary>
     <p>Ações afirmativas são medidas especiais que visam combater desigualdades históricas, rompendo com discriminações raciais, étnicas, religiosas, de gênero, entre outras. As políticas de cotas raciais são um exemplo direto: elas não "criam" um privilégio, mas buscam compensar um ponto de partida desigual, herdado justamente da falta de reformas sociais após a abolição, discutida na seção 4.</p>
@@ -341,6 +421,16 @@
 
   <h2 class="secao">Síntese: por que isso importa hoje</h2>
   <p>Compreender o racismo como um processo histórico — e não como algo natural ou sempre igual — permite enxergar suas raízes concretas: a diferença entre a escravidão antiga e a escravidão racializada moderna, o tráfico negreiro como estrutura econômica, a abolição sem reforma social, as teorias raciais do século XIX, o projeto de branqueamento, o silenciamento promovido pelo mito da democracia racial e os mecanismos simbólicos que sustentam qualquer sistema de dominação. Ao mesmo tempo, os dados sobre desigualdade que ainda hoje separam negros e brancos no Brasil mostram que essa não é uma história fechada no passado: é um processo que continua sendo enfrentado por meio da mobilização social e de instrumentos legais como as ações afirmativas. Reconhecer essas origens é o primeiro passo para entender as desigualdades que ainda hoje marcam a sociedade brasileira — e para valorizar as histórias de resistência que sempre existiram ao lado delas.</p>
+
+  <figure class="figura-charge">
+    <img src="tema5/img14.jpeg" alt="Verifique seu projeto: o conceito e a realidade" onclick="abrirLightbox(this)" style="max-width:100%;">
+    <figcaption>Verifique seu projeto: a abolição de 1888, o mito da democracia racial e o racismo científico frente à realidade histórica</figcaption>
+  </figure>
+
+  <figure class="figura-charge">
+    <img src="tema5/img15.jpeg" alt="Se foi construído, pode ser demolido" onclick="abrirLightbox(this)" style="max-width:100%;">
+    <figcaption>Se foi construído, pode ser demolido: o racismo é uma invenção humana — e a postura antirracista é a escolha ativa de ajudar a demoli-la</figcaption>
+  </figure>
 
   <h2 class="secao">Termos-chave desta aula</h2>
   <div class="grade-termos">
@@ -467,6 +557,15 @@
   </div>
 
 </main>
+
+<div class="lightbox-overlay" id="lightbox-overlay" onclick="fecharLightbox(event)">
+  <button class="lightbox-fechar" onclick="fecharLightbox(event)" aria-label="Fechar">✕</button>
+  <div class="lightbox-conteudo" id="lightbox-conteudo">
+    <img id="lightbox-img" src="" alt="" onclick="alternarZoom(event)">
+    <p class="lightbox-legenda" id="lightbox-legenda"></p>
+    <p class="lightbox-dica" id="lightbox-dica">🔍 Toque na imagem para ampliar</p>
+  </div>
+</div>
 
 <div style="max-width:820px; margin:0 auto 40px; padding:0 20px; text-align:center;">
   <a href="atividade-tema5.html" target="_blank" style="display:inline-block; font-family:'Inter',sans-serif; font-weight:600; font-size:.88rem; color:var(--dourado-2); background:var(--verde); padding:12px 28px; border-radius:30px; text-decoration:none; box-shadow:0 4px 14px rgba(27,67,50,.3);">
@@ -662,6 +761,46 @@
   window.addEventListener('resize', fecharDropdown);
 
   iniciarJogoArrastar();
+</script>
+
+<script>
+  /* ───── LIGHTBOX ───── */
+  function abrirLightbox(imgEl){
+    const overlay = document.getElementById('lightbox-overlay');
+    const conteudo = document.getElementById('lightbox-conteudo');
+    const imgGrande = document.getElementById('lightbox-img');
+    const legenda = document.getElementById('lightbox-legenda');
+    const dica = document.getElementById('lightbox-dica');
+    const figcaptionEl = imgEl.closest('figure') ? imgEl.closest('figure').querySelector('figcaption') : null;
+    imgGrande.src = imgEl.src;
+    imgGrande.alt = imgEl.alt;
+    legenda.innerHTML = figcaptionEl ? figcaptionEl.innerHTML : '';
+    conteudo.classList.remove('zoom-ativo');
+    dica.textContent = '🔍 Toque na imagem para ampliar';
+    overlay.classList.add('aberto');
+  }
+  function alternarZoom(e){
+    e.stopPropagation();
+    const conteudo = document.getElementById('lightbox-conteudo');
+    const dica = document.getElementById('lightbox-dica');
+    conteudo.classList.toggle('zoom-ativo');
+    dica.textContent = conteudo.classList.contains('zoom-ativo')
+      ? '🔍 Arraste para ver os detalhes · toque para reduzir'
+      : '🔍 Toque na imagem para ampliar';
+  }
+  function fecharLightbox(e){
+    if (e.target.id === 'lightbox-overlay' || e.target.closest('.lightbox-fechar')){
+      const overlay = document.getElementById('lightbox-overlay');
+      overlay.classList.remove('aberto');
+      document.getElementById('lightbox-conteudo').classList.remove('zoom-ativo');
+    }
+  }
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape'){
+      document.getElementById('lightbox-overlay').classList.remove('aberto');
+      document.getElementById('lightbox-conteudo').classList.remove('zoom-ativo');
+    }
+  });
 </script>
 
 <script>
