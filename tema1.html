@@ -123,6 +123,21 @@
   .rodape-nav a{text-decoration:none; color:var(--verde); font-weight:600;}
   .rodape-nav a.central{color:var(--bordo);}
 
+  /* ───── Galeria de Imagens com Zoom ───── */
+  .figura-charge{background:var(--paper); border:1px solid var(--linha); border-radius:12px; padding:16px 16px 14px; margin:18px 0;}
+  .figura-charge img{display:block; width:100%; max-width:500px; height:auto; margin:0 auto; border-radius:8px; border:1px solid var(--linha); cursor:zoom-in; transition:opacity .15s ease;}
+  .figura-charge img:hover{opacity:.85;}
+  .figura-charge figcaption{margin-top:10px; text-align:center; font-family:'Inter',sans-serif; font-size:.78rem; color:var(--ink-soft); font-style:italic;}
+  .lightbox-overlay{display:none; position:fixed; inset:0; z-index:9999; background:rgba(20,14,8,.86); align-items:center; justify-content:center; padding:24px; cursor:zoom-out;}
+  .lightbox-overlay.aberto{display:flex;}
+  .lightbox-conteudo{max-width:min(90vw,720px); max-height:90vh; display:flex; flex-direction:column; align-items:center; cursor:default;}
+  .lightbox-conteudo img{max-width:100%; max-height:78vh; width:auto; border-radius:8px; border:2px solid var(--dourado); box-shadow:0 20px 50px rgba(0,0,0,.5); cursor:zoom-in; transition:max-width .2s ease, max-height .2s ease;}
+  .lightbox-conteudo.zoom-ativo{max-width:94vw; max-height:94vh; overflow:auto; align-items:flex-start; justify-content:flex-start; cursor:auto;}
+  .lightbox-conteudo.zoom-ativo img{max-width:none; max-height:none; width:1400px; cursor:zoom-out;}
+  .lightbox-legenda{margin-top:12px; text-align:center; font-family:'Inter',sans-serif; font-size:.82rem; color:#fff; font-style:italic; max-width:600px;}
+  .lightbox-fechar{position:absolute; top:18px; right:22px; width:40px; height:40px; border-radius:50%; background:var(--paper); border:2px solid var(--dourado); color:var(--verde); font-size:1.3rem; font-weight:700; cursor:pointer; display:flex; align-items:center; justify-content:center; line-height:1;}
+  .lightbox-dica{margin-top:6px; font-family:'Inter',sans-serif; font-size:.7rem; color:var(--dourado-2); text-align:center;}
+
   /* ── Cartão de atividade complementar (PDF externo) ─────────────── */
   .atv-card{display:flex; align-items:center; gap:14px; background:var(--paper); border:1px solid var(--linha); border-left:5px solid var(--verde-2); border-radius:10px; padding:14px 16px; margin:18px 0;}
   .atv-card-icone{font-size:1.7rem; flex:none; line-height:1;}
@@ -227,6 +242,11 @@
     <p class="bncc">Alinhado à habilidade da BNCC EF08HI15: definir o conceito de nação e analisar o processo de Independência do Brasil, identificando contradições e sujeitos envolvidos.</p>
   </div>
 
+  <figure class="figura-charge">
+    <img src="tema1/img1.jpeg" alt="O Quebra-Cabeça do Brasil: afinal, o que nos faz ser uma nação?" onclick="abrirLightbox(this)" style="max-width:100%;">
+    <figcaption>O quebra-cabeça do Brasil: afinal, o que nos faz ser uma nação?</figcaption>
+  </figure>
+
   <a class="video-simples" href="https://youtu.be/G-kZF7glKCo" target="_blank" rel="noopener">
     <span class="video-simples-icone">▶</span>
     <span class="video-simples-texto">Assista à vídeo-aula resumo no YouTube</span>
@@ -271,6 +291,11 @@
     <div class="peca"><strong>Território</strong><p>O palco geográfico: o espaço físico delimitado por fronteiras onde essa autoridade é exercida.</p></div>
   </div>
 
+  <figure class="figura-charge">
+    <img src="tema1/img3.jpeg" alt="A fórmula de um país soberano: Nação + Estado + Território" onclick="abrirLightbox(this)" style="max-width:100%;">
+    <figcaption>A fórmula de um país soberano: Nação + Estado + Território precisam funcionar juntas</figcaption>
+  </figure>
+
   <h2 class="secao">3. Nação e Estado: em que se diferenciam</h2>
   <p>É comum confundir esses dois conceitos, mas eles não são a mesma coisa:</p>
   <div class="tabela-scroll">
@@ -282,6 +307,11 @@
   </table>
   </div>
 
+  <figure class="figura-charge">
+    <img src="tema1/img4.jpeg" alt="O edifício e os moradores: Nação x Estado" onclick="abrirLightbox(this)" style="max-width:100%;">
+    <figcaption>O edifício e os moradores: comparando o que une as pessoas na Nação e no Estado</figcaption>
+  </figure>
+
   <details class="acordeao">
     <summary>Nações que existem além das fronteiras de um Estado</summary>
     <div class="mapa-lutas">
@@ -291,6 +321,11 @@
       <div class="lugar"><h4>Palestinos</h4><p>Uma nação com forte identidade que reivindica ativamente a formação da estrutura política do seu próprio Estado.</p></div>
     </div>
   </details>
+
+  <figure class="figura-charge">
+    <img src="tema1/img5.jpeg" alt="Nações sem um país próprio: Curdos, Ciganos, Palestinos e Judeus até 1948" onclick="abrirLightbox(this)" style="max-width:100%;">
+    <figcaption>Nações sem um país próprio? Sim — Curdos, Ciganos, Palestinos e Judeus (até 1948) são exemplos históricos</figcaption>
+  </figure>
 
   <h2 class="secao">4. Estado e Governo também não são sinônimos</h2>
   <p>O Estado é o edifício; o governo é apenas quem o administra por um tempo. O <strong>Estado</strong> é a estrutura permanente que mantém instituições, leis e exército. Já o <strong>governo</strong> é o grupo que comanda o Estado por um período específico, mudando conforme eleições ou regimes políticos.</p>
@@ -308,10 +343,20 @@
     <p>Esse processo aproxima o Brasil, na prática, de uma futura separação política — mesmo sem que isso fosse a intenção original de Dom João VI.</p>
   </details>
 
+  <figure class="figura-charge">
+    <img src="tema1/img6.jpeg" alt="1808: a colônia sobe de nível — antes e depois da chegada da Corte" onclick="abrirLightbox(this)" style="max-width:100%;">
+    <figcaption>1808: a colônia sobe de nível — a máquina do Estado começa a ser montada com a chegada da Corte portuguesa</figcaption>
+  </figure>
+
   <h2 class="secao">6. O processo de Independência (1822)</h2>
   <p>Com o retorno de Dom João VI a Portugal em 1821, seu filho Dom Pedro permanece como príncipe regente do Brasil. As Cortes portuguesas tentam recolonizar o Brasil, exigindo o retorno de Dom Pedro. Diante da pressão de grupos locais — sobretudo a elite proprietária de terras — Dom Pedro decide romper com Portugal.</p>
   <blockquote>7 de setembro de 1822 — às margens do rio Ipiranga, em São Paulo, Dom Pedro proclama a Independência do Brasil.</blockquote>
   <p>É importante notar que essa independência foi conduzida <strong>pelas elites</strong>, sem ruptura da estrutura social: a escravidão continuou, a monarquia foi mantida e grande parte da população não participou da decisão.</p>
+
+  <figure class="figura-charge">
+    <img src="tema1/img7.jpeg" alt="1822: ganhamos um Estado, e a nação? Ruptura política sem ruptura social" onclick="abrirLightbox(this)" style="max-width:100%;">
+    <figcaption>1822: ganhamos um Estado — mas foi uma ruptura política liderada pelas elites, sem ruptura social</figcaption>
+  </figure>
 
   <div class="atv-card">
     <div class="atv-card-icone">📄</div>
@@ -337,6 +382,11 @@
     </ul>
   </details>
 
+  <figure class="figura-charge">
+    <img src="tema1/img8.jpeg" alt="1824: as regras do jogo impostas — a Constituição outorgada e o Poder Moderador" onclick="abrirLightbox(this)" style="max-width:100%;">
+    <figcaption>1824: as regras do jogo impostas — a Constituição outorgada criou o Poder Moderador, exclusivo do Imperador</figcaption>
+  </figure>
+
   <div class="atv-card">
     <div class="atv-card-icone">📄</div>
     <div class="atv-card-texto">
@@ -349,7 +399,19 @@
 
   <h2 class="secao">9. Quem ficou de fora da nação?</h2>
   <p>A Constituição de 1824 separava dois grupos que, muitas vezes, confundimos hoje: a <strong>população</strong> — todas as pessoas que simplesmente viviam no território — e o <strong>"povo"</strong> — o conjunto restrito de cidadãos reconhecidos, com voz ativa na vida pública. Nem todo habitante era, oficialmente, parte do "povo".</p>
+
+  <figure class="figura-charge">
+    <img src="tema1/img10.jpeg" alt="Nem todo habitante era 'Povo': população x povo na Constituição de 1824" onclick="abrirLightbox(this)" style="max-width:100%;">
+    <figcaption>Nem todo habitante era "povo": a população era todo mundo no território, mas o povo era o conjunto restrito com direitos políticos</figcaption>
+  </figure>
+
   <p>O voto censitário marginalizava mulheres, negros escravizados, indígenas e a maior parte dos homens pobres e livres do processo de decisão política. Ou seja: a "nação" que nascia em 1822 incluía juridicamente apenas uma pequena parcela da população — a elite proprietária de terras e de pessoas escravizadas.</p>
+
+  <figure class="figura-charge">
+    <img src="tema1/img9.jpeg" alt="O filtro de 1824: o voto censitário excluía mulheres, negros escravizados, indígenas e homens pobres" onclick="abrirLightbox(this)" style="max-width:100%;">
+    <figcaption>O filtro de 1824: o voto censitário reduzia os 100% da população brasileira a um pequeno grupo de eleitores</figcaption>
+  </figure>
+
   <p>Economicamente, o país seguia dependente: a economia agroexportadora (açúcar, algodão e, cada vez mais, café) sustentava-se no trabalho escravo, e o Brasil mantinha forte dependência comercial e financeira em relação à Inglaterra.</p>
 
   <div class="atv-card">
@@ -371,6 +433,11 @@
   <h2 class="secao">11. Nações vivas dentro do Estado brasileiro</h2>
   <p>Os povos indígenas são o exemplo mais direto de nações sem Estado próprio operando dentro das fronteiras do Brasil. Eles possuem identidades, línguas e organizações sociais seculares, muito anteriores à formação jurídica do Estado brasileiro. Estão submetidos às leis do Estado, mas lutam ativamente pelo reconhecimento de seus territórios — as demarcações — para proteger sua existência enquanto povos e culturas.</p>
 
+  <figure class="figura-charge">
+    <img src="tema1/img11.jpeg" alt="As nações vivas dentro do Brasil: povos indígenas e suas terras" onclick="abrirLightbox(this)" style="max-width:100%;">
+    <figcaption>As nações vivas dentro do Brasil: os povos indígenas existiam muito antes da formação jurídica do Estado, em 1822</figcaption>
+  </figure>
+
   <h2 class="secao">12. 1822 resolveu a soberania, mas não formou a nação</h2>
   <ul class="linha-tempo">
     <li><strong>1500–1822:</strong> o Brasil é colônia — nem Estado soberano, nem nação unificada.</li>
@@ -378,6 +445,11 @@
     <li><strong>Ao longo do século XIX:</strong> a identidade de "povo brasileiro" segue em construção lenta, dificultada pela manutenção da escravidão e das desigualdades sociais.</li>
   </ul>
   <p>Criar leis é rápido; forjar uma identidade comum é lento — e é exatamente essa diferença de ritmo que explica por que 1822 resolveu a soberania do país, mas não completou, sozinho, a construção da nação brasileira.</p>
+
+  <figure class="figura-charge">
+    <img src="tema1/img12.jpeg" alt="A equação incompleta: Nação fraturada + Estado + Território = projeto inacabado" onclick="abrirLightbox(this)" style="max-width:100%;">
+    <figcaption>A equação incompleta: a soberania foi resolvida em 1822, mas a escravidão e as desigualdades fraturaram a nação</figcaption>
+  </figure>
 
   <div class="atv-card">
     <div class="atv-card-icone">📄</div>
@@ -396,13 +468,30 @@
     <div class="passo"><span class="num">3</span><p>A nação brasileira — que exige a garantia de direitos plenos aos cidadãos, o respeito às nações indígenas e a construção de uma identidade justa — é um projeto histórico inacabado, que continuamos erguendo todos os dias.</p></div>
   </div>
 
+  <figure class="figura-charge">
+    <img src="tema1/img13.jpeg" alt="Síntese: nação é um verbo em construção — colônia, independência e o desafio atual" onclick="abrirLightbox(this)" style="max-width:100%;">
+    <figcaption>Síntese: nação é um verbo em construção — da colônia à Independência, um projeto ainda em andamento</figcaption>
+  </figure>
+
   <div class="leitura-complementar">
     <div class="leitura-eyebrow">Leitura complementar</div>
     <h3>"Eu sou brasileiro": o grito da torcida e o sentimento de pertencer a uma nação</h3>
     <p>Esse projeto inacabado de nação também aparece hoje, de formas inesperadas — como no grito de uma torcida de futebol. Quando a Seleção entra em campo, um canto atravessa gerações nas arquibancadas e nas ruas: "Eu sou brasileiro, com muito orgulho, com muito amor". O refrão nasceu como um jingle das transmissões da TV Globo e virou um canto obrigatório nos estádios, representando a paixão incondicional do torcedor pela seleção.</p>
+
+    <figure class="figura-charge">
+      <img src="tema1/img2.jpeg" alt="Mais do que futebol: o que é esse sentimento de ser brasileiro?" onclick="abrirLightbox(this)" style="max-width:100%;">
+      <figcaption>Mais do que futebol: pesquisadores mostram que o grito da torcida é um sentimento de pertencer a uma nação</figcaption>
+    </figure>
+
     <p>Mas por que milhões de pessoas, que nunca se encontraram pessoalmente, cantam a mesma frase, ao mesmo tempo, com o mesmo sentimento? Pesquisadores que estudam a linguagem das torcidas mostram que esse grito não fala só de futebol. Ele funciona como uma espécie de "grito de guerra" coletivo, no qual o torcedor reafirma seu orgulho de pertencer ao mesmo povo que a Seleção representa em campo.</p>
     <p>É exatamente esse sentimento que os historiadores chamam de <strong>nação</strong>: um grupo de pessoas que não se conhece pessoalmente, mas que se reconhece como parte do mesmo povo, unido por uma história, uma cultura e símbolos compartilhados — a bandeira, o hino, a camisa amarela e, também, um grito de torcida cantado em coro.</p>
     <p>Por isso, da próxima vez que você ouvir (ou cantar) esse refrão, vale parar e pensar: esse orgulho de ser brasileiro existe só quando o time vence? Ou ele diz respeito a algo mais profundo — o sentimento de pertencer a um povo, mesmo nos momentos difíceis?</p>
+
+    <figure class="figura-charge">
+      <img src="tema1/img14.jpeg" alt="A obra continua: e você é o construtor da nação brasileira" onclick="abrirLightbox(this)" style="max-width:100%;">
+      <figcaption>A obra continua — e você é o construtor: a nação não ficou pronta nas leis de 1824, é algo que seguimos erguendo</figcaption>
+    </figure>
+
     <div class="referencias">
       <p class="ref-titulo">Referências</p>
       <p class="ref-item">CAIXETA, Schneider Pereira; PAULA, Luciane de. <strong>O orgulho de ser brasileiro</strong>: significação e tema. Grupo de Estudos Discursivos (GED), 6 jul. 2014. Disponível em: https://gediscursivos.wordpress.com/2014/07/06/o-orgulho-de-ser-brasileiro-significacao-e-tema/. Acesso em: 6 jul. 2026.</p>
@@ -492,6 +581,15 @@
 
 </main>
 
+<div class="lightbox-overlay" id="lightbox-overlay" onclick="fecharLightbox(event)">
+  <button class="lightbox-fechar" onclick="fecharLightbox(event)" aria-label="Fechar">✕</button>
+  <div class="lightbox-conteudo" id="lightbox-conteudo">
+    <img id="lightbox-img" src="" alt="" onclick="alternarZoom(event)">
+    <p class="lightbox-legenda" id="lightbox-legenda"></p>
+    <p class="lightbox-dica" id="lightbox-dica">🔍 Toque na imagem para ampliar</p>
+  </div>
+</div>
+
 <nav class="rodape-nav">
   <span></span>
   <a class="central" href="index.html" target="_parent">↑ Voltar ao início da trilha</a>
@@ -509,6 +607,46 @@
     📖 Consultar o Glossário
   </a>
 </div>
+
+<script>
+  /* ───── LIGHTBOX ───── */
+  function abrirLightbox(imgEl){
+    const overlay = document.getElementById('lightbox-overlay');
+    const conteudo = document.getElementById('lightbox-conteudo');
+    const imgGrande = document.getElementById('lightbox-img');
+    const legenda = document.getElementById('lightbox-legenda');
+    const dica = document.getElementById('lightbox-dica');
+    const figcaptionEl = imgEl.closest('figure') ? imgEl.closest('figure').querySelector('figcaption') : null;
+    imgGrande.src = imgEl.src;
+    imgGrande.alt = imgEl.alt;
+    legenda.innerHTML = figcaptionEl ? figcaptionEl.innerHTML : '';
+    conteudo.classList.remove('zoom-ativo');
+    dica.textContent = '🔍 Toque na imagem para ampliar';
+    overlay.classList.add('aberto');
+  }
+  function alternarZoom(e){
+    e.stopPropagation();
+    const conteudo = document.getElementById('lightbox-conteudo');
+    const dica = document.getElementById('lightbox-dica');
+    conteudo.classList.toggle('zoom-ativo');
+    dica.textContent = conteudo.classList.contains('zoom-ativo')
+      ? '🔍 Arraste para ver os detalhes · toque para reduzir'
+      : '🔍 Toque na imagem para ampliar';
+  }
+  function fecharLightbox(e){
+    if (e.target.id === 'lightbox-overlay' || e.target.closest('.lightbox-fechar')){
+      const overlay = document.getElementById('lightbox-overlay');
+      overlay.classList.remove('aberto');
+      document.getElementById('lightbox-conteudo').classList.remove('zoom-ativo');
+    }
+  }
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape'){
+      document.getElementById('lightbox-overlay').classList.remove('aberto');
+      document.getElementById('lightbox-conteudo').classList.remove('zoom-ativo');
+    }
+  });
+</script>
 
 <script>
   document.querySelectorAll('.pergunta').forEach(bloco => {
