@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vozes do Presente — A Unidade Territorial do Brasil | CERO</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<style>
+  :root{
+    --bg:#f5f0fa;
+    --bg-alt:#ece2f5;
+    --paper:#fffcff;
+    --ink:#2e2438;
+    --ink-soft:#6b5b7d;
+    --lilas:#9b6bc7;
+    --lilas-dark:#6b3fa0;
+    --lilas-2:#b98fe0;
+    --gold:#a6863f;
+    --gold-light:#ddc9a3;
+    --line:#ddd0ea;
+    --shadow:0 10px 30px rgba(107,63,160,.16);
+    --radius:14px;
+    --verde-ok:#3f9142;
+    --vermelho-erro:#c0392b;
+    --font-title:'Playfair Display', serif;
+    --font-body:'Source Serif 4', serif;
+    --font-mono:'JetBrains Mono', monospace;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:var(--font-body);
+    line-height:1.7;
+    -webkit-touch-callout:none;
+    user-select:none;
+  }
+  .selecionavel, main{user-select:text;}
+
+  /* ===== CAPA / GATE ===== */
+  #capa{
+    min-height:100vh;
+    display:flex; align-items:center; justify-content:center;
+    position:relative;
+    overflow:hidden;
+    background:linear-gradient(to bottom, #2e1a44, #5c3480, #9b6bc7);
+    padding:24px;
+  }
+  #capa .grade-centralizada{
+    position:absolute;
+    top:0; bottom:0; left:50%;
+    transform:translateX(-50%);
+    width:100%;
+    max-width:896px;
+    pointer-events:none;
+    z-index:0;
+    opacity:.08;
+    background:
+      repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(255,255,255,.5) 39px, rgba(255,255,255,.5) 40px),
+      repeating-linear-gradient(90deg, transparent, transparent 39px, rgba(255,255,255,.5) 39px, rgba(255,255,255,.5) 40px);
+    background-size:40px 40px;
+  }
+  .capa-card{
+    position:relative;
+    z-index:1;
+    background:var(--paper);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    max-width:480px;
+    width:100%;
+    padding:36px 32px;
+    text-align:center;
+  }
+  .capa-card .tag{
+    display:inline-block; font-family:var(--font-mono); font-size:.7rem;
+    letter-spacing:.1em; text-transform:uppercase; color:var(--lilas-dark);
+    background:rgba(107,63,160,.1); padding:5px 12px; border-radius:999px; margin-bottom:14px;
+  }
+  .capa-card h1{font-family:var(--font-title); font-size:1.6rem; margin:0 0 10px; color:var(--lilas-dark);}
+  .capa-card p.desc{color:var(--ink-soft); font-size:.94rem; margin:0 0 22px;}
+  .capa-card input{
+    width:100%; padding:12px 14px; border:1px solid var(--line); border-radius:8px;
+    font-family:var(--font-body); font-size:1rem; margin-bottom:14px;
+  }
+  .capa-card button{
+    width:100%; padding:13px; border:none; border-radius:8px;
+    background:var(--lilas-dark); color:#fff; font-weight:600; font-size:1rem; cursor:pointer;
+    font-family:var(--font-body); transition:filter .15s ease;
+  }
+  .capa-card button:hover{filter:brightness(1.08);}
+  .capa-aviso{font-size:.78rem; color:#a33; margin-top:8px; display:none;}
+
+  /* ===== APP ===== */
+  #app{display:none;}
+  .sticky-header{
+    position:sticky; top:0; z-index:50;
+    background:var(--lilas-dark); color:#f5edfc;
+    padding:12px 20px; display:flex; align-items:center; justify-content:space-between;
+    flex-wrap:wrap; gap:8px;
+    font-family:var(--font-mono); font-size:.82rem;
+  }
+  .sticky-header .aluno{font-family:var(--font-body); font-weight:600; font-size:.92rem;}
+  .barra-progresso-trilho{
+    flex:1; min-width:120px; height:8px; background:rgba(255,255,255,.2); border-radius:6px; overflow:hidden; margin:0 14px;
+  }
+  .barra-progresso-fill{height:100%; background:var(--gold); width:0%; transition:width .3s ease;}
+
+  .wrap{max-width:800px; margin:0 auto; padding:32px 24px 60px;}
+
+  header.topo{margin-bottom:28px;}
+  header.topo .hero-tag{
+    display:inline-block; font-family:var(--font-mono); font-size:.72rem;
+    letter-spacing:.1em; text-transform:uppercase; color:var(--lilas-dark);
+    background:rgba(107,63,160,.1); padding:5px 12px; border-radius:999px; margin-bottom:12px;
+  }
+  header.topo h1{font-family:var(--font-title); font-size:clamp(1.5rem,4vw,2rem); margin:0 0 8px; color:var(--ink);}
+  header.topo p.sub{color:var(--ink-soft); margin:0; font-size:.98rem;}
+  .descritor-bar{
+    font-family:var(--font-mono); font-size:.76rem; color:var(--ink-soft);
+    background:var(--paper); border:1px solid var(--line); border-radius:8px;
+    padding:8px 14px; margin-bottom:14px; display:inline-block;
+  }
+  .ficha-id{
+    display:flex; flex-wrap:wrap; gap:10px 26px;
+    background:var(--paper); border:1px solid var(--line); border-radius:10px;
+    padding:12px 16px; margin-top:12px; font-family:var(--font-mono); font-size:.84rem; color:var(--ink);
+  }
+  .ficha-id span b{color:var(--lilas-dark);}
+
+  /* ===== TEXTO DE APOIO ===== */
+  .texto-apoio{
+    background:var(--paper); border:1px solid var(--line); border-radius:var(--radius);
+    box-shadow:var(--shadow); padding:28px 30px; margin-bottom:30px;
+  }
+  .texto-apoio h2{font-family:var(--font-title); font-size:1.25rem; color:var(--lilas-dark); margin:0 0 4px;}
+  .texto-apoio .fonte-tag{font-family:var(--font-mono); font-size:.72rem; color:var(--ink-soft); margin-bottom:16px; display:block;}
+  .texto-apoio p{margin:0 0 14px; color:var(--ink);}
+  .texto-apoio p:last-of-type{margin-bottom:0;}
+  .texto-apoio p strong{color:var(--lilas-dark);}
+
+  /* ===== QUESTOES OBJETIVAS ===== */
+  .questoes-titulo{
+    font-family:var(--font-title); font-size:1.2rem; color:var(--lilas-dark);
+    margin:0 0 18px; display:flex; align-items:center; gap:10px;
+  }
+  .questao-obj{
+    background:var(--paper); border:1px solid var(--line); border-radius:12px;
+    padding:20px 22px; margin-bottom:18px;
+  }
+  .questao-obj .num-q{
+    display:inline-flex; align-items:center; justify-content:center;
+    width:26px; height:26px; border-radius:50%; background:var(--lilas-dark);
+    color:#fff; font-family:var(--font-mono); font-size:.78rem; margin-right:8px; flex-shrink:0;
+  }
+  .questao-obj .enunciado{font-weight:600; color:var(--ink); margin-bottom:6px; display:flex; align-items:flex-start;}
+  .instrucao-multipla{
+    font-family:var(--font-mono); font-size:.72rem; color:var(--lilas-dark); text-transform:uppercase;
+    letter-spacing:.06em; margin:0 0 12px 34px;
+  }
+
+  .alternativas{display:flex; flex-direction:column; gap:10px; margin-top:12px;}
+  .alt{
+    display:flex; align-items:flex-start; gap:12px; padding:12px 14px;
+    border:1.5px solid var(--line); border-radius:8px; cursor:pointer; transition:all .15s ease;
+  }
+  .alt:hover{border-color:var(--lilas-2); background:var(--bg-alt);}
+  .alt .rotulo{
+    flex-shrink:0; width:28px; height:28px; border-radius:8px; border:1.5px solid var(--line);
+    display:flex; align-items:center; justify-content:center; font-family:var(--font-mono);
+    font-size:.76rem; font-weight:700; color:var(--ink-soft); transition:all .15s ease;
+  }
+  .alt[data-tipo="unica"] .rotulo{border-radius:50%;}
+  .alt .texto{font-size:.94rem; color:var(--ink); line-height:1.5; padding-top:3px;}
+  .alt.selecionada{border-color:var(--lilas-dark); background:var(--bg-alt);}
+  .alt.selecionada .rotulo{background:var(--lilas-dark); color:#fff; border-color:var(--lilas-dark);}
+  .alt.correta{border-color:var(--verde-ok); background:#eaf6ee;}
+  .alt.correta .rotulo{background:var(--verde-ok); color:#fff; border-color:var(--verde-ok);}
+  .alt.incorreta{border-color:var(--vermelho-erro); background:#fbeceb;}
+  .alt.incorreta .rotulo{background:var(--vermelho-erro); color:#fff; border-color:var(--vermelho-erro);}
+  .questao-obj.bloqueada .alt{cursor:default;}
+  .questao-obj.bloqueada .alt:hover{border-color:var(--line); background:transparent;}
+  .questao-obj.bloqueada .alt.selecionada:hover{border-color:var(--lilas-dark); background:var(--bg-alt);}
+  .questao-obj.bloqueada .alt.correta:hover{border-color:var(--verde-ok); background:#eaf6ee;}
+  .questao-obj.bloqueada .alt.incorreta:hover{border-color:var(--vermelho-erro); background:#fbeceb;}
+
+  .comentario-prof{
+    display:none; margin-top:14px; padding:14px 16px;
+    background:#eef0fb; border:1px solid #c9cdf0; border-radius:8px; font-size:.9rem; color:var(--lilas-dark);
+  }
+  .comentario-prof.show{display:block;}
+  .comentario-prof b{display:block; margin-bottom:4px; font-family:var(--font-title); font-size:.92rem;}
+
+  /* ===== ALERTA / FINALIZAR ===== */
+  .alerta-incompleto{
+    display:none; background:#fdf3e2; border:1px solid #f1d9a6; color:#8a5a10;
+    padding:12px 16px; border-radius:8px; font-size:.9rem; margin-bottom:16px;
+  }
+  .alerta-incompleto.show{display:block;}
+
+  .acoes-finais{display:flex; gap:12px; flex-wrap:wrap; margin-top:10px;}
+  .btn{
+    font-family:var(--font-body); font-weight:600; font-size:.94rem; padding:12px 22px;
+    border-radius:8px; border:none; cursor:pointer; transition:filter .15s ease;
+  }
+  .btn:hover{filter:brightness(1.08);}
+  .btn-primario{background:var(--lilas-dark); color:#fff;}
+  .btn-secundario{background:transparent; color:var(--ink); border:1px solid var(--line);}
+  .btn-pdf{background:var(--gold); color:#fff;}
+  .btn[disabled]{opacity:.5; cursor:not-allowed;}
+
+  /* ===== POPUP ===== */
+  .popup-overlay{
+    display:none; position:fixed; inset:0; background:rgba(46,26,68,.6);
+    align-items:center; justify-content:center; z-index:200; padding:20px;
+  }
+  .popup-overlay.show{display:flex;}
+  .popup-card{
+    background:var(--paper); border-radius:var(--radius); box-shadow:var(--shadow);
+    max-width:420px; width:100%; padding:32px 28px; text-align:center;
+  }
+  .popup-card .emoji{font-size:2.4rem; margin-bottom:10px;}
+  .popup-card h3{font-family:var(--font-title); margin:0 0 8px; color:var(--lilas-dark);}
+  .popup-card p{color:var(--ink-soft); font-size:.94rem; margin:0 0 20px;}
+  .popup-card .placar{
+    font-family:var(--font-mono); font-size:1.6rem; font-weight:700; color:var(--lilas-dark); margin:0 0 6px;
+  }
+
+  footer.rodape{text-align:center; padding:24px; color:var(--ink-soft); font-family:var(--font-mono); font-size:.8rem;}
+
+  @media (max-width:600px){
+    .wrap{padding:24px 16px 50px;}
+    .texto-apoio, .questao-obj{padding:18px 18px;}
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== CAPA ===== -->
+<div id="capa">
+  <div class="grade-centralizada"></div>
+  <div class="capa-card">
+    <span class="tag">8º ano · História · CERO</span>
+    <h1>Vozes do Presente: A Unidade Territorial do Brasil</h1>
+    <p class="desc">Leia o texto e responda às questões objetivas. Preencha os dados para começar.</p>
+    <input type="text" id="nome-aluno" placeholder="Seu nome completo">
+    <input type="text" id="turma-aluno" placeholder="Turma (ex.: 8º A)">
+    <button onclick="iniciarAtividade()">Iniciar atividade</button>
+    <div class="capa-aviso" id="capa-aviso">Por favor, digite seu nome para continuar.</div>
+  </div>
+</div>
+
+<!-- ===== APP ===== -->
+<div id="app">
+  <div class="sticky-header">
+    <span class="aluno" id="header-nome"></span>
+    <div class="barra-progresso-trilho"><div class="barra-progresso-fill" id="barra-fill"></div></div>
+    <span id="contador-geral">Respondidas: 0/4</span>
+  </div>
+
+  <div class="wrap">
+    <header class="topo selecionavel">
+      <span class="descritor-bar">História / 8.º Ano do Ensino Fundamental &nbsp;|&nbsp; (GO-EF08HI15-A) – Independência e Nação</span>
+      <span class="hero-tag" style="display:block; margin-top:10px;">Interpretação de Texto · Questões Objetivas</span>
+      <h1>Por que o Brasil manteve a unidade territorial?</h1>
+      <p class="sub">Leia o texto com atenção e responda às quatro questões objetivas a seguir.</p>
+      <div class="ficha-id" id="ficha-id">
+        <span><b>NOME:</b> <span id="ficha-nome"></span></span>
+        <span><b>DATA:</b> <span id="ficha-data"></span></span>
+        <span><b>TURMA:</b> <span id="ficha-turma"></span></span>
+      </div>
+    </header>
+
+    <main>
+      <section class="texto-apoio selecionavel">
+        <h2>Vozes do Presente</h2>
+        <span class="fonte-tag">Duas interpretações historiográficas sobre a unidade territorial do Brasil</span>
+
+        <p>Após a independência, a América espanhola dividiu-se em vários países republicanos. Já a América portuguesa, território que deu origem ao Brasil, manteve a unidade territorial e a monarquia.</p>
+        <p><strong>Como e por que o Brasil se manteve unido?</strong> Os historiadores têm respostas diferentes para essa pergunta.</p>
+        <p>Para José Murilo de Carvalho, os líderes dos movimentos pela independência tinham vários pontos em comum: pertenciam à elite, tinham profissão liberal, educação superior (a maioria havia estudado em Portugal). Isso, na visão desse historiador, explica por que eles tinham ideias semelhantes: eram favoráveis a um Estado centralizado e conservador, que mantivesse a unidade do país.</p>
+        <p>Já para o historiador Luís Felipe de Alencastro, a unidade territorial do Brasil foi mantida porque as elites consideravam que, com um governo central forte (Império), seria mais fácil manter a escravidão. Na época, a Inglaterra exercia forte pressão pelo fim do tráfico negreiro, chegando até a capturar os escravizados desembarcados nos portos brasileiros. Se uma província brasileira se separasse do resto do império, teria de enfrentar sozinha a Inglaterra, a maior potência mundial. Por isso, as elites provinciais preferiram a união à separação.</p>
+      </section>
+
+      <h2 class="questoes-titulo">✅ Questões Objetivas</h2>
+
+      <div class="questao-obj" id="questao-q1" data-questao="q1">
+        <div class="enunciado"><span class="num-q">1</span> A ideia de um Estado unificado e com governo centralizado está associada à:</div>
+        <div class="alternativas">
+          <div class="alt" data-tipo="unica" data-romano="I" onclick="selecionar('q1','I','unica')"><span class="rotulo">I</span><span class="texto">Divisão da América espanhola em vários países republicanos.</span></div>
+          <div class="alt" data-tipo="unica" data-romano="II" onclick="selecionar('q1','II','unica')"><span class="rotulo">II</span><span class="texto">Divisão da América portuguesa em vários países republicanos.</span></div>
+          <div class="alt" data-tipo="unica" data-romano="III" onclick="selecionar('q1','III','unica')"><span class="rotulo">III</span><span class="texto">Manutenção da monarquia e unidade territorial na América portuguesa.</span></div>
+          <div class="alt" data-tipo="unica" data-romano="IV" onclick="selecionar('q1','IV','unica')"><span class="rotulo">IV</span><span class="texto">Manutenção da monarquia e unidade territorial na América espanhola.</span></div>
+        </div>
+        <div class="comentario-prof">
+          <b>Comentário do professor</b>
+          A unidade territorial e a manutenção da monarquia ocorreram na América portuguesa (o Brasil), diferentemente da América espanhola, que se fragmentou em várias repúblicas. Por isso, a alternativa III está correta.
+        </div>
+      </div>
+
+      <div class="questao-obj" id="questao-q2" data-questao="q2">
+        <div class="enunciado"><span class="num-q">2</span> As afirmações a seguir estão relacionadas aos motivos pelos quais o Brasil manteve a unidade após o processo de independência. Indique quais estão de acordo com as versões contidas no texto.</div>
+        <div class="instrucao-multipla">Selecione todas as afirmativas corretas</div>
+        <div class="alternativas">
+          <div class="alt" data-tipo="multipla" data-romano="I" onclick="selecionar('q2','I','multipla')"><span class="rotulo">I</span><span class="texto">Os líderes do movimento pela independência faziam parte da elite, tinham profissão liberal e defendiam a unidade do país.</span></div>
+          <div class="alt" data-tipo="multipla" data-romano="II" onclick="selecionar('q2','II','multipla')"><span class="rotulo">II</span><span class="texto">A maioria dos líderes da independência fez curso superior em Portugal, o que influenciou suas ideias favoráveis à República.</span></div>
+          <div class="alt" data-tipo="multipla" data-romano="III" onclick="selecionar('q2','III','multipla')"><span class="rotulo">III</span><span class="texto">Havia preocupação em manter a escravidão e resistir à pressão abolicionista exercida pela Inglaterra.</span></div>
+        </div>
+        <div class="comentario-prof">
+          <b>Comentário do professor</b>
+          As afirmativas I e III estão de acordo com o texto: a I resume o argumento de José Murilo de Carvalho (elite, profissão liberal, defesa da unidade), e a III resume o argumento de Luís Felipe de Alencastro (interesse em manter a escravidão frente à pressão inglesa). A afirmativa II está incorreta porque o texto diz que os líderes eram favoráveis a um Estado centralizado e conservador — e não a uma República.
+        </div>
+      </div>
+
+      <div class="questao-obj" id="questao-q3" data-questao="q3">
+        <div class="enunciado"><span class="num-q">3</span> Segundo o historiador Luís Felipe de Alencastro, a unidade territorial do Brasil foi mantida porque as elites consideravam que, com um governo central forte (Império), seria mais fácil manter a escravidão. Que fator externo justifica essa opção da elite brasileira da época?</div>
+        <div class="alternativas">
+          <div class="alt" data-tipo="unica" data-romano="I" onclick="selecionar('q3','I','unica')"><span class="rotulo">I</span><span class="texto">A pressão exercida pela maior potência mundial da época, a Inglaterra, pelo fim do tráfico negreiro.</span></div>
+          <div class="alt" data-tipo="unica" data-romano="II" onclick="selecionar('q3','II','unica')"><span class="rotulo">II</span><span class="texto">A ideia de que províncias separadas podiam manter o tráfico de africanos com mais facilidade.</span></div>
+          <div class="alt" data-tipo="unica" data-romano="III" onclick="selecionar('q3','III','unica')"><span class="rotulo">III</span><span class="texto">O fato de os elementos da elite brasileira terem feito curso superior em Portugal.</span></div>
+          <div class="alt" data-tipo="unica" data-romano="IV" onclick="selecionar('q3','IV','unica')"><span class="rotulo">IV</span><span class="texto">A divisão da América espanhola em países republicanos que acabou influenciando o Brasil.</span></div>
+        </div>
+        <div class="comentario-prof">
+          <b>Comentário do professor</b>
+          O fator externo é a pressão inglesa pelo fim do tráfico negreiro. Segundo Alencastro, uma província isolada teria de enfrentar sozinha a Inglaterra — a maior potência da época —, o que levou as elites a preferir a união em torno de um governo central forte.
+        </div>
+      </div>
+
+      <div class="questao-obj" id="questao-q4" data-questao="q4">
+        <div class="enunciado"><span class="num-q">4</span> A ideia central do texto é que</div>
+        <div class="alternativas">
+          <div class="alt" data-tipo="unica" data-romano="I" onclick="selecionar('q4','I','unica')"><span class="rotulo">I</span><span class="texto">Há mais de uma versão sobre os motivos pelos quais o Brasil conservou a unidade territorial após o processo de independência.</span></div>
+          <div class="alt" data-tipo="unica" data-romano="II" onclick="selecionar('q4','II','unica')"><span class="rotulo">II</span><span class="texto">As práticas inglesas de capturar escravizados desembarcados nos portos brasileiros influenciaram a criação do Estado unificado.</span></div>
+          <div class="alt" data-tipo="unica" data-romano="III" onclick="selecionar('q4','III','unica')"><span class="rotulo">III</span><span class="texto">A unidade do país e a manutenção da escravidão interessavam a todos os brasileiros.</span></div>
+          <div class="alt" data-tipo="unica" data-romano="IV" onclick="selecionar('q4','IV','unica')"><span class="rotulo">IV</span><span class="texto">A influência do processo de independência da América espanhola foi decisiva para a manutenção da unidade territorial no Brasil.</span></div>
+        </div>
+        <div class="comentario-prof">
+          <b>Comentário do professor</b>
+          O texto apresenta duas interpretações historiográficas diferentes (a de José Murilo de Carvalho e a de Luís Felipe de Alencastro) para explicar por que o Brasil manteve sua unidade territorial. A ideia central, portanto, é justamente a existência de mais de uma versão histórica para esse fenômeno — e não uma explicação única e consensual.
+        </div>
+      </div>
+
+      <div class="alerta-incompleto" id="alerta-incompleto">
+        ⚠️ Ainda há questões sem resposta. Revise antes de finalizar.
+      </div>
+
+      <div class="acoes-finais">
+        <button class="btn btn-primario" onclick="finalizarAtividade()">Finalizar e ver correção</button>
+        <button class="btn btn-secundario" onclick="refazerAtividade()">Refazer</button>
+        <button class="btn btn-pdf" onclick="exportarPDF()">Exportar em PDF</button>
+      </div>
+    </main>
+  </div>
+
+  <footer class="rodape">Colégio Estadual Rodolfo de Oliveira · CERO · 2026</footer>
+</div>
+
+<!-- ===== POPUP ===== -->
+<div class="popup-overlay" id="popup-overlay">
+  <div class="popup-card">
+    <div class="emoji" id="popup-emoji">🎉</div>
+    <h3>Atividade concluída!</h3>
+    <div class="placar" id="popup-placar">0/4</div>
+    <p id="popup-msg">Suas respostas foram corrigidas. Confira os comentários do professor em cada questão.</p>
+    <button class="btn btn-primario" onclick="fecharPopup()">Continuar</button>
+  </div>
+</div>
+
+<script>
+/* ===== DADOS DAS QUESTÕES ===== */
+const QUESTOES = {
+  q1: { tipo:'unica',    correta:['III'] },
+  q2: { tipo:'multipla', correta:['I','III'] },
+  q3: { tipo:'unica',    correta:['I'] },
+  q4: { tipo:'unica',    correta:['I'] }
+};
+const respostas = { q1:[], q2:[], q3:[], q4:[] };
+let finalizado = false;
+
+/* ===== GATE DE NOME ===== */
+function iniciarAtividade(){
+  const nome = document.getElementById('nome-aluno').value.trim();
+  const turma = document.getElementById('turma-aluno').value.trim();
+  const aviso = document.getElementById('capa-aviso');
+  if(!nome){
+    aviso.style.display = 'block';
+    return;
+  }
+  aviso.style.display = 'none';
+  const hoje = new Date();
+  const dataFormatada = String(hoje.getDate()).padStart(2,'0') + '/' + String(hoje.getMonth()+1).padStart(2,'0') + '/' + hoje.getFullYear();
+  document.getElementById('header-nome').textContent = nome;
+  document.getElementById('ficha-nome').textContent = nome;
+  document.getElementById('ficha-data').textContent = dataFormatada;
+  document.getElementById('ficha-turma').textContent = turma || '—';
+  document.getElementById('capa').style.display = 'none';
+  document.getElementById('app').style.display = 'block';
+  window.scrollTo(0,0);
+}
+
+/* ===== SELEÇÃO DE ALTERNATIVAS ===== */
+function selecionar(qId, romano, tipo){
+  if(finalizado) return;
+  if(tipo === 'unica'){
+    respostas[qId] = [romano];
+  } else {
+    const arr = respostas[qId];
+    const idx = arr.indexOf(romano);
+    if(idx > -1) arr.splice(idx, 1); else arr.push(romano);
+  }
+  atualizarSelecaoVisual(qId);
+  atualizarProgresso();
+}
+
+function atualizarSelecaoVisual(qId){
+  const qEl = document.getElementById('questao-' + qId);
+  qEl.querySelectorAll('.alt').forEach(function(alt){
+    const romano = alt.dataset.romano;
+    alt.classList.toggle('selecionada', respostas[qId].indexOf(romano) > -1);
+  });
+}
+
+function atualizarProgresso(){
+  const ids = Object.keys(QUESTOES);
+  let respondidas = 0;
+  ids.forEach(function(qId){ if(respostas[qId].length > 0) respondidas++; });
+  document.getElementById('contador-geral').textContent = 'Respondidas: ' + respondidas + '/' + ids.length;
+  document.getElementById('barra-fill').style.width = (respondidas / ids.length * 100) + '%';
+}
+
+function mesmoConjunto(a, b){
+  if(a.length !== b.length) return false;
+  const sa = a.slice().sort(), sb = b.slice().sort();
+  return sa.every(function(v,i){ return v === sb[i]; });
+}
+
+/* ===== FINALIZAR ===== */
+function finalizarAtividade(){
+  const ids = Object.keys(QUESTOES);
+  const incompleta = ids.some(function(qId){ return respostas[qId].length === 0; });
+
+  const alerta = document.getElementById('alerta-incompleto');
+  if(incompleta){
+    alerta.classList.add('show');
+    alerta.scrollIntoView({behavior:'smooth', block:'center'});
+    return;
+  }
+  alerta.classList.remove('show');
+  finalizado = true;
+
+  let acertos = 0;
+  ids.forEach(function(qId){
+    const q = QUESTOES[qId];
+    const acertou = mesmoConjunto(respostas[qId], q.correta);
+    if(acertou) acertos++;
+
+    const qEl = document.getElementById('questao-' + qId);
+    qEl.classList.add('bloqueada');
+    qEl.querySelectorAll('.alt').forEach(function(alt){
+      const romano = alt.dataset.romano;
+      const ehCorreta = q.correta.indexOf(romano) > -1;
+      const foiSelecionada = respostas[qId].indexOf(romano) > -1;
+      if(ehCorreta){
+        alt.classList.add('correta');
+      } else if(foiSelecionada){
+        alt.classList.add('incorreta');
+      }
+    });
+    qEl.querySelector('.comentario-prof').classList.add('show');
+  });
+
+  const pct = Math.round((acertos / ids.length) * 100);
+  const emoji = pct >= 70 ? '🎉' : (pct >= 50 ? '👍' : '📚');
+  const msg = pct >= 70 ? 'Ótimo desempenho! Confira os comentários do professor em cada questão.' :
+              pct >= 50 ? 'Bom trabalho! Revise os comentários do professor para fixar os pontos que faltaram.' :
+              'Vale a pena revisar o texto e os comentários do professor com calma em cada questão.';
+
+  document.getElementById('popup-emoji').textContent = emoji;
+  document.getElementById('popup-placar').textContent = acertos + '/' + ids.length;
+  document.getElementById('popup-msg').textContent = msg;
+  document.getElementById('popup-overlay').classList.add('show');
+}
+
+function fecharPopup(){
+  document.getElementById('popup-overlay').classList.remove('show');
+}
+
+function refazerAtividade(){
+  finalizado = false;
+  Object.keys(QUESTOES).forEach(function(qId){
+    respostas[qId] = [];
+    const qEl = document.getElementById('questao-' + qId);
+    qEl.classList.remove('bloqueada');
+    qEl.querySelectorAll('.alt').forEach(function(alt){
+      alt.classList.remove('selecionada','correta','incorreta');
+    });
+    qEl.querySelector('.comentario-prof').classList.remove('show');
+  });
+  document.getElementById('alerta-incompleto').classList.remove('show');
+  atualizarProgresso();
+  window.scrollTo(0,0);
+}
+
+/* ===== EXPORTAR PDF ===== */
+function sleep(ms){ return new Promise(function(r){ setTimeout(r, ms); }); }
+
+function esc(str){
+  const d = document.createElement('div');
+  d.textContent = str || '';
+  return d.innerHTML.replace(/\n/g, '<br>');
+}
+
+async function exportarPDF(){
+  const overlay = document.createElement('div');
+  overlay.id = 'pdf-overlay';
+  overlay.style.cssText = 'position:fixed;inset:0;background:rgba(46,26,68,.6);display:flex;align-items:center;justify-content:center;z-index:999;';
+  overlay.innerHTML =
+    '<div style="background:#fff;border-radius:14px;padding:32px 36px;text-align:center;max-width:300px;box-shadow:0 10px 30px rgba(107,63,160,.3);font-family:\'Source Serif 4\',serif;">' +
+      '<div style="font-size:2rem;margin-bottom:8px;">📄</div>' +
+      '<h4 style="margin:0 0 4px;color:#6b3fa0;font-family:\'Playfair Display\',serif;">Gerando PDF…</h4>' +
+      '<p style="margin:0 0 14px;color:#6b5b7d;font-size:.86rem;">Aguarde alguns instantes.</p>' +
+      '<div style="background:#ece2f5;border-radius:6px;overflow:hidden;height:8px;">' +
+        '<div id="pdf-prog" style="height:100%;width:0%;background:#6b3fa0;transition:width .2s ease;"></div>' +
+      '</div>' +
+      '<div id="pdf-prog-txt" style="margin-top:8px;font-family:\'JetBrains Mono\',monospace;font-size:.74rem;color:#6b5b7d;">0%</div>' +
+    '</div>';
+  document.body.appendChild(overlay);
+  await sleep(80);
+  function setP(pct, msg){
+    const pp = document.getElementById('pdf-prog'), pt = document.getElementById('pdf-prog-txt');
+    if(pp) pp.style.width = pct + '%';
+    if(pt) pt.textContent = msg || (pct + '%');
+  }
+
+  try{
+    const { jsPDF } = window.jspdf;
+    const pdf = new jsPDF({orientation:'portrait', unit:'px', format:'a4', hotfixes:['px_scaling']});
+    const PW = pdf.internal.pageSize.getWidth(), PH = pdf.internal.pageSize.getHeight();
+    const ML = 28, CW = PW - ML*2;
+    let y = ML;
+
+    async function addImg(el){
+      const canvas = await html2canvas(el, {scale:2, useCORS:true, logging:false, backgroundColor:'#ffffff', scrollX:0, scrollY:0, windowWidth:860});
+      const imgW = CW, imgH = (canvas.height / canvas.width) * imgW;
+      const dataUrl = canvas.toDataURL('image/jpeg', .92), avail = PH - ML*2;
+      if(imgH <= avail){
+        if(y + imgH > PH - ML){ pdf.addPage(); y = ML; }
+        pdf.addImage(dataUrl, 'JPEG', ML, y, imgW, imgH);
+        y += imgH + 8;
+      } else {
+        const pxPerPdfPt = canvas.width / imgW;
+        let srcY = 0;
+        while(srcY < canvas.height){
+          const availPt = PH - y - ML, sliceH_pt = Math.min(availPt, avail);
+          const sliceH_px = Math.round(sliceH_pt * pxPerPdfPt), actualH_px = Math.min(sliceH_px, canvas.height - srcY);
+          const tmp = document.createElement('canvas');
+          tmp.width = canvas.width; tmp.height = actualH_px;
+          tmp.getContext('2d').drawImage(canvas, 0, srcY, canvas.width, actualH_px, 0, 0, canvas.width, actualH_px);
+          const sliceUrl = tmp.toDataURL('image/jpeg', .92), slicePt = (actualH_px / canvas.width) * imgW;
+          pdf.addImage(sliceUrl, 'JPEG', ML, y, imgW, slicePt);
+          srcY += actualH_px; y += slicePt;
+          if(srcY < canvas.height){ pdf.addPage(); y = ML; }
+        }
+        y += 8;
+      }
+    }
+
+    async function band(tag, txt){
+      const b = document.createElement('div');
+      b.style.cssText = 'width:860px;font-family:Arial,sans-serif;position:absolute;left:-9999px;top:0';
+      b.innerHTML = '<div style="background:linear-gradient(90deg,#9b6bc7,#6b3fa0);border-radius:8px;padding:12px 22px;display:flex;align-items:center;gap:12px">' +
+        '<span style="background:rgba(255,255,255,.2);color:#fff;font-weight:700;font-size:12px;letter-spacing:1px;border-radius:20px;padding:3px 12px">' + tag + '</span>' +
+        '<span style="color:#fff;font-size:15px;font-weight:700">' + txt + '</span></div>';
+      document.body.appendChild(b);
+      await sleep(20);
+      await addImg(b);
+      document.body.removeChild(b);
+    }
+
+    const nome = document.getElementById('header-nome').textContent || 'Aluno(a)';
+    const turma = document.getElementById('ficha-turma').textContent || '—';
+    const now = new Date();
+    const dtStr = now.toLocaleDateString('pt-BR') + ' às ' + now.toLocaleTimeString('pt-BR', {hour:'2-digit', minute:'2-digit'});
+
+    let acertosPdf = 0;
+    Object.keys(QUESTOES).forEach(function(qId){
+      if(mesmoConjunto(respostas[qId], QUESTOES[qId].correta)) acertosPdf++;
+    });
+
+    setP(5, 'Preparando capa…'); await sleep(40);
+    const coverEl = document.createElement('div');
+    coverEl.style.cssText = 'width:860px;font-family:Arial,sans-serif;overflow:hidden;position:absolute;left:-9999px;top:0';
+    coverEl.innerHTML =
+      '<div style="background:linear-gradient(135deg,#2e1a44 0%,#6b3fa0 60%,#b98fe0 100%);padding:32px 48px 28px;color:white">' +
+        '<div style="font-size:10px;letter-spacing:3px;text-transform:uppercase;opacity:.7;font-weight:700;margin-bottom:6px">História · 8º Ano do Ensino Fundamental · GO-EF08HI15-A</div>' +
+        '<div style="font-size:26px;font-weight:900;line-height:1.2;margin-bottom:5px">Por que o Brasil manteve a unidade territorial?</div>' +
+        '<div style="font-size:13px;opacity:.8;font-style:italic">Vozes do Presente · Interpretação de texto · 4 questões objetivas</div>' +
+      '</div>' +
+      '<div style="background:#f5f0fa;padding:22px 48px 26px;border-bottom:3px solid #ddc9a3">' +
+        '<div style="font-size:9px;text-transform:uppercase;letter-spacing:2px;color:#6b3fa0;font-weight:700;margin-bottom:5px">Aluno(a)</div>' +
+        '<div style="font-size:20px;font-weight:700;color:#2e2438;border-bottom:2.5px solid #6b3fa0;padding-bottom:6px;display:inline-block;margin-bottom:16px">' + esc(nome) + '</div>' +
+        '<div style="display:flex;gap:12px;flex-wrap:wrap">' +
+          '<div style="background:white;border-radius:8px;padding:12px 18px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.07);min-width:84px">' +
+            '<div style="font-size:22px;font-weight:900;color:#6b3fa0">' + esc(turma) + '</div>' +
+            '<div style="font-size:9px;text-transform:uppercase;letter-spacing:1px;color:#888;margin-top:2px">Turma</div></div>' +
+          '<div style="background:white;border-radius:8px;padding:12px 18px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.07);min-width:84px">' +
+            '<div style="font-size:22px;font-weight:900;color:#a6863f">' + acertosPdf + '/4</div>' +
+            '<div style="font-size:9px;text-transform:uppercase;letter-spacing:1px;color:#888;margin-top:2px">Acertos</div></div>' +
+          '<div style="background:white;border-radius:8px;padding:12px 18px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.07);min-width:140px">' +
+            '<div style="font-size:13px;font-weight:700;color:#333">' + dtStr + '</div>' +
+            '<div style="font-size:9px;text-transform:uppercase;letter-spacing:1px;color:#888;margin-top:2px">Gerado em</div></div>' +
+        '</div>' +
+        '<div style="font-size:9px;color:#bbb;margin-top:14px">Colégio Estadual Rodolfo de Oliveira · Goiás · 2026</div>' +
+      '</div>';
+    document.body.appendChild(coverEl); await sleep(60); await addImg(coverEl); document.body.removeChild(coverEl);
+
+    // TEXTO DE APOIO
+    setP(15, 'Preparando texto de apoio…'); await sleep(20);
+    await band('TEXTO', 'Vozes do Presente');
+    const textoEl = document.createElement('div');
+    textoEl.style.cssText = 'width:860px;font-family:Arial,sans-serif;background:white;overflow:hidden;border:1px solid #ddd0ea;border-radius:10px;position:absolute;left:-9999px;top:0';
+    textoEl.innerHTML =
+      '<div style="padding:18px 24px;background:#fdfdfa">' +
+        '<p style="font-size:12.5px;color:#2e2438;line-height:1.8;margin:0 0 12px">Após a independência, a América espanhola dividiu-se em vários países republicanos. Já a América portuguesa, território que deu origem ao Brasil, manteve a unidade territorial e a monarquia.</p>' +
+        '<p style="font-size:12.5px;color:#2e2438;line-height:1.8;margin:0 0 12px"><b>Como e por que o Brasil se manteve unido?</b> Os historiadores têm respostas diferentes para essa pergunta.</p>' +
+        '<p style="font-size:12.5px;color:#2e2438;line-height:1.8;margin:0 0 12px">Para José Murilo de Carvalho, os líderes dos movimentos pela independência tinham vários pontos em comum: pertenciam à elite, tinham profissão liberal, educação superior (a maioria havia estudado em Portugal). Isso, na visão desse historiador, explica por que eles tinham ideias semelhantes: eram favoráveis a um Estado centralizado e conservador, que mantivesse a unidade do país.</p>' +
+        '<p style="font-size:12.5px;color:#2e2438;line-height:1.8;margin:0">Já para o historiador Luís Felipe de Alencastro, a unidade territorial do Brasil foi mantida porque as elites consideravam que, com um governo central forte (Império), seria mais fácil manter a escravidão. Na época, a Inglaterra exercia forte pressão pelo fim do tráfico negreiro, chegando até a capturar os escravizados desembarcados nos portos brasileiros. Se uma província brasileira se separasse do resto do império, teria de enfrentar sozinha a Inglaterra, a maior potência mundial. Por isso, as elites provinciais preferiram a união à separação.</p>' +
+      '</div>';
+    document.body.appendChild(textoEl); await sleep(20); await addImg(textoEl); document.body.removeChild(textoEl);
+
+    // QUESTÕES OBJETIVAS
+    await band('QUESTÕES', 'Questões Objetivas — Correção e Comentários');
+
+    const QUESTOES_PDF = [
+      { num:'1', qId:'q1', enunc:'A ideia de um Estado unificado e com governo centralizado está associada à:',
+        alts:[
+          {r:'I', t:'Divisão da América espanhola em vários países republicanos.'},
+          {r:'II', t:'Divisão da América portuguesa em vários países republicanos.'},
+          {r:'III', t:'Manutenção da monarquia e unidade territorial na América portuguesa.'},
+          {r:'IV', t:'Manutenção da monarquia e unidade territorial na América espanhola.'}
+        ],
+        coment:'A unidade territorial e a manutenção da monarquia ocorreram na América portuguesa (o Brasil), diferentemente da América espanhola, que se fragmentou em várias repúblicas. Por isso, a alternativa III está correta.' },
+      { num:'2', qId:'q2', enunc:'As afirmações a seguir estão relacionadas aos motivos pelos quais o Brasil manteve a unidade após o processo de independência. Indique quais estão de acordo com as versões contidas no texto. (Selecione todas as corretas)',
+        alts:[
+          {r:'I', t:'Os líderes do movimento pela independência faziam parte da elite, tinham profissão liberal e defendiam a unidade do país.'},
+          {r:'II', t:'A maioria dos líderes da independência fez curso superior em Portugal, o que influenciou suas ideias favoráveis à República.'},
+          {r:'III', t:'Havia preocupação em manter a escravidão e resistir à pressão abolicionista exercida pela Inglaterra.'}
+        ],
+        coment:'As afirmativas I e III estão de acordo com o texto: a I resume o argumento de José Murilo de Carvalho, e a III resume o argumento de Luís Felipe de Alencastro. A afirmativa II está incorreta porque o texto diz que os líderes eram favoráveis a um Estado centralizado e conservador — e não a uma República.' },
+      { num:'3', qId:'q3', enunc:'Segundo Luís Felipe de Alencastro, a unidade territorial do Brasil foi mantida para facilitar a manutenção da escravidão. Que fator externo justifica essa opção da elite brasileira?',
+        alts:[
+          {r:'I', t:'A pressão exercida pela maior potência mundial da época, a Inglaterra, pelo fim do tráfico negreiro.'},
+          {r:'II', t:'A ideia de que províncias separadas podiam manter o tráfico de africanos com mais facilidade.'},
+          {r:'III', t:'O fato de os elementos da elite brasileira terem feito curso superior em Portugal.'},
+          {r:'IV', t:'A divisão da América espanhola em países republicanos que acabou influenciando o Brasil.'}
+        ],
+        coment:'O fator externo é a pressão inglesa pelo fim do tráfico negreiro. Segundo Alencastro, uma província isolada teria de enfrentar sozinha a Inglaterra, o que levou as elites a preferir a união em torno de um governo central forte.' },
+      { num:'4', qId:'q4', enunc:'A ideia central do texto é que',
+        alts:[
+          {r:'I', t:'Há mais de uma versão sobre os motivos pelos quais o Brasil conservou a unidade territorial após o processo de independência.'},
+          {r:'II', t:'As práticas inglesas de capturar escravizados desembarcados nos portos brasileiros influenciaram a criação do Estado unificado.'},
+          {r:'III', t:'A unidade do país e a manutenção da escravidão interessavam a todos os brasileiros.'},
+          {r:'IV', t:'A influência do processo de independência da América espanhola foi decisiva para a manutenção da unidade territorial no Brasil.'}
+        ],
+        coment:'O texto apresenta duas interpretações historiográficas diferentes para explicar por que o Brasil manteve sua unidade territorial. A ideia central é justamente a existência de mais de uma versão histórica para esse fenômeno.' }
+    ];
+
+    for(let i=0; i<QUESTOES_PDF.length; i++){
+      const q = QUESTOES_PDF[i];
+      const corretas = QUESTOES[q.qId].correta;
+      const selecionadas = respostas[q.qId];
+      setP(35 + Math.round(i/QUESTOES_PDF.length*55), 'Questão ' + q.num + '/4…'); await sleep(12);
+
+      let altsHTML = '';
+      q.alts.forEach(function(a){
+        const ehCorreta = corretas.indexOf(a.r) > -1;
+        const foiSelecionada = selecionadas.indexOf(a.r) > -1;
+        let borda = '#ddd0ea', fundo = '#fdfdfa', marca = '';
+        if(ehCorreta){ borda = '#3f9142'; fundo = '#eaf6ee'; marca = ' ✓'; }
+        else if(foiSelecionada){ borda = '#c0392b'; fundo = '#fbeceb'; marca = ' ✗'; }
+        altsHTML +=
+          '<div style="display:flex;gap:8px;align-items:flex-start;border:1.5px solid ' + borda + ';background:' + fundo + ';border-radius:8px;padding:9px 12px;margin-bottom:7px">' +
+            '<span style="font-family:monospace;font-weight:700;font-size:11px;color:#2e2438;min-width:20px">' + a.r + (foiSelecionada ? ' •' : '') + marca + '</span>' +
+            '<span style="font-size:11.5px;color:#2e2438;line-height:1.6">' + esc(a.t) + '</span>' +
+          '</div>';
+      });
+
+      const qEl = document.createElement('div');
+      qEl.style.cssText = 'width:860px;font-family:Arial,sans-serif;background:white;overflow:hidden;border:1px solid #ddd0ea;border-radius:10px;position:absolute;left:-9999px;top:0';
+      qEl.innerHTML =
+        '<div style="background:linear-gradient(90deg,#9b6bc7,#6b3fa0);padding:10px 22px;display:flex;justify-content:space-between;align-items:center">' +
+          '<span style="color:white;font-weight:700;font-size:13px;letter-spacing:.8px">QUESTÃO ' + q.num + '</span>' +
+          '<span style="background:rgba(255,255,255,.15);color:rgba(255,255,255,.9);font-size:11px;padding:3px 12px;border-radius:20px;font-weight:600">Objetiva</span></div>' +
+        '<div style="padding:18px 24px 16px;background:#fdfdfa">' +
+          '<div style="font-size:13px;font-weight:700;color:#2e2438;line-height:1.6;margin-bottom:14px;padding-bottom:12px;border-bottom:1px solid #eee">' + esc(q.enunc) + '</div>' +
+          altsHTML +
+          '<div style="display:flex;align-items:center;gap:8px;margin:12px 0 7px">' +
+            '<div style="width:4px;height:15px;background:#a6863f;border-radius:2px"></div>' +
+            '<div style="font-size:10px;font-weight:700;color:#8a6f2f;text-transform:uppercase;letter-spacing:1.5px">Comentário do Professor</div></div>' +
+          '<div style="background:#f7f1e3;border:1.5px solid #ddc9a3;border-radius:8px;padding:13px 16px">' +
+            '<div style="font-size:12px;color:#4a3a10;line-height:1.8">' + esc(q.coment) + '</div></div>' +
+        '</div>';
+      document.body.appendChild(qEl); await sleep(12); await addImg(qEl); document.body.removeChild(qEl);
+    }
+
+    // RODAPÉ EM TODAS AS PÁGINAS
+    setP(92, 'Finalizando…'); await sleep(30);
+    const totalPages = pdf.getNumberOfPages();
+    for(let p=1; p<=totalPages; p++){
+      pdf.setPage(p);
+      const fEl = document.createElement('div');
+      fEl.style.cssText = 'width:' + Math.round(CW) + 'px;height:22px;background:#f5f0fa;display:flex;align-items:center;justify-content:space-between;padding:0 28px;font-size:10px;color:#888;font-family:Arial,sans-serif;position:absolute;left:-9999px;top:0';
+      fEl.innerHTML = '<span>Vozes do Presente — Unidade Territorial · ' + esc(nome) + '</span><span>Página ' + p + ' de ' + totalPages + '</span>';
+      document.body.appendChild(fEl);
+      const fc = await html2canvas(fEl, {scale:2, logging:false, backgroundColor:'#f5f0fa'});
+      document.body.removeChild(fEl);
+      const fUrl = fc.toDataURL('image/jpeg', .9), fH = (fc.height / fc.width) * CW;
+      pdf.setFillColor(245,240,250); pdf.rect(ML, PH-fH, CW, fH, 'F');
+      pdf.addImage(fUrl, 'JPEG', ML, PH-fH, CW, fH);
+    }
+
+    setP(100, 'Salvando…'); await sleep(200);
+    const safeName = nome.replace(/[^a-zA-Z0-9_\-]/g, '_');
+    pdf.save('Unidade_Territorial_Brasil_' + safeName + '.pdf');
+
+  } catch(err){
+    console.error(err);
+    alert('Erro ao gerar PDF: ' + err.message);
+  } finally {
+    const ov = document.getElementById('pdf-overlay');
+    if(ov) document.body.removeChild(ov);
+  }
+}
+</script>
+
+</body>
+</html>
