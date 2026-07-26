@@ -145,11 +145,15 @@
   .atv-card-eyebrow{font-family:'Inter',sans-serif; font-weight:700; letter-spacing:.08em; text-transform:uppercase; font-size:.66rem; color:var(--bordo);}
   .atv-card-titulo{font-family:'Playfair Display',serif; font-weight:700; color:var(--verde); font-size:.98rem; margin-top:2px;}
   .atv-card-desc{font-family:'Inter',sans-serif; font-size:.8rem; color:var(--ink-soft); margin-top:3px; line-height:1.4;}
-  .atv-card-btn{flex:none; font-family:'Inter',sans-serif; font-weight:600; font-size:.78rem; color:var(--dourado-2); background:var(--verde); padding:9px 16px; border-radius:20px; text-decoration:none; white-space:nowrap; transition:background .15s ease;}
+  .atv-card-btns{flex:none; display:flex; flex-direction:column; gap:8px;}
+  .atv-card-btn{flex:none; font-family:'Inter',sans-serif; font-weight:600; font-size:.78rem; color:var(--dourado-2); background:var(--verde); padding:9px 16px; border-radius:20px; text-decoration:none; white-space:nowrap; transition:background .15s ease; text-align:center;}
   .atv-card-btn:hover{background:var(--verde-2);}
+  .atv-card-btn-pdf{background:transparent; color:var(--bordo); border:1.5px solid var(--bordo);}
+  .atv-card-btn-pdf:hover{background:rgba(122,46,46,.08);}
   @media (max-width:520px){
     .atv-card{flex-wrap:wrap;}
-    .atv-card-btn{width:100%; text-align:center;}
+    .atv-card-btns{flex-direction:row; width:100%;}
+    .atv-card-btn{flex:1;}
   }
 
   /* ── Jogo da memória ─────────────────────────────────────────── */
@@ -280,7 +284,10 @@
       <div class="atv-card-titulo">Pernambuco 1817 e a troca de sobrenome</div>
       <div class="atv-card-desc">Uma proclamação da Revolução Pernambucana de 1817 e o caso real de um brasileiro que trocou o sobrenome português por um "bem brasileiro" após a Independência — dois registros do sentimento de pertencer a uma nação.</div>
     </div>
-    <a class="atv-card-btn" href="https://drive.google.com/file/d/1r121_UWYpugBD55F5pUr9M1qXGy0Obhj/view?usp=sharing" target="_blank" rel="noopener">Abrir atividade →</a>
+    <div class="atv-card-btns">
+      <a class="atv-card-btn" href="tema1/atv2.html" target="_blank" rel="noopener">Abrir atividade →</a>
+      <a class="atv-card-btn atv-card-btn-pdf" href="https://drive.google.com/file/d/1r121_UWYpugBD55F5pUr9M1qXGy0Obhj/view?usp=sharing" target="_blank" rel="noopener">Abrir PDF</a>
+    </div>
   </div>
 
   <h2 class="secao">2. As três peças que formam um país</h2>
@@ -365,7 +372,10 @@
       <div class="atv-card-titulo">Duas interpretações sobre a Independência</div>
       <div class="atv-card-desc">Compare os textos das historiadoras Emilia Viotti da Costa e Cecilia Helena de S. Oliveira: por que dois estudos sérios podem enxergar o mesmo acontecimento de formas tão diferentes?</div>
     </div>
-    <a class="atv-card-btn" href="https://drive.google.com/file/d/1mn-_WiZiEGAb6PMnQN2MVw1X5WAz5X6M/view?usp=sharing" target="_blank" rel="noopener">Abrir atividade →</a>
+    <div class="atv-card-btns">
+      <a class="atv-card-btn" href="tema1/atv1.html" target="_blank" rel="noopener">Abrir atividade →</a>
+      <a class="atv-card-btn atv-card-btn-pdf" href="https://drive.google.com/file/d/1mn-_WiZiEGAb6PMnQN2MVw1X5WAz5X6M/view?usp=sharing" target="_blank" rel="noopener">Abrir PDF</a>
+    </div>
   </div>
 
   <h2 class="secao">7. O Primeiro Reinado (1822–1831)</h2>
@@ -394,7 +404,10 @@
       <div class="atv-card-titulo">A Constituição de 1824 e o manifesto de Frei Caneca</div>
       <div class="atv-card-desc">Leia trechos originais dos artigos da primeira Constituição brasileira e um manifesto de Frei Caneca sobre a Confederação do Equador (1824).</div>
     </div>
-    <a class="atv-card-btn" href="https://drive.google.com/file/d/16Aih1amgX7b4gU2MY6oZ94NG1aGyZ-TQ/view?usp=sharing" target="_blank" rel="noopener">Abrir atividade →</a>
+    <div class="atv-card-btns">
+      <a class="atv-card-btn" href="tema1/atv4.html" target="_blank" rel="noopener">Abrir atividade →</a>
+      <a class="atv-card-btn atv-card-btn-pdf" href="https://drive.google.com/file/d/16Aih1amgX7b4gU2MY6oZ94NG1aGyZ-TQ/view?usp=sharing" target="_blank" rel="noopener">Abrir PDF</a>
+    </div>
   </div>
 
   <h2 class="secao">9. Quem ficou de fora da nação?</h2>
@@ -421,7 +434,10 @@
       <div class="atv-card-titulo">Manifesto das Mulheres de Goiana (1824)</div>
       <div class="atv-card-desc">Um documento em que mulheres pernambucanas criticam Dom Pedro I e reivindicam seu direito de participar da política, num momento em que isso era considerado "matéria alheia ao sexo feminino".</div>
     </div>
-    <a class="atv-card-btn" href="https://drive.google.com/file/d/13w3XkC4E70e1qBdocANyjOLRMCtcee9E/view?usp=sharing" target="_blank" rel="noopener">Abrir atividade →</a>
+    <div class="atv-card-btns">
+      <a class="atv-card-btn" href="tema1/atv5.html" target="_blank" rel="noopener">Abrir atividade →</a>
+      <a class="atv-card-btn atv-card-btn-pdf" href="https://drive.google.com/file/d/13w3XkC4E70e1qBdocANyjOLRMCtcee9E/view?usp=sharing" target="_blank" rel="noopener">Abrir PDF</a>
+    </div>
   </div>
 
   <h2 class="secao">10. A equação de um país soberano</h2>
@@ -458,7 +474,10 @@
       <div class="atv-card-titulo">Por que o Brasil manteve a unidade territorial?</div>
       <div class="atv-card-desc">Enquanto a América espanhola se dividiu em vários países, o Brasil permaneceu unido. Compare as explicações dos historiadores José Murilo de Carvalho e Luís Felipe de Alencastro para esse fenômeno.</div>
     </div>
-    <a class="atv-card-btn" href="https://drive.google.com/file/d/181z8N93GClZGx437CFzBFYA6jpXzsHVS/view?usp=sharing" target="_blank" rel="noopener">Abrir atividade →</a>
+    <div class="atv-card-btns">
+      <a class="atv-card-btn" href="tema1/atv3.html" target="_blank" rel="noopener">Abrir atividade →</a>
+      <a class="atv-card-btn atv-card-btn-pdf" href="https://drive.google.com/file/d/181z8N93GClZGx437CFzBFYA6jpXzsHVS/view?usp=sharing" target="_blank" rel="noopener">Abrir PDF</a>
+    </div>
   </div>
 
   <h2 class="secao">Síntese: a nação é um verbo em construção</h2>
