@@ -70,11 +70,15 @@
   .atv-card-eyebrow{font-family:'Inter',sans-serif; font-weight:700; letter-spacing:.08em; text-transform:uppercase; font-size:.66rem; color:var(--bordo);}
   .atv-card-titulo{font-family:'Playfair Display',serif; font-weight:700; color:var(--verde); font-size:.98rem; margin-top:2px;}
   .atv-card-desc{font-family:'Inter',sans-serif; font-size:.8rem; color:var(--ink-soft); margin-top:3px; line-height:1.4;}
-  .atv-card-btn{flex:none; font-family:'Inter',sans-serif; font-weight:600; font-size:.78rem; color:var(--dourado-2); background:var(--verde); padding:9px 16px; border-radius:20px; text-decoration:none; white-space:nowrap; transition:background .15s ease;}
+  .atv-card-btns{flex:none; display:flex; flex-direction:column; gap:8px;}
+  .atv-card-btn{flex:none; font-family:'Inter',sans-serif; font-weight:600; font-size:.78rem; color:var(--dourado-2); background:var(--verde); padding:9px 16px; border-radius:20px; text-decoration:none; white-space:nowrap; transition:background .15s ease; text-align:center;}
   .atv-card-btn:hover{background:var(--verde-2);}
+  .atv-card-btn-pdf{background:transparent; color:var(--bordo); border:1.5px solid var(--bordo);}
+  .atv-card-btn-pdf:hover{background:rgba(122,46,46,.08);}
   @media (max-width:480px){
     .atv-card{flex-wrap:wrap;}
-    .atv-card-btn{width:100%; text-align:center;}
+    .atv-card-btns{flex-direction:row; width:100%;}
+    .atv-card-btn{flex:1;}
   }
   .texto-apoio{background:var(--paper); border:2px solid var(--dourado); border-radius:12px; padding:20px 22px; margin:20px 0;}
   .texto-apoio .apoio-eyebrow{font-family:'Inter',sans-serif; font-weight:700; letter-spacing:.1em; text-transform:uppercase; font-size:.68rem; color:var(--bordo); margin-bottom:6px;}
@@ -383,7 +387,10 @@
       <div class="atv-card-titulo">O gaúcho de Erico Verissimo e a Revolta dos Malês</div>
       <div class="atv-card-desc">Um trecho literário sobre o espírito rebelde do Rio Grande do Sul e um relato do historiador Jack Goody sobre o papel da escrita árabe na Revolta dos Malês (1835).</div>
     </div>
-    <a class="atv-card-btn" href="https://drive.google.com/file/d/1pqWBbkaQ---oXAy5W3yGUagcxM21NB30/view?usp=sharing" target="_blank" rel="noopener">Abrir atividade →</a>
+    <div class="atv-card-btns">
+      <a class="atv-card-btn" href="tema2/atv1.html" target="_blank" rel="noopener">Abrir atividade →</a>
+      <a class="atv-card-btn atv-card-btn-pdf" href="https://drive.google.com/file/d/1pqWBbkaQ---oXAy5W3yGUagcxM21NB30/view?usp=sharing" target="_blank" rel="noopener">Abrir PDF</a>
+    </div>
   </div>
 
   <h2 class="secao">5. A Confederação do Equador (1824)</h2>
@@ -428,7 +435,10 @@
       <div class="atv-card-titulo">Bento Gonçalves e Eduardo Angelim: discursos de revolta</div>
       <div class="atv-card-desc">Um discurso do líder farroupilha Bento Gonçalves contra os impostos do governo imperial e o Manifesto dos Cabanos, de Eduardo Angelim, reivindicando liberdade e respeito ao povo paraense.</div>
     </div>
-    <a class="atv-card-btn" href="https://drive.google.com/file/d/10Ef5BBtllQHPSerbkUbHru-KOwTprtCT/view?usp=sharing" target="_blank" rel="noopener">Abrir atividade →</a>
+    <div class="atv-card-btns">
+      <a class="atv-card-btn" href="tema2/atv4.html" target="_blank" rel="noopener">Abrir atividade →</a>
+      <a class="atv-card-btn atv-card-btn-pdf" href="https://drive.google.com/file/d/10Ef5BBtllQHPSerbkUbHru-KOwTprtCT/view?usp=sharing" target="_blank" rel="noopener">Abrir PDF</a>
+    </div>
   </div>
 
   <h2 class="secao">9. Cidadania limitada: quem lutou e quem foi ouvido</h2>
@@ -469,7 +479,10 @@
       <div class="atv-card-titulo">A Guarda Nacional</div>
       <div class="atv-card-desc">Criada em 1831 para conter revoltas e proteger a ordem social do Império, a Guarda Nacional deu poder político aos "coronéis" locais — um texto de apoio para entender essa força armada.</div>
     </div>
-    <a class="atv-card-btn" href="https://drive.google.com/file/d/1Y6PLmMtaHWMfqkDNCfSIonEPKj41vxEs/view?usp=sharing" target="_blank" rel="noopener">Abrir atividade →</a>
+    <div class="atv-card-btns">
+      <a class="atv-card-btn" href="tema2/atv5.html" target="_blank" rel="noopener">Abrir atividade →</a>
+      <a class="atv-card-btn atv-card-btn-pdf" href="https://drive.google.com/file/d/1Y6PLmMtaHWMfqkDNCfSIonEPKj41vxEs/view?usp=sharing" target="_blank" rel="noopener">Abrir PDF</a>
+    </div>
   </div>
 
   <h2 class="secao">11. As revoltas regenciais: os limites da cidadania continuam</h2>
@@ -517,7 +530,10 @@
       <div class="atv-card-titulo">Localizando e relacionando as revoltas regenciais</div>
       <div class="atv-card-desc">Numere e localize no mapa a Revolta dos Malês, a Cabanagem, a Farroupilha, a Sabinada e a Balaiada, relacionando cada uma às suas características históricas.</div>
     </div>
-    <a class="atv-card-btn" href="https://drive.google.com/file/d/1ZIsMWKSGCLtINsdSvVO2V8f7GhL5sOjv/view?usp=sharing" target="_blank" rel="noopener">Abrir atividade →</a>
+    <div class="atv-card-btns">
+      <a class="atv-card-btn" href="tema2/atv2.html" target="_blank" rel="noopener">Abrir atividade →</a>
+      <a class="atv-card-btn atv-card-btn-pdf" href="https://drive.google.com/file/d/1ZIsMWKSGCLtINsdSvVO2V8f7GhL5sOjv/view?usp=sharing" target="_blank" rel="noopener">Abrir PDF</a>
+    </div>
   </div>
 
   <h2 class="secao">12. O Golpe da Maioridade (1840)</h2>
@@ -535,7 +551,10 @@
       <div class="atv-card-titulo">Legado indígena no Rio Grande do Sul</div>
       <div class="atv-card-desc">De onde vêm palavras como "tchê", "piá" e "guri"? Um texto sobre os charruas, jês e guaranis e a herança indígena que segue viva na cultura rio-grandense.</div>
     </div>
-    <a class="atv-card-btn" href="https://drive.google.com/file/d/1GYxP6zB8-UcO2BLMgL9sH35bcQiU7ADT/view?usp=sharing" target="_blank" rel="noopener">Abrir atividade →</a>
+    <div class="atv-card-btns">
+      <a class="atv-card-btn" href="tema2/atv3.html" target="_blank" rel="noopener">Abrir atividade →</a>
+      <a class="atv-card-btn atv-card-btn-pdf" href="https://drive.google.com/file/d/1GYxP6zB8-UcO2BLMgL9sH35bcQiU7ADT/view?usp=sharing" target="_blank" rel="noopener">Abrir PDF</a>
+    </div>
   </div>
 
   <h2 class="secao">Síntese</h2>
