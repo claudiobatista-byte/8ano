@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Leitura e Escrita — Revoltas do Período Regencial | CERO</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<style>
+  :root{
+    --bg:#faf3ee;
+    --bg-alt:#f0dccb;
+    --paper:#fffdfb;
+    --ink:#2e1f16;
+    --ink-soft:#6b5544;
+    --verde:#a8452c;
+    --verde-dark:#6b2a1a;
+    --verde-2:#c96b45;
+    --gold:#5c7a4a;
+    --gold-light:#c3d4b3;
+    --line:#e8d2c0;
+    --shadow:0 10px 30px rgba(107,42,26,.16);
+    --radius:14px;
+    --font-title:'Playfair Display', serif;
+    --font-body:'Source Serif 4', serif;
+    --font-mono:'JetBrains Mono', monospace;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:var(--font-body);
+    line-height:1.7;
+    -webkit-touch-callout:none;
+    user-select:none;
+  }
+  .selecionavel, main{user-select:text;}
+  .campo-resposta{user-select:text;}
+
+  /* ===== CAPA / GATE ===== */
+  #capa{
+    min-height:100vh;
+    display:flex; align-items:center; justify-content:center;
+    position:relative;
+    overflow:hidden;
+    background:linear-gradient(to bottom, #3d1f14, #6b2a1a, #a8452c);
+    padding:24px;
+  }
+  #capa .grade-centralizada{
+    position:absolute;
+    top:0; bottom:0; left:50%;
+    transform:translateX(-50%);
+    width:100%;
+    max-width:896px;
+    pointer-events:none;
+    z-index:0;
+    opacity:.08;
+    background:
+      repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(255,255,255,.5) 39px, rgba(255,255,255,.5) 40px),
+      repeating-linear-gradient(90deg, transparent, transparent 39px, rgba(255,255,255,.5) 39px, rgba(255,255,255,.5) 40px);
+    background-size:40px 40px;
+  }
+  .capa-card{
+    position:relative;
+    z-index:1;
+    background:var(--paper);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    max-width:480px;
+    width:100%;
+    padding:36px 32px;
+    text-align:center;
+  }
+  .capa-card .tag{
+    display:inline-block; font-family:var(--font-mono); font-size:.7rem;
+    letter-spacing:.1em; text-transform:uppercase; color:var(--verde-dark);
+    background:rgba(168,69,44,.1); padding:5px 12px; border-radius:999px; margin-bottom:14px;
+  }
+  .capa-card h1{font-family:var(--font-title); font-size:1.6rem; margin:0 0 10px; color:var(--verde-dark);}
+  .capa-card p.desc{color:var(--ink-soft); font-size:.94rem; margin:0 0 22px;}
+  .capa-card input{
+    width:100%; padding:12px 14px; border:1px solid var(--line); border-radius:8px;
+    font-family:var(--font-body); font-size:1rem; margin-bottom:14px;
+  }
+  .capa-card button{
+    width:100%; padding:13px; border:none; border-radius:8px;
+    background:var(--verde); color:#fff; font-weight:600; font-size:1rem; cursor:pointer;
+    font-family:var(--font-body); transition:filter .15s ease;
+  }
+  .capa-card button:hover{filter:brightness(1.08);}
+  .capa-aviso{font-size:.78rem; color:#a33; margin-top:8px; display:none;}
+
+  /* ===== APP ===== */
+  #app{display:none;}
+  .sticky-header{
+    position:sticky; top:0; z-index:50;
+    background:var(--verde-dark); color:#fbeee7;
+    padding:12px 20px; display:flex; align-items:center; justify-content:space-between;
+    flex-wrap:wrap; gap:8px;
+    font-family:var(--font-mono); font-size:.82rem;
+  }
+  .sticky-header .aluno{font-family:var(--font-body); font-weight:600; font-size:.92rem;}
+  .barra-progresso-trilho{
+    flex:1; min-width:120px; height:8px; background:rgba(255,255,255,.2); border-radius:6px; overflow:hidden; margin:0 14px;
+  }
+  .barra-progresso-fill{height:100%; background:var(--gold); width:0%; transition:width .3s ease;}
+
+  .wrap{max-width:800px; margin:0 auto; padding:32px 24px 60px;}
+
+  header.topo{margin-bottom:28px;}
+  header.topo .hero-tag{
+    display:inline-block; font-family:var(--font-mono); font-size:.72rem;
+    letter-spacing:.1em; text-transform:uppercase; color:var(--verde-dark);
+    background:rgba(168,69,44,.1); padding:5px 12px; border-radius:999px; margin-bottom:12px;
+  }
+  header.topo h1{font-family:var(--font-title); font-size:clamp(1.5rem,4vw,2rem); margin:0 0 8px; color:var(--ink);}
+  header.topo p.sub{color:var(--ink-soft); margin:0; font-size:.98rem;}
+  header.topo .aluno-info{
+    font-family:var(--font-mono); font-size:.82rem; color:var(--verde-dark);
+    background:var(--bg-alt); display:inline-block; padding:6px 12px; border-radius:8px; margin-top:12px;
+  }
+  .descritor-bar{
+    font-family:var(--font-mono); font-size:.76rem; color:var(--ink-soft);
+    background:var(--paper); border:1px solid var(--line); border-radius:8px;
+    padding:8px 14px; margin-bottom:14px; display:inline-block;
+  }
+  .ficha-id{
+    display:flex; flex-wrap:wrap; gap:10px 26px;
+    background:var(--paper); border:1px solid var(--line); border-radius:10px;
+    padding:12px 16px; margin-top:12px; font-family:var(--font-mono); font-size:.84rem; color:var(--ink);
+  }
+  .ficha-id span b{color:var(--verde-dark);}
+
+  /* ===== TEXTO DE APOIO ===== */
+  .texto-apoio{
+    background:var(--paper); border:1px solid var(--line); border-radius:var(--radius);
+    box-shadow:var(--shadow); padding:28px 30px; margin-bottom:22px;
+  }
+  .texto-apoio h2{font-family:var(--font-title); font-size:1.25rem; color:var(--verde-dark); margin:0 0 4px;}
+  .texto-apoio .fonte-tag{font-family:var(--font-mono); font-size:.72rem; color:var(--ink-soft); margin-bottom:16px; display:block;}
+  .texto-apoio p{margin:0 0 14px; color:var(--ink);}
+  .texto-apoio p:last-of-type{margin-bottom:0;}
+
+  .nota-rodape{font-family:var(--font-mono); font-size:.76rem; color:var(--ink-soft); margin-top:10px; font-style:italic;}
+
+  .referencia-box{
+    margin-top:20px; padding:14px 16px;
+    background:var(--bg-alt); border-left:3px solid var(--gold); border-radius:0 8px 8px 0;
+  }
+  .referencia-box .rot{
+    font-family:var(--font-mono); font-size:.7rem; text-transform:uppercase; letter-spacing:.08em;
+    color:var(--verde-dark); display:block; margin-bottom:6px;
+  }
+  .referencia-box p{margin:0 0 6px; font-size:.86rem; color:var(--ink-soft); font-family:var(--font-mono); line-height:1.6;}
+  .referencia-box p:last-child{margin-bottom:0;}
+
+  .documento-fonte{
+    background:var(--bg-alt);
+    border-left:3px solid var(--verde);
+    border-radius:0 8px 8px 0;
+    padding:16px 20px;
+    margin:16px 0;
+  }
+  .documento-fonte p{margin:0; font-style:italic; color:var(--ink);}
+
+  .tabela-apoio{width:100%; border-collapse:collapse; margin:16px 0; font-size:.9rem;}
+  .tabela-apoio th, .tabela-apoio td{border:1px solid var(--line); padding:9px 12px; text-align:left; vertical-align:top;}
+  .tabela-apoio th{background:var(--bg-alt); color:var(--verde-dark); font-family:var(--font-mono); font-size:.72rem; text-transform:uppercase; letter-spacing:.04em;}
+  .tabela-apoio td{color:var(--ink);}
+
+  /* ===== QUESTOES ===== */
+  .questoes-titulo{
+    font-family:var(--font-title); font-size:1.2rem; color:var(--verde-dark);
+    margin:0 0 18px; display:flex; align-items:center; gap:10px;
+  }
+  .questao{
+    background:var(--paper); border:1px solid var(--line); border-radius:12px;
+    padding:20px 22px; margin-bottom:18px;
+  }
+  .questao.intercalada{margin-bottom:22px;}
+  .questao .num-q{
+    display:inline-flex; align-items:center; justify-content:center;
+    width:26px; height:26px; border-radius:50%; background:var(--verde);
+    color:#fff; font-family:var(--font-mono); font-size:.78rem; margin-right:8px; flex-shrink:0;
+  }
+  .questao .enunciado{font-weight:600; color:var(--ink); margin-bottom:12px; display:flex; align-items:flex-start;}
+  .questao textarea{
+    width:100%; min-height:100px; padding:12px 14px; border:1px solid var(--line); border-radius:8px;
+    font-family:var(--font-body); font-size:.96rem; resize:vertical; color:var(--ink);
+  }
+  .questao textarea:focus{outline:2px solid var(--verde-2); outline-offset:1px;}
+  .contador-chars{font-family:var(--font-mono); font-size:.72rem; color:var(--ink-soft); margin-top:6px; text-align:right;}
+
+  .comentario-prof{
+    display:none; margin-top:14px; padding:14px 16px;
+    background:#eaf6ee; border:1px solid #bfe3c8; border-radius:8px; font-size:.9rem; color:#1f5c33;
+  }
+  .comentario-prof.show{display:block;}
+  .comentario-prof b{display:block; margin-bottom:4px; font-family:var(--font-title); font-size:.92rem;}
+
+  /* ===== ALERTA / FINALIZAR ===== */
+  .alerta-incompleto{
+    display:none; background:#fdf3e2; border:1px solid #f1d9a6; color:#8a5a10;
+    padding:12px 16px; border-radius:8px; font-size:.9rem; margin-bottom:16px;
+  }
+  .alerta-incompleto.show{display:block;}
+
+  .acoes-finais{display:flex; gap:12px; flex-wrap:wrap; margin-top:10px;}
+  .btn{
+    font-family:var(--font-body); font-weight:600; font-size:.94rem; padding:12px 22px;
+    border-radius:8px; border:none; cursor:pointer; transition:filter .15s ease;
+  }
+  .btn:hover{filter:brightness(1.08);}
+  .btn-primario{background:var(--verde); color:#fff;}
+  .btn-secundario{background:transparent; color:var(--ink); border:1px solid var(--line);}
+  .btn-pdf{background:var(--gold); color:#fff;}
+  .btn[disabled]{opacity:.5; cursor:not-allowed;}
+
+  /* ===== POPUP ===== */
+  .popup-overlay{
+    display:none; position:fixed; inset:0; background:rgba(61,31,20,.6);
+    align-items:center; justify-content:center; z-index:200; padding:20px;
+  }
+  .popup-overlay.show{display:flex;}
+  .popup-card{
+    background:var(--paper); border-radius:var(--radius); box-shadow:var(--shadow);
+    max-width:420px; width:100%; padding:32px 28px; text-align:center;
+  }
+  .popup-card .emoji{font-size:2.4rem; margin-bottom:10px;}
+  .popup-card h3{font-family:var(--font-title); margin:0 0 8px; color:var(--verde-dark);}
+  .popup-card p{color:var(--ink-soft); font-size:.94rem; margin:0 0 20px;}
+
+  footer.rodape{text-align:center; padding:24px; color:var(--ink-soft); font-family:var(--font-mono); font-size:.8rem;}
+
+  @media (max-width:600px){
+    .wrap{padding:24px 16px 50px;}
+    .texto-apoio, .questao{padding:18px 18px;}
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== CAPA ===== -->
+<div id="capa">
+  <div class="grade-centralizada"></div>
+  <div class="capa-card">
+    <span class="tag">8º ano · História · CERO</span>
+    <h1>Leitura e Escrita: Revoltas do Período Regencial</h1>
+    <p class="desc">Dois textos — literário e historiográfico — sobre o clima de revolta no Brasil regencial. Preencha os dados para começar.</p>
+    <input type="text" id="nome-aluno" placeholder="Seu nome completo">
+    <input type="text" id="turma-aluno" placeholder="Turma (ex.: 8º A)">
+    <button onclick="iniciarAtividade()">Iniciar atividade</button>
+    <div class="capa-aviso" id="capa-aviso">Por favor, digite seu nome para continuar.</div>
+  </div>
+</div>
+
+<!-- ===== APP ===== -->
+<div id="app">
+  <div class="sticky-header">
+    <span class="aluno" id="header-nome"></span>
+    <div class="barra-progresso-trilho"><div class="barra-progresso-fill" id="barra-fill"></div></div>
+    <span id="contador-geral">Respondidas: 0/8</span>
+  </div>
+
+  <div class="wrap">
+    <header class="topo selecionavel">
+      <span class="descritor-bar">História / 8.º Ano do Ensino Fundamental &nbsp;|&nbsp; (GO-EF08HI16-A) – Primeiro Reinado e Período Regencial</span>
+      <span class="hero-tag" style="display:block; margin-top:10px;">Integrando com Língua Portuguesa</span>
+      <h1>Vozes da Revolta: Literatura e História</h1>
+      <p class="sub">Leia com atenção os dois textos a seguir e responda às questões.</p>
+      <div class="ficha-id" id="ficha-id">
+        <span><b>NOME:</b> <span id="ficha-nome"></span></span>
+        <span><b>DATA:</b> <span id="ficha-data"></span></span>
+        <span><b>TURMA:</b> <span id="ficha-turma"></span></span>
+      </div>
+    </header>
+
+    <main>
+      <h2 class="questoes-titulo">📖 Para Refletir</h2>
+
+      <section class="texto-apoio selecionavel">
+        <h2>Texto 1 — Erico Verissimo</h2>
+        <span class="fonte-tag">Trecho literário — romance histórico</span>
+        <div class="documento-fonte">
+          <p>— Escuta o que vou lhe dizer, amigo. Nesta província a gente só pode ter como certo uma coisa: mais cedo ou mais tarde rebenta uma guerra ou uma revolução — atirou ambos os braços para o lado, num gesto de despreocupação. — Que é que adianta plantar, criar, trabalhar como burro de carga? O direito mesmo era a nossa gente nunca tirar o fardamento do corpo nem a espada da cinta. [...] O castelhano está aí mesmo. Hoje é Montevidéu. Amanhã, Buenos Aires. E nós aqui no Continente sempre acabamos entrando na dança.</p>
+        </div>
+        <div class="referencia-box">
+          <span class="rot">Referência (ABNT NBR 6023)</span>
+          <p>VERISSIMO, Erico. Um certo capitão Rodrigo. São Paulo: Editora Globo, 1987. p. 18.</p>
+        </div>
+      </section>
+
+      <div class="questao intercalada" data-questao="1">
+        <div class="enunciado"><span class="num-q">1</span> Identifique a quem ou a que o personagem está se referindo ao dizer "Nesta província..." e "nossa gente".</div>
+        <textarea id="resp-1" class="campo-resposta dissertativa" data-min="60" placeholder="Escreva sua resposta aqui..."></textarea>
+        <div class="contador-chars">0 caracteres (mínimo 60)</div>
+        <div class="comentario-prof">
+          <b>Comentário do professor</b>
+          "Nesta província" refere-se à Província de São Pedro do Rio Grande do Sul, então parte do Império do Brasil; "nossa gente" refere-se aos habitantes rio-grandenses, com quem o narrador se identifica e a quem atribui coragem e disposição para o combate.
+        </div>
+      </div>
+
+      <div class="questao intercalada" data-questao="2">
+        <div class="enunciado"><span class="num-q">2</span> A expressão "a gente", quando se refere a "nós", é empregada de maneira informal, sendo muito comum o seu uso na linguagem cotidiana. Essa expressão aparece no texto com esse sentido? Justifique.</div>
+        <textarea id="resp-2" class="campo-resposta dissertativa" data-min="60" placeholder="Escreva sua resposta aqui..."></textarea>
+        <div class="contador-chars">0 caracteres (mínimo 60)</div>
+        <div class="comentario-prof">
+          <b>Comentário do professor</b>
+          Sim. No trecho "Nesta província a gente só pode ter como certo uma coisa", "a gente" substitui "nós", indicando a coletividade dos habitantes da província e reforçando o tom coloquial e oral da fala do personagem.
+        </div>
+      </div>
+
+      <div class="questao intercalada" data-questao="3">
+        <div class="enunciado"><span class="num-q">3</span> Na linguagem literária, os escritores costumam usar figuras de linguagem. Leia o conceito de duas dessas figuras e encontre e transcreva um exemplo retirado do texto.</div>
+        <textarea id="resp-3" class="campo-resposta dissertativa" data-min="60" placeholder="Escreva sua resposta aqui..."></textarea>
+        <div class="contador-chars">0 caracteres (mínimo 60)</div>
+        <div class="comentario-prof">
+          <b>Comentário do professor</b>
+          Um exemplo é a hipérbole em "nunca tirar o fardamento do corpo nem a espada da cinta", que exagera a ideia de estar sempre pronto para o combate. Também há metáfora em "entrando na dança", expressão que representa, de forma figurada, o envolvimento inevitável nos conflitos da região.
+        </div>
+      </div>
+
+      <section class="texto-apoio selecionavel">
+        <h2>Texto 2 — Você cidadão!</h2>
+        <span class="fonte-tag">Trecho historiográfico — Revolta dos Malês (1835)</span>
+        <div class="documento-fonte">
+          <p>[...] me interesso por revoltas, em geral. Mas, nesse caso particular, o que me atraiu foi o fato de o chefe de polícia local atribuir o relativo sucesso da revolta ao papel da escrita no seu planejamento. Sabe-se que escravos e homens livres participantes da revolta – a maioria [...] de origem iorubá – frequentavam escolas informais islamitas, onde aprendiam a ler e a escrever em caracteres árabes, e que muitos dos líderes tinham perfeito domínio da leitura e da escrita, o que os colocava acima dos colonizadores brancos que mal sabiam assinar o nome. Com essa habilidade eles puderam planejar o levante em segredo, enviando mensagens e instruções que foram apreendidas pela polícia [...]. Assim, meu antigo interesse pelas consequências da alfabetização se viu aguçado por esse episódio que punha à luz as potencialidades da leitura e da escrita para a transformação cultural.</p>
+        </div>
+        <p class="nota-rodape">Escolas islamitas: escolas onde se estuda o Corão em língua árabe.</p>
+        <div class="referencia-box">
+          <span class="rot">Referência (ABNT NBR 6023)</span>
+          <p>GOODY, Jack, 1988 apud SEFFNER, Fernando. Leitura e escrita na história. In: NEVES, Iara C. Bittencourt (Org.). Ler e escrever: compromisso de todas as áreas. Porto Alegre: UFRGS, 2011. p. 116.</p>
+        </div>
+      </section>
+
+      <div class="questao intercalada" data-questao="4">
+        <div class="enunciado"><span class="num-q">4</span> Por que o autor do texto se interessou pela Revolta de 1835?</div>
+        <textarea id="resp-4" class="campo-resposta dissertativa" data-min="60" placeholder="Escreva sua resposta aqui..."></textarea>
+        <div class="contador-chars">0 caracteres (mínimo 60)</div>
+        <div class="comentario-prof">
+          <b>Comentário do professor</b>
+          Porque o chefe de polícia local atribuiu o relativo sucesso da revolta ao papel da escrita em seu planejamento, o que despertou o interesse do autor pelas consequências culturais da alfabetização.
+        </div>
+      </div>
+
+      <div class="questao intercalada" data-questao="5">
+        <div class="enunciado"><span class="num-q">5</span> Que relação o autor do texto estabelece entre a escrita e a Revolta de 1835 na Bahia?</div>
+        <textarea id="resp-5" class="campo-resposta dissertativa" data-min="60" placeholder="Escreva sua resposta aqui..."></textarea>
+        <div class="contador-chars">0 caracteres (mínimo 60)</div>
+        <div class="comentario-prof">
+          <b>Comentário do professor</b>
+          A escrita permitiu que os líderes planejassem o levante em segredo, trocando mensagens e instruções em caracteres árabes, o que deu organização e coordenação à revolta — embora essas mesmas mensagens tenham sido depois apreendidas pela polícia.
+        </div>
+      </div>
+
+      <div class="questao intercalada" data-questao="6">
+        <div class="enunciado"><span class="num-q">6</span> Diferencie os rebeldes dos colonizadores brancos no tocante à escrita.</div>
+        <textarea id="resp-6" class="campo-resposta dissertativa" data-min="60" placeholder="Escreva sua resposta aqui..."></textarea>
+        <div class="contador-chars">0 caracteres (mínimo 60)</div>
+        <div class="comentario-prof">
+          <b>Comentário do professor</b>
+          Muitos escravos e homens livres de origem iorubá dominavam a leitura e a escrita em árabe, aprendida em escolas islâmicas informais, enquanto muitos colonizadores brancos mal sabiam assinar o próprio nome — ou seja, os rebeldes tinham, nesse aspecto, um domínio da escrita superior ao dos colonizadores.
+        </div>
+      </div>
+
+      <div class="questao intercalada" data-questao="7">
+        <div class="enunciado"><span class="num-q">7</span> Explique de que forma isso influenciou a revolta.</div>
+        <textarea id="resp-7" class="campo-resposta dissertativa" data-min="60" placeholder="Escreva sua resposta aqui..."></textarea>
+        <div class="contador-chars">0 caracteres (mínimo 60)</div>
+        <div class="comentario-prof">
+          <b>Comentário do professor</b>
+          O domínio da escrita permitiu comunicação segura e organizada entre os participantes, favorecendo o planejamento coletivo e o relativo sucesso inicial da revolta, ainda que ela tenha sido descoberta pela polícia por meio das mensagens apreendidas.
+        </div>
+      </div>
+
+      <div class="questao intercalada" data-questao="8">
+        <div class="enunciado"><span class="num-q">8</span> Reflita e escreva sobre a importância da leitura e da escrita na vida de uma pessoa nos dias de hoje. Justifique.</div>
+        <textarea id="resp-8" class="campo-resposta dissertativa" data-min="60" placeholder="Escreva sua resposta aqui..."></textarea>
+        <div class="contador-chars">0 caracteres (mínimo 60)</div>
+        <div class="comentario-prof">
+          <b>Comentário do professor</b>
+          Resposta pessoal — espera-se que o aluno relacione a leitura e a escrita ao acesso à informação, à autonomia, ao exercício da cidadania e à participação social e política na atualidade.
+        </div>
+      </div>
+
+
+      <div class="alerta-incompleto" id="alerta-incompleto">
+        ⚠️ Ainda há campos incompletos (respeite o mínimo de caracteres indicado em cada um). Revise antes de finalizar.
+      </div>
+
+      <div class="acoes-finais">
+        <button class="btn btn-primario" onclick="finalizarAtividade()">Finalizar e ver comentários</button>
+        <button class="btn btn-secundario" onclick="refazerAtividade()">Refazer</button>
+        <button class="btn btn-pdf" onclick="exportarPDF()">Exportar em PDF</button>
+      </div>
+    </main>
+  </div>
+
+  <footer class="rodape">Colégio Estadual Rodolfo de Oliveira · CERO · 2026</footer>
+</div>
+
+<!-- ===== POPUP ===== -->
+<div class="popup-overlay" id="popup-overlay">
+  <div class="popup-card">
+    <div class="emoji">🎉</div>
+    <h3>Atividade concluída!</h3>
+    <p>Suas respostas foram registradas. Os comentários do professor já estão disponíveis abaixo de cada questão para você comparar com o que escreveu.</p>
+    <button class="btn btn-primario" onclick="fecharPopup()">Continuar</button>
+  </div>
+</div>
+
+<script>
+/* ===== GATE DE NOME ===== */
+function iniciarAtividade(){
+  const nome = document.getElementById('nome-aluno').value.trim();
+  const turma = document.getElementById('turma-aluno').value.trim();
+  const aviso = document.getElementById('capa-aviso');
+  if(!nome){
+    aviso.style.display = 'block';
+    return;
+  }
+  aviso.style.display = 'none';
+  const hoje = new Date();
+  const dataFormatada = String(hoje.getDate()).padStart(2,'0') + '/' + String(hoje.getMonth()+1).padStart(2,'0') + '/' + hoje.getFullYear();
+  document.getElementById('header-nome').textContent = nome;
+  document.getElementById('ficha-nome').textContent = nome;
+  document.getElementById('ficha-data').textContent = dataFormatada;
+  document.getElementById('ficha-turma').textContent = turma || '—';
+  document.getElementById('capa').style.display = 'none';
+  document.getElementById('app').style.display = 'block';
+  window.scrollTo(0,0);
+}
+
+/* ===== CONTADOR DE CARACTERES E PROGRESSO ===== */
+const textareas = document.querySelectorAll('textarea.dissertativa');
+
+function atualizarProgresso(){
+  let respondidas = 0;
+  textareas.forEach(function(t){
+    const min = parseInt(t.dataset.min, 10);
+    if(t.value.trim().length >= min) respondidas++;
+  });
+  document.getElementById('contador-geral').textContent = 'Respondidas: ' + respondidas + '/' + textareas.length;
+  document.getElementById('barra-fill').style.width = (respondidas / textareas.length * 100) + '%';
+}
+
+textareas.forEach(function(t){
+  const contadorEl = t.parentElement.querySelector('.contador-chars');
+  const min = parseInt(t.dataset.min, 10);
+  t.addEventListener('input', function(){
+    contadorEl.textContent = t.value.length + ' caracteres (mínimo ' + min + ')';
+    atualizarProgresso();
+  });
+});
+
+/* ===== FINALIZAR ===== */
+function finalizarAtividade(){
+  let completo = true;
+  textareas.forEach(function(t){
+    const min = parseInt(t.dataset.min, 10);
+    if(t.value.trim().length < min) completo = false;
+  });
+
+  const alerta = document.getElementById('alerta-incompleto');
+  if(!completo){
+    alerta.classList.add('show');
+    alerta.scrollIntoView({behavior:'smooth', block:'center'});
+    return;
+  }
+  alerta.classList.remove('show');
+
+  document.querySelectorAll('.comentario-prof').forEach(function(c){
+    c.classList.add('show');
+  });
+
+  document.getElementById('popup-overlay').classList.add('show');
+}
+
+function fecharPopup(){
+  document.getElementById('popup-overlay').classList.remove('show');
+}
+
+function refazerAtividade(){
+  textareas.forEach(function(t){
+    t.value = '';
+    t.parentElement.querySelector('.contador-chars').textContent = '0 caracteres (mínimo ' + t.dataset.min + ')';
+  });
+  document.querySelectorAll('.comentario-prof').forEach(function(c){
+    c.classList.remove('show');
+  });
+  document.getElementById('alerta-incompleto').classList.remove('show');
+  atualizarProgresso();
+  window.scrollTo(0,0);
+}
+
+/* ===== EXPORTAR PDF ===== */
+function sleep(ms){ return new Promise(function(r){ setTimeout(r, ms); }); }
+
+function esc(str){
+  const d = document.createElement('div');
+  d.textContent = str || '';
+  return d.innerHTML.replace(/\n/g, '<br>');
+}
+
+async function exportarPDF(){
+  const overlay = document.createElement('div');
+  overlay.id = 'pdf-overlay';
+  overlay.style.cssText = 'position:fixed;inset:0;background:rgba(61,31,20,.6);display:flex;align-items:center;justify-content:center;z-index:999;';
+  overlay.innerHTML =
+    '<div style="background:#fff;border-radius:14px;padding:32px 36px;text-align:center;max-width:300px;box-shadow:0 10px 30px rgba(107,42,26,.16);font-family:\'Source Serif 4\',serif;">' +
+      '<div style="font-size:2rem;margin-bottom:8px;">📄</div>' +
+      '<h4 style="margin:0 0 4px;color:#6b2a1a;font-family:\'Playfair Display\',serif;">Gerando PDF…</h4>' +
+      '<p style="margin:0 0 14px;color:#6b5544;font-size:.86rem;">Aguarde alguns instantes.</p>' +
+      '<div style="background:#f0dccb;border-radius:6px;overflow:hidden;height:8px;">' +
+        '<div id="pdf-prog" style="height:100%;width:0%;background:#a8452c;transition:width .2s ease;"></div>' +
+      '</div>' +
+      '<div id="pdf-prog-txt" style="margin-top:8px;font-family:\'JetBrains Mono\',monospace;font-size:.74rem;color:#6b5544;">0%</div>' +
+    '</div>';
+  document.body.appendChild(overlay);
+  await sleep(80);
+  function setP(pct, msg){
+    const pp = document.getElementById('pdf-prog'), pt = document.getElementById('pdf-prog-txt');
+    if(pp) pp.style.width = pct + '%';
+    if(pt) pt.textContent = msg || (pct + '%');
+  }
+
+  try{
+    const { jsPDF } = window.jspdf;
+    const pdf = new jsPDF({orientation:'portrait', unit:'px', format:'a4', hotfixes:['px_scaling']});
+    const PW = pdf.internal.pageSize.getWidth(), PH = pdf.internal.pageSize.getHeight();
+    const ML = 28, CW = PW - ML*2;
+    let y = ML;
+
+    async function addImg(el){
+      const canvas = await html2canvas(el, {scale:2, useCORS:true, logging:false, backgroundColor:'#ffffff', scrollX:0, scrollY:0, windowWidth:860});
+      const imgW = CW, imgH = (canvas.height / canvas.width) * imgW;
+      const dataUrl = canvas.toDataURL('image/jpeg', .92), avail = PH - ML*2;
+      if(imgH <= avail){
+        if(y + imgH > PH - ML){ pdf.addPage(); y = ML; }
+        pdf.addImage(dataUrl, 'JPEG', ML, y, imgW, imgH);
+        y += imgH + 8;
+      } else {
+        const pxPerPdfPt = canvas.width / imgW;
+        let srcY = 0;
+        while(srcY < canvas.height){
+          const availPt = PH - y - ML, sliceH_pt = Math.min(availPt, avail);
+          const sliceH_px = Math.round(sliceH_pt * pxPerPdfPt), actualH_px = Math.min(sliceH_px, canvas.height - srcY);
+          const tmp = document.createElement('canvas');
+          tmp.width = canvas.width; tmp.height = actualH_px;
+          tmp.getContext('2d').drawImage(canvas, 0, srcY, canvas.width, actualH_px, 0, 0, canvas.width, actualH_px);
+          const sliceUrl = tmp.toDataURL('image/jpeg', .92), slicePt = (actualH_px / canvas.width) * imgW;
+          pdf.addImage(sliceUrl, 'JPEG', ML, y, imgW, slicePt);
+          srcY += actualH_px; y += slicePt;
+          if(srcY < canvas.height){ pdf.addPage(); y = ML; }
+        }
+        y += 8;
+      }
+    }
+
+    async function band(tag, txt){
+      const b = document.createElement('div');
+      b.style.cssText = 'width:860px;font-family:Arial,sans-serif;position:absolute;left:-9999px;top:0';
+      b.innerHTML = '<div style="background:linear-gradient(90deg,#a8452c,#6b2a1a);border-radius:8px;padding:12px 22px;display:flex;align-items:center;gap:12px">' +
+        '<span style="background:rgba(255,255,255,.2);color:#fff;font-weight:700;font-size:12px;letter-spacing:1px;border-radius:20px;padding:3px 12px">' + tag + '</span>' +
+        '<span style="color:#fff;font-size:15px;font-weight:700">' + txt + '</span></div>';
+      document.body.appendChild(b);
+      await sleep(20);
+      await addImg(b);
+      document.body.removeChild(b);
+    }
+
+    const nome = document.getElementById('header-nome').textContent || 'Aluno(a)';
+    const turma = document.getElementById('ficha-turma').textContent || '—';
+    const now = new Date();
+    const dtStr = now.toLocaleDateString('pt-BR') + ' às ' + now.toLocaleTimeString('pt-BR', {hour:'2-digit', minute:'2-digit'});
+
+    setP(5, 'Preparando capa…'); await sleep(40);
+    const coverEl = document.createElement('div');
+    coverEl.style.cssText = 'width:860px;font-family:Arial,sans-serif;overflow:hidden;position:absolute;left:-9999px;top:0';
+    coverEl.innerHTML =
+      '<div style="background:linear-gradient(135deg,#3d1f14 0%,#6b2a1a 60%,#a8452c 100%);padding:32px 48px 28px;color:white">' +
+        '<div style="font-size:10px;letter-spacing:3px;text-transform:uppercase;opacity:.7;font-weight:700;margin-bottom:6px">HISTÓRIA · 8º ANO DO ENSINO FUNDAMENTAL · GO-EF08HI16-A</div>' +
+        '<div style="font-size:26px;font-weight:900;line-height:1.2;margin-bottom:5px">Vozes da Revolta: Literatura e História</div>' +
+        '<div style="font-size:13px;opacity:.8;font-style:italic">Leitura e escrita: literatura e historiografia sobre revoltas regenciais · 8 questões dissertativas</div>' +
+      '</div>' +
+      '<div style="background:#faf3ee;padding:22px 48px 26px;border-bottom:3px solid #c3d4b3">' +
+        '<div style="font-size:9px;text-transform:uppercase;letter-spacing:2px;color:#a8452c;font-weight:700;margin-bottom:5px">Aluno(a)</div>' +
+        '<div style="font-size:20px;font-weight:700;color:#2e1f16;border-bottom:2.5px solid #a8452c;padding-bottom:6px;display:inline-block;margin-bottom:16px">' + esc(nome) + '</div>' +
+        '<div style="display:flex;gap:12px;flex-wrap:wrap">' +
+          '<div style="background:white;border-radius:8px;padding:12px 18px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.07);min-width:84px">' +
+            '<div style="font-size:22px;font-weight:900;color:#a8452c">' + esc(turma) + '</div>' +
+            '<div style="font-size:9px;text-transform:uppercase;letter-spacing:1px;color:#888;margin-top:2px">Turma</div></div>' +
+          '<div style="background:white;border-radius:8px;padding:12px 18px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.07);min-width:84px">' +
+            '<div style="font-size:22px;font-weight:900;color:#5c7a4a">8</div>' +
+            '<div style="font-size:9px;text-transform:uppercase;letter-spacing:1px;color:#888;margin-top:2px">Dissertativas</div></div>' +
+          '<div style="background:white;border-radius:8px;padding:12px 18px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.07);min-width:140px">' +
+            '<div style="font-size:13px;font-weight:700;color:#333">' + dtStr + '</div>' +
+            '<div style="font-size:9px;text-transform:uppercase;letter-spacing:1px;color:#888;margin-top:2px">Gerado em</div></div>' +
+        '</div>' +
+        '<div style="font-size:9px;color:#bbb;margin-top:14px">Colégio Estadual Rodolfo de Oliveira · Goiás · 2026</div>' +
+      '</div>';
+    document.body.appendChild(coverEl); await sleep(60); await addImg(coverEl); document.body.removeChild(coverEl);
+
+    setP(11, 'Preparando Erico Verissimo…'); await sleep(20);
+    await band('TEXTO 1', 'Erico Verissimo');
+    const txt1El = document.createElement('div');
+    txt1El.style.cssText = 'width:860px;font-family:Arial,sans-serif;background:white;overflow:hidden;border:1px solid #e8d2c0;border-radius:10px;position:absolute;left:-9999px;top:0';
+    txt1El.innerHTML =
+      '<div style="padding:18px 24px;background:#fdfdfa">' +
+        '<div style="background:#f0dccb;border-left:3px solid #a8452c;border-radius:0 8px 8px 0;padding:14px 18px;margin-bottom:14px">' +
+          '<div style=\"font-size:12px;color:#2e1f16;line-height:1.85;font-style:italic\">— Escuta o que vou lhe dizer, amigo. Nesta província a gente só pode ter como certo uma coisa: mais cedo ou mais tarde rebenta uma guerra ou uma revolução — atirou ambos os braços para o lado, num gesto de despreocupação. — Que é que adianta plantar, criar, trabalhar como burro de carga? O direito mesmo era a nossa gente nunca tirar o fardamento do corpo nem a espada da cinta. [...] O castelhano está aí mesmo. Hoje é Montevidéu. Amanhã, Buenos Aires. E nós aqui no Continente sempre acabamos entrando na dança.</div>' +
+        '</div>' +
+        '<div style=\"font-size:10px;color:#6b5544;font-family:monospace;border-top:1px solid #eee;padding-top:10px\">VERISSIMO, Erico. Um certo capitão Rodrigo. São Paulo: Editora Globo, 1987. p. 18.</div>' +
+      '</div>';
+    document.body.appendChild(txt1El); await sleep(20); await addImg(txt1El); document.body.removeChild(txt1El);
+
+    setP(14, 'Preparando Jack Goody — Revolta dos Malês…'); await sleep(20);
+    await band('TEXTO 2', 'Jack Goody — Revolta dos Malês');
+    const txt4El = document.createElement('div');
+    txt4El.style.cssText = 'width:860px;font-family:Arial,sans-serif;background:white;overflow:hidden;border:1px solid #e8d2c0;border-radius:10px;position:absolute;left:-9999px;top:0';
+    txt4El.innerHTML =
+      '<div style="padding:18px 24px;background:#fdfdfa">' +
+        '<div style="background:#f0dccb;border-left:3px solid #a8452c;border-radius:0 8px 8px 0;padding:14px 18px;margin-bottom:14px">' +
+          '<div style=\"font-size:12px;color:#2e1f16;line-height:1.85;font-style:italic\">[...] me interesso por revoltas, em geral. Mas, nesse caso particular, o que me atraiu foi o fato de o chefe de polícia local atribuir o relativo sucesso da revolta ao papel da escrita no seu planejamento. Sabe-se que escravos e homens livres participantes da revolta – a maioria [...] de origem iorubá – frequentavam escolas informais islamitas, onde aprendiam a ler e a escrever em caracteres árabes, e que muitos dos líderes tinham perfeito domínio da leitura e da escrita, o que os colocava acima dos colonizadores brancos que mal sabiam assinar o nome. Com essa habilidade eles puderam planejar o levante em segredo, enviando mensagens e instruções que foram apreendidas pela polícia [...]. Assim, meu antigo interesse pelas consequências da alfabetização se viu aguçado por esse episódio que punha à luz as potencialidades da leitura e da escrita para a transformação cultural.</div>' +
+        '</div>' +
+        '<div style=\"font-size:10px;color:#6b5544;font-family:monospace;border-top:1px solid #eee;padding-top:10px\">GOODY, Jack, 1988 apud SEFFNER, Fernando. Leitura e escrita na história. In: NEVES, Iara C. Bittencourt (Org.). Ler e escrever: compromisso de todas as áreas. Porto Alegre: UFRGS, 2011. p. 116.</div>' +
+      '</div>';
+    document.body.appendChild(txt4El); await sleep(20); await addImg(txt4El); document.body.removeChild(txt4El);
+
+
+    // QUESTÕES
+    await band('QUESTÕES', 'Questões Dissertativas — Respostas e Orientações');
+
+    const QUESTOES = [{"num": "1", "enunc": "Identifique a quem ou a que o personagem está se referindo ao dizer \"Nesta província...\" e \"nossa gente\".", "id": "resp-1", "coment": "\"Nesta província\" refere-se à Província de São Pedro do Rio Grande do Sul, então parte do Império do Brasil; \"nossa gente\" refere-se aos habitantes rio-grandenses, com quem o narrador se identifica e a quem atribui coragem e disposição para o combate."}, {"num": "2", "enunc": "A expressão \"a gente\", quando se refere a \"nós\", é empregada de maneira informal, sendo muito comum o seu uso na linguagem cotidiana. Essa expressão aparece no texto com esse sentido? Justifique.", "id": "resp-2", "coment": "Sim. No trecho \"Nesta província a gente só pode ter como certo uma coisa\", \"a gente\" substitui \"nós\", indicando a coletividade dos habitantes da província e reforçando o tom coloquial e oral da fala do personagem."}, {"num": "3", "enunc": "Na linguagem literária, os escritores costumam usar figuras de linguagem. Leia o conceito de duas dessas figuras e encontre e transcreva um exemplo retirado do texto.", "id": "resp-3", "coment": "Um exemplo é a hipérbole em \"nunca tirar o fardamento do corpo nem a espada da cinta\", que exagera a ideia de estar sempre pronto para o combate. Também há metáfora em \"entrando na dança\", expressão que representa, de forma figurada, o envolvimento inevitável nos conflitos da região."}, {"num": "4", "enunc": "Por que o autor do texto se interessou pela Revolta de 1835?", "id": "resp-4", "coment": "Porque o chefe de polícia local atribuiu o relativo sucesso da revolta ao papel da escrita em seu planejamento, o que despertou o interesse do autor pelas consequências culturais da alfabetização."}, {"num": "5", "enunc": "Que relação o autor do texto estabelece entre a escrita e a Revolta de 1835 na Bahia?", "id": "resp-5", "coment": "A escrita permitiu que os líderes planejassem o levante em segredo, trocando mensagens e instruções em caracteres árabes, o que deu organização e coordenação à revolta — embora essas mesmas mensagens tenham sido depois apreendidas pela polícia."}, {"num": "6", "enunc": "Diferencie os rebeldes dos colonizadores brancos no tocante à escrita.", "id": "resp-6", "coment": "Muitos escravos e homens livres de origem iorubá dominavam a leitura e a escrita em árabe, aprendida em escolas islâmicas informais, enquanto muitos colonizadores brancos mal sabiam assinar o próprio nome — ou seja, os rebeldes tinham, nesse aspecto, um domínio da escrita superior ao dos colonizadores."}, {"num": "7", "enunc": "Explique de que forma isso influenciou a revolta.", "id": "resp-7", "coment": "O domínio da escrita permitiu comunicação segura e organizada entre os participantes, favorecendo o planejamento coletivo e o relativo sucesso inicial da revolta, ainda que ela tenha sido descoberta pela polícia por meio das mensagens apreendidas."}, {"num": "8", "enunc": "Reflita e escreva sobre a importância da leitura e da escrita na vida de uma pessoa nos dias de hoje. Justifique.", "id": "resp-8", "coment": "Resposta pessoal — espera-se que o aluno relacione a leitura e a escrita ao acesso à informação, à autonomia, ao exercício da cidadania e à participação social e política na atualidade."}];
+
+    for(let i=0; i<QUESTOES.length; i++){
+      const q = QUESTOES[i];
+      setP(35 + Math.round(i/QUESTOES.length*55), 'Questão ' + q.num + '/' + QUESTOES.length + '…'); await sleep(12);
+
+      const valor = document.getElementById(q.id) ? document.getElementById(q.id).value : '';
+      const respostaHTML =
+        '<div style="background:#f0dccb;border:1.5px solid #c96b45;border-radius:8px;padding:12px 15px;min-height:40px">' +
+          '<div style="font-size:12px;color:#2e1f16;line-height:1.75;white-space:pre-wrap">' + (esc(valor) || '<span style=\"color:#aaa\">(sem resposta)</span>') + '</div>' +
+        '</div>';
+
+      const qEl = document.createElement('div');
+      qEl.style.cssText = 'width:860px;font-family:Arial,sans-serif;background:white;overflow:hidden;border:1px solid #e8d2c0;border-radius:10px;position:absolute;left:-9999px;top:0';
+      qEl.innerHTML =
+        '<div style="background:linear-gradient(90deg,#a8452c,#6b2a1a);padding:10px 22px;display:flex;justify-content:space-between;align-items:center">' +
+          '<span style="color:white;font-weight:700;font-size:13px;letter-spacing:.8px">QUESTÃO ' + q.num + '</span>' +
+          '<span style="background:rgba(255,255,255,.15);color:rgba(255,255,255,.9);font-size:11px;padding:3px 12px;border-radius:20px;font-weight:600">Dissertativa</span></div>' +
+        '<div style="padding:18px 24px 16px;background:#fdfdfa">' +
+          '<div style="font-size:13px;font-weight:700;color:#2e1f16;line-height:1.6;margin-bottom:14px;padding-bottom:12px;border-bottom:1px solid #eee">' + esc(q.enunc) + '</div>' +
+          '<div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">' +
+            '<div style="width:4px;height:15px;background:#a8452c;border-radius:2px"></div>' +
+            '<div style="font-size:10px;font-weight:700;color:#a8452c;text-transform:uppercase;letter-spacing:1.5px">Resposta do Aluno(a)</div></div>' +
+          respostaHTML +
+          '<div style="display:flex;align-items:center;gap:8px;margin:12px 0 7px">' +
+            '<div style="width:4px;height:15px;background:#5c7a4a;border-radius:2px"></div>' +
+            '<div style="font-size:10px;font-weight:700;color:#3d5330;text-transform:uppercase;letter-spacing:1.5px">Comentário do Professor</div></div>' +
+          '<div style="background:#eef3e8;border:1.5px solid #c3d4b3;border-radius:8px;padding:13px 16px">' +
+            '<div style="font-size:12px;color:#33421f;line-height:1.8">' + esc(q.coment) + '</div></div>' +
+        '</div>';
+      document.body.appendChild(qEl); await sleep(12); await addImg(qEl); document.body.removeChild(qEl);
+    }
+
+    // RODAPÉ EM TODAS AS PÁGINAS
+    setP(92, 'Finalizando…'); await sleep(30);
+    const totalPages = pdf.getNumberOfPages();
+    for(let p=1; p<=totalPages; p++){
+      pdf.setPage(p);
+      const fEl = document.createElement('div');
+      fEl.style.cssText = 'width:' + Math.round(CW) + 'px;height:22px;background:#faf3ee;display:flex;align-items:center;justify-content:space-between;padding:0 28px;font-size:10px;color:#888;font-family:Arial,sans-serif;position:absolute;left:-9999px;top:0';
+      fEl.innerHTML = '<span>Vozes da Revolta: Literatura e História · ' + esc(nome) + '</span><span>Página ' + p + ' de ' + totalPages + '</span>';
+      document.body.appendChild(fEl);
+      const fc = await html2canvas(fEl, {scale:2, logging:false, backgroundColor:'#faf3ee'});
+      document.body.removeChild(fEl);
+      const fUrl = fc.toDataURL('image/jpeg', .9), fH = (fc.height / fc.width) * CW;
+      pdf.setFillColor(250,243,238); pdf.rect(ML, PH-fH, CW, fH, 'F');
+      pdf.addImage(fUrl, 'JPEG', ML, PH-fH, CW, fH);
+    }
+
+    setP(100, 'Salvando…'); await sleep(200);
+    const safeName = nome.replace(/[^a-zA-Z0-9_\-]/g, '_');
+    pdf.save('Vozes_da_Revolta_' + safeName + '.pdf');
+
+  } catch(err){
+    console.error(err);
+    alert('Erro ao gerar PDF: ' + err.message);
+  } finally {
+    const ov = document.getElementById('pdf-overlay');
+    if(ov) document.body.removeChild(ov);
+  }
+}
+
+/* ===== PROTEÇÃO ANTI-COLA ===== */
+(function () {
+  const CAMPOS_PROTEGIDOS = document.querySelectorAll('textarea.dissertativa, .campo-resposta');
+  const LIMITE_BLOCO = 25;
+
+  function bloquear(e) {
+    e.preventDefault();
+    mostrarToast('Colar não permitido nesta atividade.');
+  }
+
+  CAMPOS_PROTEGIDOS.forEach(function (campo) {
+    ['paste', 'copy', 'cut', 'drop', 'dragover', 'contextmenu'].forEach(function (evt) {
+      campo.addEventListener(evt, bloquear);
+    });
+
+    campo.addEventListener('beforeinput', function (e) {
+      if (e.inputType === 'insertFromPaste' || e.inputType === 'insertFromDrop') {
+        e.preventDefault();
+        mostrarToast('Colar não permitido nesta atividade.');
+      }
+    });
+
+    let valorAnterior = campo.value;
+    campo.addEventListener('input', function (e) {
+      const diferenca = campo.value.length - valorAnterior.length;
+      if (diferenca >= LIMITE_BLOCO && e.inputType !== 'insertReplacementText') {
+        campo.value = valorAnterior;
+        mostrarToast('Colar não permitido nesta atividade.');
+      } else {
+        valorAnterior = campo.value;
+      }
+    });
+  });
+
+  function mostrarToast(mensagem) {
+    let toast = document.getElementById('anti-cola-toast');
+    if (!toast) {
+      toast = document.createElement('div');
+      toast.id = 'anti-cola-toast';
+      toast.style.cssText =
+        'position:fixed;bottom:24px;left:50%;transform:translateX(-50%);' +
+        'background:#333;color:#fff;padding:10px 20px;border-radius:8px;' +
+        'font-size:14px;z-index:9999;opacity:0;transition:opacity .3s;';
+      document.body.appendChild(toast);
+    }
+    toast.textContent = mensagem;
+    toast.style.opacity = '1';
+    clearTimeout(toast._timeout);
+    toast._timeout = setTimeout(function () {
+      toast.style.opacity = '0';
+    }, 2500);
+  }
+})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mapa das Revoltas do Período Regencial | CERO</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<style>
+  :root{
+    --bg:#eef6f7;
+    --bg-alt:#cfe7ea;
+    --paper:#fdfffe;
+    --ink:#122b30;
+    --ink-soft:#4d6a70;
+    --verde:#1f5f74;
+    --verde-dark:#123a48;
+    --verde-2:#2f8aa3;
+    --gold:#b8843f;
+    --gold-light:#e6cfa3;
+    --line:#c3dee2;
+    --shadow:0 10px 30px rgba(18,58,72,.18);
+    --radius:14px;
+    --font-title:'Playfair Display', serif;
+    --font-body:'Source Serif 4', serif;
+    --font-mono:'JetBrains Mono', monospace;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:var(--font-body);
+    line-height:1.7;
+    -webkit-touch-callout:none;
+    user-select:none;
+  }
+  .selecionavel, main{user-select:text;}
+  .campo-resposta{user-select:text;}
+
+  /* ===== CAPA / GATE ===== */
+  #capa{
+    min-height:100vh;
+    display:flex; align-items:center; justify-content:center;
+    position:relative;
+    overflow:hidden;
+    background:linear-gradient(to bottom, #0d232b, #123a48, #1f5f74);
+    padding:24px;
+  }
+  #capa .grade-centralizada{
+    position:absolute;
+    top:0; bottom:0; left:50%;
+    transform:translateX(-50%);
+    width:100%;
+    max-width:896px;
+    pointer-events:none;
+    z-index:0;
+    opacity:.08;
+    background:
+      repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(255,255,255,.5) 39px, rgba(255,255,255,.5) 40px),
+      repeating-linear-gradient(90deg, transparent, transparent 39px, rgba(255,255,255,.5) 39px, rgba(255,255,255,.5) 40px);
+    background-size:40px 40px;
+  }
+  .capa-card{
+    position:relative;
+    z-index:1;
+    background:var(--paper);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    max-width:480px;
+    width:100%;
+    padding:36px 32px;
+    text-align:center;
+  }
+  .capa-card .tag{
+    display:inline-block; font-family:var(--font-mono); font-size:.7rem;
+    letter-spacing:.1em; text-transform:uppercase; color:var(--verde-dark);
+    background:rgba(31,95,116,.1); padding:5px 12px; border-radius:999px; margin-bottom:14px;
+  }
+  .capa-card h1{font-family:var(--font-title); font-size:1.6rem; margin:0 0 10px; color:var(--verde-dark);}
+  .capa-card p.desc{color:var(--ink-soft); font-size:.94rem; margin:0 0 22px;}
+  .capa-card input{
+    width:100%; padding:12px 14px; border:1px solid var(--line); border-radius:8px;
+    font-family:var(--font-body); font-size:1rem; margin-bottom:14px;
+  }
+  .capa-card button{
+    width:100%; padding:13px; border:none; border-radius:8px;
+    background:var(--verde); color:#fff; font-weight:600; font-size:1rem; cursor:pointer;
+    font-family:var(--font-body); transition:filter .15s ease;
+  }
+  .capa-card button:hover{filter:brightness(1.08);}
+  .capa-aviso{font-size:.78rem; color:#a33; margin-top:8px; display:none;}
+
+  /* ===== APP ===== */
+  #app{display:none;}
+  .sticky-header{
+    position:sticky; top:0; z-index:50;
+    background:var(--verde-dark); color:#e6f4f7;
+    padding:12px 20px; display:flex; align-items:center; justify-content:space-between;
+    flex-wrap:wrap; gap:8px;
+    font-family:var(--font-mono); font-size:.82rem;
+  }
+  .sticky-header .aluno{font-family:var(--font-body); font-weight:600; font-size:.92rem;}
+  .barra-progresso-trilho{
+    flex:1; min-width:120px; height:8px; background:rgba(255,255,255,.2); border-radius:6px; overflow:hidden; margin:0 14px;
+  }
+  .barra-progresso-fill{height:100%; background:var(--gold); width:0%; transition:width .3s ease;}
+
+  .wrap{max-width:800px; margin:0 auto; padding:32px 24px 60px;}
+
+  header.topo{margin-bottom:28px;}
+  header.topo .hero-tag{
+    display:inline-block; font-family:var(--font-mono); font-size:.72rem;
+    letter-spacing:.1em; text-transform:uppercase; color:var(--verde-dark);
+    background:rgba(31,95,116,.1); padding:5px 12px; border-radius:999px; margin-bottom:12px;
+  }
+  header.topo h1{font-family:var(--font-title); font-size:clamp(1.5rem,4vw,2rem); margin:0 0 8px; color:var(--ink);}
+  header.topo p.sub{color:var(--ink-soft); margin:0; font-size:.98rem;}
+  header.topo .aluno-info{
+    font-family:var(--font-mono); font-size:.82rem; color:var(--verde-dark);
+    background:var(--bg-alt); display:inline-block; padding:6px 12px; border-radius:8px; margin-top:12px;
+  }
+  .descritor-bar{
+    font-family:var(--font-mono); font-size:.76rem; color:var(--ink-soft);
+    background:var(--paper); border:1px solid var(--line); border-radius:8px;
+    padding:8px 14px; margin-bottom:14px; display:inline-block;
+  }
+  .ficha-id{
+    display:flex; flex-wrap:wrap; gap:10px 26px;
+    background:var(--paper); border:1px solid var(--line); border-radius:10px;
+    padding:12px 16px; margin-top:12px; font-family:var(--font-mono); font-size:.84rem; color:var(--ink);
+  }
+  .ficha-id span b{color:var(--verde-dark);}
+
+  /* ===== TEXTO DE APOIO ===== */
+  .texto-apoio{
+    background:var(--paper); border:1px solid var(--line); border-radius:var(--radius);
+    box-shadow:var(--shadow); padding:28px 30px; margin-bottom:22px;
+  }
+  .texto-apoio h2{font-family:var(--font-title); font-size:1.25rem; color:var(--verde-dark); margin:0 0 4px;}
+  .texto-apoio .fonte-tag{font-family:var(--font-mono); font-size:.72rem; color:var(--ink-soft); margin-bottom:16px; display:block;}
+  .texto-apoio p{margin:0 0 14px; color:var(--ink);}
+  .texto-apoio p:last-of-type{margin-bottom:0;}
+
+  .nota-rodape{font-family:var(--font-mono); font-size:.76rem; color:var(--ink-soft); margin-top:10px; font-style:italic;}
+
+  .referencia-box{
+    margin-top:20px; padding:14px 16px;
+    background:var(--bg-alt); border-left:3px solid var(--gold); border-radius:0 8px 8px 0;
+  }
+  .referencia-box .rot{
+    font-family:var(--font-mono); font-size:.7rem; text-transform:uppercase; letter-spacing:.08em;
+    color:var(--verde-dark); display:block; margin-bottom:6px;
+  }
+  .referencia-box p{margin:0 0 6px; font-size:.86rem; color:var(--ink-soft); font-family:var(--font-mono); line-height:1.6;}
+  .referencia-box p:last-child{margin-bottom:0;}
+
+  .documento-fonte{
+    background:var(--bg-alt);
+    border-left:3px solid var(--verde);
+    border-radius:0 8px 8px 0;
+    padding:16px 20px;
+    margin:16px 0;
+  }
+  .documento-fonte p{margin:0; font-style:italic; color:var(--ink);}
+
+  .tabela-apoio{width:100%; border-collapse:collapse; margin:16px 0; font-size:.9rem;}
+  .tabela-apoio th, .tabela-apoio td{border:1px solid var(--line); padding:9px 12px; text-align:left; vertical-align:top;}
+  .tabela-apoio th{background:var(--bg-alt); color:var(--verde-dark); font-family:var(--font-mono); font-size:.72rem; text-transform:uppercase; letter-spacing:.04em;}
+  .tabela-apoio td{color:var(--ink);}
+
+  /* ===== QUESTOES ===== */
+  .questoes-titulo{
+    font-family:var(--font-title); font-size:1.2rem; color:var(--verde-dark);
+    margin:0 0 18px; display:flex; align-items:center; gap:10px;
+  }
+  .questao{
+    background:var(--paper); border:1px solid var(--line); border-radius:12px;
+    padding:20px 22px; margin-bottom:18px;
+  }
+  .questao.intercalada{margin-bottom:22px;}
+  .questao .num-q{
+    display:inline-flex; align-items:center; justify-content:center;
+    width:26px; height:26px; border-radius:50%; background:var(--verde);
+    color:#fff; font-family:var(--font-mono); font-size:.78rem; margin-right:8px; flex-shrink:0;
+  }
+  .questao .enunciado{font-weight:600; color:var(--ink); margin-bottom:12px; display:flex; align-items:flex-start;}
+  .questao textarea{
+    width:100%; min-height:100px; padding:12px 14px; border:1px solid var(--line); border-radius:8px;
+    font-family:var(--font-body); font-size:.96rem; resize:vertical; color:var(--ink);
+  }
+  .questao textarea:focus{outline:2px solid var(--verde-2); outline-offset:1px;}
+  .contador-chars{font-family:var(--font-mono); font-size:.72rem; color:var(--ink-soft); margin-top:6px; text-align:right;}
+
+  .comentario-prof{
+    display:none; margin-top:14px; padding:14px 16px;
+    background:#eaf6ee; border:1px solid #bfe3c8; border-radius:8px; font-size:.9rem; color:#1f5c33;
+  }
+  .comentario-prof.show{display:block;}
+  .comentario-prof b{display:block; margin-bottom:4px; font-family:var(--font-title); font-size:.92rem;}
+
+  /* ===== ALERTA / FINALIZAR ===== */
+  .alerta-incompleto{
+    display:none; background:#fdf3e2; border:1px solid #f1d9a6; color:#8a5a10;
+    padding:12px 16px; border-radius:8px; font-size:.9rem; margin-bottom:16px;
+  }
+  .alerta-incompleto.show{display:block;}
+
+  .acoes-finais{display:flex; gap:12px; flex-wrap:wrap; margin-top:10px;}
+  .btn{
+    font-family:var(--font-body); font-weight:600; font-size:.94rem; padding:12px 22px;
+    border-radius:8px; border:none; cursor:pointer; transition:filter .15s ease;
+  }
+  .btn:hover{filter:brightness(1.08);}
+  .btn-primario{background:var(--verde); color:#fff;}
+  .btn-secundario{background:transparent; color:var(--ink); border:1px solid var(--line);}
+  .btn-pdf{background:var(--gold); color:#fff;}
+  .btn[disabled]{opacity:.5; cursor:not-allowed;}
+
+  /* ===== POPUP ===== */
+  .popup-overlay{
+    display:none; position:fixed; inset:0; background:rgba(13,35,43,.6);
+    align-items:center; justify-content:center; z-index:200; padding:20px;
+  }
+  .popup-overlay.show{display:flex;}
+  .popup-card{
+    background:var(--paper); border-radius:var(--radius); box-shadow:var(--shadow);
+    max-width:420px; width:100%; padding:32px 28px; text-align:center;
+  }
+  .popup-card .emoji{font-size:2.4rem; margin-bottom:10px;}
+  .popup-card h3{font-family:var(--font-title); margin:0 0 8px; color:var(--verde-dark);}
+  .popup-card p{color:var(--ink-soft); font-size:.94rem; margin:0 0 20px;}
+
+  footer.rodape{text-align:center; padding:24px; color:var(--ink-soft); font-family:var(--font-mono); font-size:.8rem;}
+
+  @media (max-width:600px){
+    .wrap{padding:24px 16px 50px;}
+    .texto-apoio, .questao{padding:18px 18px;}
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== CAPA ===== -->
+<div id="capa">
+  <div class="grade-centralizada"></div>
+  <div class="capa-card">
+    <span class="tag">8º ano · História · CERO</span>
+    <h1>Mapa das Revoltas do Período Regencial</h1>
+    <p class="desc">Cinco revoltas regenciais, seus locais, datas e motivações. Preencha os dados para começar.</p>
+    <input type="text" id="nome-aluno" placeholder="Seu nome completo">
+    <input type="text" id="turma-aluno" placeholder="Turma (ex.: 8º A)">
+    <button onclick="iniciarAtividade()">Iniciar atividade</button>
+    <div class="capa-aviso" id="capa-aviso">Por favor, digite seu nome para continuar.</div>
+  </div>
+</div>
+
+<!-- ===== APP ===== -->
+<div id="app">
+  <div class="sticky-header">
+    <span class="aluno" id="header-nome"></span>
+    <div class="barra-progresso-trilho"><div class="barra-progresso-fill" id="barra-fill"></div></div>
+    <span id="contador-geral">Respondidas: 0/5</span>
+  </div>
+
+  <div class="wrap">
+    <header class="topo selecionavel">
+      <span class="descritor-bar">História / 8.º Ano do Ensino Fundamental &nbsp;|&nbsp; (GO-EF08HI16-A) – Primeiro Reinado e Período Regencial</span>
+      <span class="hero-tag" style="display:block; margin-top:10px;">Localizar e Relacionar Revoltas Regenciais</span>
+      <h1>As Revoltas do Período Regencial</h1>
+      <p class="sub">Leia as informações sobre cada revolta e responda às questões, relacionando local, data e causas.</p>
+      <div class="ficha-id" id="ficha-id">
+        <span><b>NOME:</b> <span id="ficha-nome"></span></span>
+        <span><b>DATA:</b> <span id="ficha-data"></span></span>
+        <span><b>TURMA:</b> <span id="ficha-turma"></span></span>
+      </div>
+    </header>
+
+    <main>
+      <h2 class="questoes-titulo">🗺️ Revoltas Regenciais</h2>
+
+      <section class="texto-apoio selecionavel">
+        <h2>Revolta dos Malês</h2>
+        <span class="fonte-tag">1835 · Bahia</span>
+        <div class="documento-fonte">
+          <p>Cativos muçulmanos utilizaram o protocolo militar islâmico para tomar o poder, instalar uma "Bahia só de africanos" e obter sua própria liberdade.</p>
+        </div>
+      </section>
+
+      <div class="questao intercalada" data-questao="1">
+        <div class="enunciado"><span class="num-q">1</span> Quem participou da Revolta dos Malês e qual era seu principal objetivo?</div>
+        <textarea id="resp-1" class="campo-resposta dissertativa" data-min="60" placeholder="Escreva sua resposta aqui..."></textarea>
+        <div class="contador-chars">0 caracteres (mínimo 60)</div>
+        <div class="comentario-prof">
+          <b>Comentário do professor</b>
+          Participaram cativos muçulmanos, em sua maioria de origem africana, que utilizaram o protocolo militar islâmico para tentar tomar o poder, instaurar uma "Bahia só de africanos" e conquistar sua própria liberdade.
+        </div>
+      </div>
+
+      <section class="texto-apoio selecionavel">
+        <h2>Cabanagem</h2>
+        <span class="fonte-tag">1835 a 1840 · Pará</span>
+        <div class="documento-fonte">
+          <p>Indígenas, mestiços e negros tentaram assumir o Governo da província, devido à exploração que sofriam pela elite local. Formou o primeiro governo popular da História do Brasil.</p>
+        </div>
+      </section>
+
+      <div class="questao intercalada" data-questao="2">
+        <div class="enunciado"><span class="num-q">2</span> Por que indígenas, mestiços e negros se rebelaram na Cabanagem, e qual foi seu resultado inédito na História do Brasil?</div>
+        <textarea id="resp-2" class="campo-resposta dissertativa" data-min="60" placeholder="Escreva sua resposta aqui..."></textarea>
+        <div class="contador-chars">0 caracteres (mínimo 60)</div>
+        <div class="comentario-prof">
+          <b>Comentário do professor</b>
+          Rebelaram-se contra a exploração sofrida pela elite local e tentaram assumir o governo da província; a Cabanagem formou o primeiro governo popular da história do Brasil.
+        </div>
+      </div>
+
+      <section class="texto-apoio selecionavel">
+        <h2>Farroupilha</h2>
+        <span class="fonte-tag">1835 a 1845 · Rio Grande do Sul</span>
+        <div class="documento-fonte">
+          <p>Revolta protagonizada pelos estancieiros e charqueadores da província, com o objetivo de depor o presidente da província, conquistar autonomia provincial e reduzir os impostos sobre o charque.</p>
+        </div>
+      </section>
+
+      <div class="questao intercalada" data-questao="3">
+        <div class="enunciado"><span class="num-q">3</span> Quem protagonizou a Farroupilha e quais eram seus principais objetivos?</div>
+        <textarea id="resp-3" class="campo-resposta dissertativa" data-min="60" placeholder="Escreva sua resposta aqui..."></textarea>
+        <div class="contador-chars">0 caracteres (mínimo 60)</div>
+        <div class="comentario-prof">
+          <b>Comentário do professor</b>
+          Foi protagonizada pelos estancieiros e charqueadores gaúchos, que buscavam depor o presidente da província, conquistar autonomia provincial e reduzir os impostos cobrados sobre o charque.
+        </div>
+      </div>
+
+      <section class="texto-apoio selecionavel">
+        <h2>Sabinada</h2>
+        <span class="fonte-tag">1837 e 1838 · Bahia</span>
+        <div class="documento-fonte">
+          <p>Realizada pelas camadas médias de Salvador, buscava proclamar a "República Bahiense", com caráter provisório, devido às dificuldades econômicas e ao recrutamento forçado da população para lutar na Farroupilha.</p>
+        </div>
+      </section>
+
+      <div class="questao intercalada" data-questao="4">
+        <div class="enunciado"><span class="num-q">4</span> O que pretendiam os sabinos ao proclamar a "República Bahiense", e o que motivou esse movimento?</div>
+        <textarea id="resp-4" class="campo-resposta dissertativa" data-min="60" placeholder="Escreva sua resposta aqui..."></textarea>
+        <div class="contador-chars">0 caracteres (mínimo 60)</div>
+        <div class="comentario-prof">
+          <b>Comentário do professor</b>
+          As camadas médias de Salvador buscavam proclamar uma "República Bahiense" de caráter provisório, motivadas pelas dificuldades econômicas e pelo recrutamento forçado da população para lutar na Farroupilha.
+        </div>
+      </div>
+
+      <section class="texto-apoio selecionavel">
+        <h2>Balaiada</h2>
+        <span class="fonte-tag">1838 a 1841 · Maranhão</span>
+        <div class="documento-fonte">
+          <p>Realizada pelos pobres e miseráveis da região, que contestaram os privilégios de latifundiários e comerciantes.</p>
+        </div>
+      </section>
+
+      <div class="questao intercalada" data-questao="5">
+        <div class="enunciado"><span class="num-q">5</span> Quem participou da Balaiada e contra o que essas pessoas se rebelaram?</div>
+        <textarea id="resp-5" class="campo-resposta dissertativa" data-min="60" placeholder="Escreva sua resposta aqui..."></textarea>
+        <div class="contador-chars">0 caracteres (mínimo 60)</div>
+        <div class="comentario-prof">
+          <b>Comentário do professor</b>
+          Participaram os pobres e miseráveis da região, que contestavam os privilégios dos latifundiários e comerciantes locais.
+        </div>
+      </div>
+
+
+      <div class="alerta-incompleto" id="alerta-incompleto">
+        ⚠️ Ainda há campos incompletos (respeite o mínimo de caracteres indicado em cada um). Revise antes de finalizar.
+      </div>
+
+      <div class="acoes-finais">
+        <button class="btn btn-primario" onclick="finalizarAtividade()">Finalizar e ver comentários</button>
+        <button class="btn btn-secundario" onclick="refazerAtividade()">Refazer</button>
+        <button class="btn btn-pdf" onclick="exportarPDF()">Exportar em PDF</button>
+      </div>
+    </main>
+  </div>
+
+  <footer class="rodape">Colégio Estadual Rodolfo de Oliveira · CERO · 2026</footer>
+</div>
+
+<!-- ===== POPUP ===== -->
+<div class="popup-overlay" id="popup-overlay">
+  <div class="popup-card">
+    <div class="emoji">🎉</div>
+    <h3>Atividade concluída!</h3>
+    <p>Suas respostas foram registradas. Os comentários do professor já estão disponíveis abaixo de cada questão para você comparar com o que escreveu.</p>
+    <button class="btn btn-primario" onclick="fecharPopup()">Continuar</button>
+  </div>
+</div>
+
+<script>
+/* ===== GATE DE NOME ===== */
+function iniciarAtividade(){
+  const nome = document.getElementById('nome-aluno').value.trim();
+  const turma = document.getElementById('turma-aluno').value.trim();
+  const aviso = document.getElementById('capa-aviso');
+  if(!nome){
+    aviso.style.display = 'block';
+    return;
+  }
+  aviso.style.display = 'none';
+  const hoje = new Date();
+  const dataFormatada = String(hoje.getDate()).padStart(2,'0') + '/' + String(hoje.getMonth()+1).padStart(2,'0') + '/' + hoje.getFullYear();
+  document.getElementById('header-nome').textContent = nome;
+  document.getElementById('ficha-nome').textContent = nome;
+  document.getElementById('ficha-data').textContent = dataFormatada;
+  document.getElementById('ficha-turma').textContent = turma || '—';
+  document.getElementById('capa').style.display = 'none';
+  document.getElementById('app').style.display = 'block';
+  window.scrollTo(0,0);
+}
+
+/* ===== CONTADOR DE CARACTERES E PROGRESSO ===== */
+const textareas = document.querySelectorAll('textarea.dissertativa');
+
+function atualizarProgresso(){
+  let respondidas = 0;
+  textareas.forEach(function(t){
+    const min = parseInt(t.dataset.min, 10);
+    if(t.value.trim().length >= min) respondidas++;
+  });
+  document.getElementById('contador-geral').textContent = 'Respondidas: ' + respondidas + '/' + textareas.length;
+  document.getElementById('barra-fill').style.width = (respondidas / textareas.length * 100) + '%';
+}
+
+textareas.forEach(function(t){
+  const contadorEl = t.parentElement.querySelector('.contador-chars');
+  const min = parseInt(t.dataset.min, 10);
+  t.addEventListener('input', function(){
+    contadorEl.textContent = t.value.length + ' caracteres (mínimo ' + min + ')';
+    atualizarProgresso();
+  });
+});
+
+/* ===== FINALIZAR ===== */
+function finalizarAtividade(){
+  let completo = true;
+  textareas.forEach(function(t){
+    const min = parseInt(t.dataset.min, 10);
+    if(t.value.trim().length < min) completo = false;
+  });
+
+  const alerta = document.getElementById('alerta-incompleto');
+  if(!completo){
+    alerta.classList.add('show');
+    alerta.scrollIntoView({behavior:'smooth', block:'center'});
+    return;
+  }
+  alerta.classList.remove('show');
+
+  document.querySelectorAll('.comentario-prof').forEach(function(c){
+    c.classList.add('show');
+  });
+
+  document.getElementById('popup-overlay').classList.add('show');
+}
+
+function fecharPopup(){
+  document.getElementById('popup-overlay').classList.remove('show');
+}
+
+function refazerAtividade(){
+  textareas.forEach(function(t){
+    t.value = '';
+    t.parentElement.querySelector('.contador-chars').textContent = '0 caracteres (mínimo ' + t.dataset.min + ')';
+  });
+  document.querySelectorAll('.comentario-prof').forEach(function(c){
+    c.classList.remove('show');
+  });
+  document.getElementById('alerta-incompleto').classList.remove('show');
+  atualizarProgresso();
+  window.scrollTo(0,0);
+}
+
+/* ===== EXPORTAR PDF ===== */
+function sleep(ms){ return new Promise(function(r){ setTimeout(r, ms); }); }
+
+function esc(str){
+  const d = document.createElement('div');
+  d.textContent = str || '';
+  return d.innerHTML.replace(/\n/g, '<br>');
+}
+
+async function exportarPDF(){
+  const overlay = document.createElement('div');
+  overlay.id = 'pdf-overlay';
+  overlay.style.cssText = 'position:fixed;inset:0;background:rgba(13,35,43,.6);display:flex;align-items:center;justify-content:center;z-index:999;';
+  overlay.innerHTML =
+    '<div style="background:#fff;border-radius:14px;padding:32px 36px;text-align:center;max-width:300px;box-shadow:0 10px 30px rgba(18,58,72,.18);font-family:\'Source Serif 4\',serif;">' +
+      '<div style="font-size:2rem;margin-bottom:8px;">📄</div>' +
+      '<h4 style="margin:0 0 4px;color:#123a48;font-family:\'Playfair Display\',serif;">Gerando PDF…</h4>' +
+      '<p style="margin:0 0 14px;color:#4d6a70;font-size:.86rem;">Aguarde alguns instantes.</p>' +
+      '<div style="background:#cfe7ea;border-radius:6px;overflow:hidden;height:8px;">' +
+        '<div id="pdf-prog" style="height:100%;width:0%;background:#1f5f74;transition:width .2s ease;"></div>' +
+      '</div>' +
+      '<div id="pdf-prog-txt" style="margin-top:8px;font-family:\'JetBrains Mono\',monospace;font-size:.74rem;color:#4d6a70;">0%</div>' +
+    '</div>';
+  document.body.appendChild(overlay);
+  await sleep(80);
+  function setP(pct, msg){
+    const pp = document.getElementById('pdf-prog'), pt = document.getElementById('pdf-prog-txt');
+    if(pp) pp.style.width = pct + '%';
+    if(pt) pt.textContent = msg || (pct + '%');
+  }
+
+  try{
+    const { jsPDF } = window.jspdf;
+    const pdf = new jsPDF({orientation:'portrait', unit:'px', format:'a4', hotfixes:['px_scaling']});
+    const PW = pdf.internal.pageSize.getWidth(), PH = pdf.internal.pageSize.getHeight();
+    const ML = 28, CW = PW - ML*2;
+    let y = ML;
+
+    async function addImg(el){
+      const canvas = await html2canvas(el, {scale:2, useCORS:true, logging:false, backgroundColor:'#ffffff', scrollX:0, scrollY:0, windowWidth:860});
+      const imgW = CW, imgH = (canvas.height / canvas.width) * imgW;
+      const dataUrl = canvas.toDataURL('image/jpeg', .92), avail = PH - ML*2;
+      if(imgH <= avail){
+        if(y + imgH > PH - ML){ pdf.addPage(); y = ML; }
+        pdf.addImage(dataUrl, 'JPEG', ML, y, imgW, imgH);
+        y += imgH + 8;
+      } else {
+        const pxPerPdfPt = canvas.width / imgW;
+        let srcY = 0;
+        while(srcY < canvas.height){
+          const availPt = PH - y - ML, sliceH_pt = Math.min(availPt, avail);
+          const sliceH_px = Math.round(sliceH_pt * pxPerPdfPt), actualH_px = Math.min(sliceH_px, canvas.height - srcY);
+          const tmp = document.createElement('canvas');
+          tmp.width = canvas.width; tmp.height = actualH_px;
+          tmp.getContext('2d').drawImage(canvas, 0, srcY, canvas.width, actualH_px, 0, 0, canvas.width, actualH_px);
+          const sliceUrl = tmp.toDataURL('image/jpeg', .92), slicePt = (actualH_px / canvas.width) * imgW;
+          pdf.addImage(sliceUrl, 'JPEG', ML, y, imgW, slicePt);
+          srcY += actualH_px; y += slicePt;
+          if(srcY < canvas.height){ pdf.addPage(); y = ML; }
+        }
+        y += 8;
+      }
+    }
+
+    async function band(tag, txt){
+      const b = document.createElement('div');
+      b.style.cssText = 'width:860px;font-family:Arial,sans-serif;position:absolute;left:-9999px;top:0';
+      b.innerHTML = '<div style="background:linear-gradient(90deg,#1f5f74,#123a48);border-radius:8px;padding:12px 22px;display:flex;align-items:center;gap:12px">' +
+        '<span style="background:rgba(255,255,255,.2);color:#fff;font-weight:700;font-size:12px;letter-spacing:1px;border-radius:20px;padding:3px 12px">' + tag + '</span>' +
+        '<span style="color:#fff;font-size:15px;font-weight:700">' + txt + '</span></div>';
+      document.body.appendChild(b);
+      await sleep(20);
+      await addImg(b);
+      document.body.removeChild(b);
+    }
+
+    const nome = document.getElementById('header-nome').textContent || 'Aluno(a)';
+    const turma = document.getElementById('ficha-turma').textContent || '—';
+    const now = new Date();
+    const dtStr = now.toLocaleDateString('pt-BR') + ' às ' + now.toLocaleTimeString('pt-BR', {hour:'2-digit', minute:'2-digit'});
+
+    setP(5, 'Preparando capa…'); await sleep(40);
+    const coverEl = document.createElement('div');
+    coverEl.style.cssText = 'width:860px;font-family:Arial,sans-serif;overflow:hidden;position:absolute;left:-9999px;top:0';
+    coverEl.innerHTML =
+      '<div style="background:linear-gradient(135deg,#0d232b 0%,#123a48 60%,#1f5f74 100%);padding:32px 48px 28px;color:white">' +
+        '<div style="font-size:10px;letter-spacing:3px;text-transform:uppercase;opacity:.7;font-weight:700;margin-bottom:6px">HISTÓRIA · 8º ANO DO ENSINO FUNDAMENTAL · GO-EF08HI16-A</div>' +
+        '<div style="font-size:26px;font-weight:900;line-height:1.2;margin-bottom:5px">As Revoltas do Período Regencial</div>' +
+        '<div style="font-size:13px;opacity:.8;font-style:italic">Revoltas do Período Regencial: Malês, Cabanagem, Farroupilha, Sabinada e Balaiada · 5 questões dissertativas</div>' +
+      '</div>' +
+      '<div style="background:#eef6f7;padding:22px 48px 26px;border-bottom:3px solid #e6cfa3">' +
+        '<div style="font-size:9px;text-transform:uppercase;letter-spacing:2px;color:#1f5f74;font-weight:700;margin-bottom:5px">Aluno(a)</div>' +
+        '<div style="font-size:20px;font-weight:700;color:#122b30;border-bottom:2.5px solid #1f5f74;padding-bottom:6px;display:inline-block;margin-bottom:16px">' + esc(nome) + '</div>' +
+        '<div style="display:flex;gap:12px;flex-wrap:wrap">' +
+          '<div style="background:white;border-radius:8px;padding:12px 18px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.07);min-width:84px">' +
+            '<div style="font-size:22px;font-weight:900;color:#1f5f74">' + esc(turma) + '</div>' +
+            '<div style="font-size:9px;text-transform:uppercase;letter-spacing:1px;color:#888;margin-top:2px">Turma</div></div>' +
+          '<div style="background:white;border-radius:8px;padding:12px 18px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.07);min-width:84px">' +
+            '<div style="font-size:22px;font-weight:900;color:#b8843f">5</div>' +
+            '<div style="font-size:9px;text-transform:uppercase;letter-spacing:1px;color:#888;margin-top:2px">Dissertativas</div></div>' +
+          '<div style="background:white;border-radius:8px;padding:12px 18px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.07);min-width:140px">' +
+            '<div style="font-size:13px;font-weight:700;color:#333">' + dtStr + '</div>' +
+            '<div style="font-size:9px;text-transform:uppercase;letter-spacing:1px;color:#888;margin-top:2px">Gerado em</div></div>' +
+        '</div>' +
+        '<div style="font-size:9px;color:#bbb;margin-top:14px">Colégio Estadual Rodolfo de Oliveira · Goiás · 2026</div>' +
+      '</div>';
+    document.body.appendChild(coverEl); await sleep(60); await addImg(coverEl); document.body.removeChild(coverEl);
+
+    setP(11, 'Preparando Revolta dos Malês (1835 · Bahia)…'); await sleep(20);
+    await band('REVOLTA 1', 'Revolta dos Malês (1835 · Bahia)');
+    const txt1El = document.createElement('div');
+    txt1El.style.cssText = 'width:860px;font-family:Arial,sans-serif;background:white;overflow:hidden;border:1px solid #c3dee2;border-radius:10px;position:absolute;left:-9999px;top:0';
+    txt1El.innerHTML =
+      '<div style="padding:18px 24px;background:#fdfdfa">' +
+        '<div style="background:#cfe7ea;border-left:3px solid #1f5f74;border-radius:0 8px 8px 0;padding:14px 18px;margin-bottom:14px">' +
+          '<div style=\"font-size:12px;color:#122b30;line-height:1.85;font-style:italic\">Cativos muçulmanos utilizaram o protocolo militar islâmico para tomar o poder, instalar uma &quot;Bahia só de africanos&quot; e obter sua própria liberdade.</div>' +
+        '</div>' +
+        '' +
+      '</div>';
+    document.body.appendChild(txt1El); await sleep(20); await addImg(txt1El); document.body.removeChild(txt1El);
+
+    setP(12, 'Preparando Cabanagem (1835-1840 · Pará)…'); await sleep(20);
+    await band('REVOLTA 2', 'Cabanagem (1835-1840 · Pará)');
+    const txt2El = document.createElement('div');
+    txt2El.style.cssText = 'width:860px;font-family:Arial,sans-serif;background:white;overflow:hidden;border:1px solid #c3dee2;border-radius:10px;position:absolute;left:-9999px;top:0';
+    txt2El.innerHTML =
+      '<div style="padding:18px 24px;background:#fdfdfa">' +
+        '<div style="background:#cfe7ea;border-left:3px solid #1f5f74;border-radius:0 8px 8px 0;padding:14px 18px;margin-bottom:14px">' +
+          '<div style=\"font-size:12px;color:#122b30;line-height:1.85;font-style:italic\">Indígenas, mestiços e negros tentaram assumir o Governo da província, devido à exploração que sofriam pela elite local. Formou o primeiro governo popular da História do Brasil.</div>' +
+        '</div>' +
+        '' +
+      '</div>';
+    document.body.appendChild(txt2El); await sleep(20); await addImg(txt2El); document.body.removeChild(txt2El);
+
+    setP(13, 'Preparando Farroupilha (1835-1845 · Rio Grande do Sul)…'); await sleep(20);
+    await band('REVOLTA 3', 'Farroupilha (1835-1845 · Rio Grande do Sul)');
+    const txt3El = document.createElement('div');
+    txt3El.style.cssText = 'width:860px;font-family:Arial,sans-serif;background:white;overflow:hidden;border:1px solid #c3dee2;border-radius:10px;position:absolute;left:-9999px;top:0';
+    txt3El.innerHTML =
+      '<div style="padding:18px 24px;background:#fdfdfa">' +
+        '<div style="background:#cfe7ea;border-left:3px solid #1f5f74;border-radius:0 8px 8px 0;padding:14px 18px;margin-bottom:14px">' +
+          '<div style=\"font-size:12px;color:#122b30;line-height:1.85;font-style:italic\">Revolta protagonizada pelos estancieiros e charqueadores da província, com o objetivo de depor o presidente da província, conquistar autonomia provincial e reduzir os impostos sobre o charque.</div>' +
+        '</div>' +
+        '' +
+      '</div>';
+    document.body.appendChild(txt3El); await sleep(20); await addImg(txt3El); document.body.removeChild(txt3El);
+
+    setP(14, 'Preparando Sabinada (1837-1838 · Bahia)…'); await sleep(20);
+    await band('REVOLTA 4', 'Sabinada (1837-1838 · Bahia)');
+    const txt4El = document.createElement('div');
+    txt4El.style.cssText = 'width:860px;font-family:Arial,sans-serif;background:white;overflow:hidden;border:1px solid #c3dee2;border-radius:10px;position:absolute;left:-9999px;top:0';
+    txt4El.innerHTML =
+      '<div style="padding:18px 24px;background:#fdfdfa">' +
+        '<div style="background:#cfe7ea;border-left:3px solid #1f5f74;border-radius:0 8px 8px 0;padding:14px 18px;margin-bottom:14px">' +
+          '<div style=\"font-size:12px;color:#122b30;line-height:1.85;font-style:italic\">Realizada pelas camadas médias de Salvador, buscava proclamar a &quot;República Bahiense&quot;, com caráter provisório, devido às dificuldades econômicas e ao recrutamento forçado da população para lutar na Farroupilha.</div>' +
+        '</div>' +
+        '' +
+      '</div>';
+    document.body.appendChild(txt4El); await sleep(20); await addImg(txt4El); document.body.removeChild(txt4El);
+
+    setP(15, 'Preparando Balaiada (1838-1841 · Maranhão)…'); await sleep(20);
+    await band('REVOLTA 5', 'Balaiada (1838-1841 · Maranhão)');
+    const txt5El = document.createElement('div');
+    txt5El.style.cssText = 'width:860px;font-family:Arial,sans-serif;background:white;overflow:hidden;border:1px solid #c3dee2;border-radius:10px;position:absolute;left:-9999px;top:0';
+    txt5El.innerHTML =
+      '<div style="padding:18px 24px;background:#fdfdfa">' +
+        '<div style="background:#cfe7ea;border-left:3px solid #1f5f74;border-radius:0 8px 8px 0;padding:14px 18px;margin-bottom:14px">' +
+          '<div style=\"font-size:12px;color:#122b30;line-height:1.85;font-style:italic\">Realizada pelos pobres e miseráveis da região, que contestaram os privilégios de latifundiários e comerciantes.</div>' +
+        '</div>' +
+        '' +
+      '</div>';
+    document.body.appendChild(txt5El); await sleep(20); await addImg(txt5El); document.body.removeChild(txt5El);
+
+
+    // QUESTÕES
+    await band('QUESTÕES', 'Questões Dissertativas — Respostas e Orientações');
+
+    const QUESTOES = [{"num": "1", "enunc": "Quem participou da Revolta dos Malês e qual era seu principal objetivo?", "id": "resp-1", "coment": "Participaram cativos muçulmanos, em sua maioria de origem africana, que utilizaram o protocolo militar islâmico para tentar tomar o poder, instaurar uma \"Bahia só de africanos\" e conquistar sua própria liberdade."}, {"num": "2", "enunc": "Por que indígenas, mestiços e negros se rebelaram na Cabanagem, e qual foi seu resultado inédito na História do Brasil?", "id": "resp-2", "coment": "Rebelaram-se contra a exploração sofrida pela elite local e tentaram assumir o governo da província; a Cabanagem formou o primeiro governo popular da história do Brasil."}, {"num": "3", "enunc": "Quem protagonizou a Farroupilha e quais eram seus principais objetivos?", "id": "resp-3", "coment": "Foi protagonizada pelos estancieiros e charqueadores gaúchos, que buscavam depor o presidente da província, conquistar autonomia provincial e reduzir os impostos cobrados sobre o charque."}, {"num": "4", "enunc": "O que pretendiam os sabinos ao proclamar a \"República Bahiense\", e o que motivou esse movimento?", "id": "resp-4", "coment": "As camadas médias de Salvador buscavam proclamar uma \"República Bahiense\" de caráter provisório, motivadas pelas dificuldades econômicas e pelo recrutamento forçado da população para lutar na Farroupilha."}, {"num": "5", "enunc": "Quem participou da Balaiada e contra o que essas pessoas se rebelaram?", "id": "resp-5", "coment": "Participaram os pobres e miseráveis da região, que contestavam os privilégios dos latifundiários e comerciantes locais."}];
+
+    for(let i=0; i<QUESTOES.length; i++){
+      const q = QUESTOES[i];
+      setP(35 + Math.round(i/QUESTOES.length*55), 'Questão ' + q.num + '/' + QUESTOES.length + '…'); await sleep(12);
+
+      const valor = document.getElementById(q.id) ? document.getElementById(q.id).value : '';
+      const respostaHTML =
+        '<div style="background:#cfe7ea;border:1.5px solid #2f8aa3;border-radius:8px;padding:12px 15px;min-height:40px">' +
+          '<div style="font-size:12px;color:#122b30;line-height:1.75;white-space:pre-wrap">' + (esc(valor) || '<span style=\"color:#aaa\">(sem resposta)</span>') + '</div>' +
+        '</div>';
+
+      const qEl = document.createElement('div');
+      qEl.style.cssText = 'width:860px;font-family:Arial,sans-serif;background:white;overflow:hidden;border:1px solid #c3dee2;border-radius:10px;position:absolute;left:-9999px;top:0';
+      qEl.innerHTML =
+        '<div style="background:linear-gradient(90deg,#1f5f74,#123a48);padding:10px 22px;display:flex;justify-content:space-between;align-items:center">' +
+          '<span style="color:white;font-weight:700;font-size:13px;letter-spacing:.8px">QUESTÃO ' + q.num + '</span>' +
+          '<span style="background:rgba(255,255,255,.15);color:rgba(255,255,255,.9);font-size:11px;padding:3px 12px;border-radius:20px;font-weight:600">Dissertativa</span></div>' +
+        '<div style="padding:18px 24px 16px;background:#fdfdfa">' +
+          '<div style="font-size:13px;font-weight:700;color:#122b30;line-height:1.6;margin-bottom:14px;padding-bottom:12px;border-bottom:1px solid #eee">' + esc(q.enunc) + '</div>' +
+          '<div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">' +
+            '<div style="width:4px;height:15px;background:#1f5f74;border-radius:2px"></div>' +
+            '<div style="font-size:10px;font-weight:700;color:#1f5f74;text-transform:uppercase;letter-spacing:1.5px">Resposta do Aluno(a)</div></div>' +
+          respostaHTML +
+          '<div style="display:flex;align-items:center;gap:8px;margin:12px 0 7px">' +
+            '<div style="width:4px;height:15px;background:#b8843f;border-radius:2px"></div>' +
+            '<div style="font-size:10px;font-weight:700;color:#7a5220;text-transform:uppercase;letter-spacing:1.5px">Comentário do Professor</div></div>' +
+          '<div style="background:#faf3e6;border:1.5px solid #e6cfa3;border-radius:8px;padding:13px 16px">' +
+            '<div style="font-size:12px;color:#5c3d16;line-height:1.8">' + esc(q.coment) + '</div></div>' +
+        '</div>';
+      document.body.appendChild(qEl); await sleep(12); await addImg(qEl); document.body.removeChild(qEl);
+    }
+
+    // RODAPÉ EM TODAS AS PÁGINAS
+    setP(92, 'Finalizando…'); await sleep(30);
+    const totalPages = pdf.getNumberOfPages();
+    for(let p=1; p<=totalPages; p++){
+      pdf.setPage(p);
+      const fEl = document.createElement('div');
+      fEl.style.cssText = 'width:' + Math.round(CW) + 'px;height:22px;background:#eef6f7;display:flex;align-items:center;justify-content:space-between;padding:0 28px;font-size:10px;color:#888;font-family:Arial,sans-serif;position:absolute;left:-9999px;top:0';
+      fEl.innerHTML = '<span>As Revoltas do Período Regencial · ' + esc(nome) + '</span><span>Página ' + p + ' de ' + totalPages + '</span>';
+      document.body.appendChild(fEl);
+      const fc = await html2canvas(fEl, {scale:2, logging:false, backgroundColor:'#eef6f7'});
+      document.body.removeChild(fEl);
+      const fUrl = fc.toDataURL('image/jpeg', .9), fH = (fc.height / fc.width) * CW;
+      pdf.setFillColor(238,246,247); pdf.rect(ML, PH-fH, CW, fH, 'F');
+      pdf.addImage(fUrl, 'JPEG', ML, PH-fH, CW, fH);
+    }
+
+    setP(100, 'Salvando…'); await sleep(200);
+    const safeName = nome.replace(/[^a-zA-Z0-9_\-]/g, '_');
+    pdf.save('Revoltas_Regenciais_' + safeName + '.pdf');
+
+  } catch(err){
+    console.error(err);
+    alert('Erro ao gerar PDF: ' + err.message);
+  } finally {
+    const ov = document.getElementById('pdf-overlay');
+    if(ov) document.body.removeChild(ov);
+  }
+}
+
+/* ===== PROTEÇÃO ANTI-COLA ===== */
+(function () {
+  const CAMPOS_PROTEGIDOS = document.querySelectorAll('textarea.dissertativa, .campo-resposta');
+  const LIMITE_BLOCO = 25;
+
+  function bloquear(e) {
+    e.preventDefault();
+    mostrarToast('Colar não permitido nesta atividade.');
+  }
+
+  CAMPOS_PROTEGIDOS.forEach(function (campo) {
+    ['paste', 'copy', 'cut', 'drop', 'dragover', 'contextmenu'].forEach(function (evt) {
+      campo.addEventListener(evt, bloquear);
+    });
+
+    campo.addEventListener('beforeinput', function (e) {
+      if (e.inputType === 'insertFromPaste' || e.inputType === 'insertFromDrop') {
+        e.preventDefault();
+        mostrarToast('Colar não permitido nesta atividade.');
+      }
+    });
+
+    let valorAnterior = campo.value;
+    campo.addEventListener('input', function (e) {
+      const diferenca = campo.value.length - valorAnterior.length;
+      if (diferenca >= LIMITE_BLOCO && e.inputType !== 'insertReplacementText') {
+        campo.value = valorAnterior;
+        mostrarToast('Colar não permitido nesta atividade.');
+      } else {
+        valorAnterior = campo.value;
+      }
+    });
+  });
+
+  function mostrarToast(mensagem) {
+    let toast = document.getElementById('anti-cola-toast');
+    if (!toast) {
+      toast = document.createElement('div');
+      toast.id = 'anti-cola-toast';
+      toast.style.cssText =
+        'position:fixed;bottom:24px;left:50%;transform:translateX(-50%);' +
+        'background:#333;color:#fff;padding:10px 20px;border-radius:8px;' +
+        'font-size:14px;z-index:9999;opacity:0;transition:opacity .3s;';
+      document.body.appendChild(toast);
+    }
+    toast.textContent = mensagem;
+    toast.style.opacity = '1';
+    clearTimeout(toast._timeout);
+    toast._timeout = setTimeout(function () {
+      toast.style.opacity = '0';
+    }, 2500);
+  }
+})();
+</script>
+
+</body>
+</html>
