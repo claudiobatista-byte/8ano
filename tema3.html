@@ -70,11 +70,15 @@
   .atv-card-eyebrow{font-family:'Inter',sans-serif; font-weight:700; letter-spacing:.08em; text-transform:uppercase; font-size:.66rem; color:var(--bordo);}
   .atv-card-titulo{font-family:'Playfair Display',serif; font-weight:700; color:var(--verde); font-size:.98rem; margin-top:2px;}
   .atv-card-desc{font-family:'Inter',sans-serif; font-size:.8rem; color:var(--ink-soft); margin-top:3px; line-height:1.4;}
-  .atv-card-btn{flex:none; font-family:'Inter',sans-serif; font-weight:600; font-size:.78rem; color:var(--dourado-2); background:var(--verde); padding:9px 16px; border-radius:20px; text-decoration:none; white-space:nowrap; transition:background .15s ease;}
+  .atv-card-btns{flex:none; display:flex; flex-direction:column; gap:8px;}
+  .atv-card-btn{flex:none; font-family:'Inter',sans-serif; font-weight:600; font-size:.78rem; color:var(--dourado-2); background:var(--verde); padding:9px 16px; border-radius:20px; text-decoration:none; white-space:nowrap; transition:background .15s ease; text-align:center;}
   .atv-card-btn:hover{background:var(--verde-2);}
+  .atv-card-btn-pdf{background:transparent; color:var(--bordo); border:1.5px solid var(--bordo);}
+  .atv-card-btn-pdf:hover{background:rgba(122,46,46,.08);}
   @media (max-width:480px){
     .atv-card{flex-wrap:wrap;}
-    .atv-card-btn{width:100%; text-align:center;}
+    .atv-card-btns{flex-direction:row; width:100%;}
+    .atv-card-btn{flex:1;}
   }
   .figura-charge{background:var(--paper); border:1px solid var(--linha); border-radius:12px; padding:16px 16px 14px; margin:18px 0;}
   .figura-charge img{display:block; width:100%; max-width:420px; height:auto; margin:0 auto; border-radius:8px; border:1px solid var(--linha);}
@@ -328,7 +332,10 @@
       <div class="atv-card-titulo">Interpretando as charges da fraude eleitoral</div>
       <div class="atv-card-desc">Analise a charge do "Bazar Eleitoral" e outra charge de 1879 sobre a disputa entre liberais e conservadores nas eleições do Império.</div>
     </div>
-    <a class="atv-card-btn" href="https://drive.google.com/file/d/19Rfd57DMlN3a1lTXVk2rAKxmtLMo2vhi/view?usp=sharing" target="_blank" rel="noopener">Abrir atividade →</a>
+    <div class="atv-card-btns">
+      <a class="atv-card-btn" href="tema3/atv4.html" target="_blank" rel="noopener">Abrir atividade →</a>
+      <a class="atv-card-btn atv-card-btn-pdf" href="https://drive.google.com/file/d/19Rfd57DMlN3a1lTXVk2rAKxmtLMo2vhi/view?usp=sharing" target="_blank" rel="noopener">Abrir PDF</a>
+    </div>
   </div>
 
   <h2 class="secao">5. O poder do imperador na prática</h2>
@@ -347,7 +354,10 @@
       <div class="atv-card-titulo">Liberais, "Cascudos" e o poder de D. Pedro II</div>
       <div class="atv-card-desc">Interprete duas charges de Ângelo Agostini e Cândido de Aragonez Faria sobre a disputa entre liberais e conservadores e o poder do Imperador.</div>
     </div>
-    <a class="atv-card-btn" href="https://drive.google.com/file/d/11wjKTLQULiIFy0D17o7YWLyYzQf1lCcv/view?usp=sharing" target="_blank" rel="noopener">Abrir atividade →</a>
+    <div class="atv-card-btns">
+      <a class="atv-card-btn" href="tema3/atv3.html" target="_blank" rel="noopener">Abrir atividade →</a>
+      <a class="atv-card-btn atv-card-btn-pdf" href="https://drive.google.com/file/d/11wjKTLQULiIFy0D17o7YWLyYzQf1lCcv/view?usp=sharing" target="_blank" rel="noopener">Abrir PDF</a>
+    </div>
   </div>
 
   <h2 class="secao">6. A última rebelião: a Revolução Praieira (1848–1849)</h2>
@@ -370,7 +380,10 @@
       <div class="atv-card-titulo">A Insurreição Praieira, por Marcus Carvalho</div>
       <div class="atv-card-desc">Leia o texto do historiador Marcus Carvalho sobre a Praieira e responda às questões sobre suas causas, reivindicações e significado.</div>
     </div>
-    <a class="atv-card-btn" href="https://drive.google.com/file/d/1zl9xNijR9O2ECPRWqHYlJ6dwbXt90yZF/view?usp=sharing" target="_blank" rel="noopener">Abrir atividade →</a>
+    <div class="atv-card-btns">
+      <a class="atv-card-btn" href="tema3/atv2.html" target="_blank" rel="noopener">Abrir atividade →</a>
+      <a class="atv-card-btn atv-card-btn-pdf" href="https://drive.google.com/file/d/1zl9xNijR9O2ECPRWqHYlJ6dwbXt90yZF/view?usp=sharing" target="_blank" rel="noopener">Abrir PDF</a>
+    </div>
   </div>
 
   <h2 class="secao">7. Economia: o império do café</h2>
@@ -408,7 +421,10 @@
       <div class="atv-card-titulo">Analisando os números da economia cafeeira</div>
       <div class="atv-card-desc">Use a tabela de exportações (1820–1890) para construir um gráfico de barras e responder a questões sobre o peso do café na economia imperial.</div>
     </div>
-    <a class="atv-card-btn" href="https://drive.google.com/file/d/11MBrqYcGEMV5iA6iCmK84jxT6diez_Yx/view?usp=sharing" target="_blank" rel="noopener">Abrir atividade →</a>
+    <div class="atv-card-btns">
+      <a class="atv-card-btn" href="tema3/atv5.html" target="_blank" rel="noopener">Abrir atividade →</a>
+      <a class="atv-card-btn atv-card-btn-pdf" href="https://drive.google.com/file/d/11MBrqYcGEMV5iA6iCmK84jxT6diez_Yx/view?usp=sharing" target="_blank" rel="noopener">Abrir PDF</a>
+    </div>
   </div>
 
   <h2 class="secao">8. Modernização do Império: ferrovias e indústrias</h2>
@@ -466,7 +482,10 @@
       <div class="atv-card-titulo">Duas versões sobre a Guerra do Paraguai</div>
       <div class="atv-card-desc">Compare como a revista brasileira A Vida Fluminense e um jornal paraguaio retrataram, cada um à sua maneira, os líderes do lado inimigo.</div>
     </div>
-    <a class="atv-card-btn" href="https://drive.google.com/file/d/1izAhamVEqyUj-YjkHp_25-U9V45lgJL-/view?usp=sharing" target="_blank" rel="noopener">Abrir atividade →</a>
+    <div class="atv-card-btns">
+      <a class="atv-card-btn" href="tema3/atv1.html" target="_blank" rel="noopener">Abrir atividade →</a>
+      <a class="atv-card-btn atv-card-btn-pdf" href="https://drive.google.com/file/d/1izAhamVEqyUj-YjkHp_25-U9V45lgJL-/view?usp=sharing" target="_blank" rel="noopener">Abrir PDF</a>
+    </div>
   </div>
 
   <h3 class="subsecao">Uma guerra desigual</h3>
