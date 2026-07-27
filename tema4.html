@@ -175,6 +175,9 @@
   .atv-card-desc{font-family:'Inter',sans-serif; font-size:.8rem; color:var(--ink-soft); margin-top:3px; line-height:1.4;}
   .atv-card-btn{flex:none; font-family:'Inter',sans-serif; font-weight:600; font-size:.78rem; color:var(--dourado-2); background:var(--verde); padding:9px 16px; border-radius:20px; text-decoration:none; white-space:nowrap; transition:background .15s ease;}
   .atv-card-btn:hover{background:var(--verde-2);}
+  .atv-card-btns{flex:none; display:flex; flex-direction:column; gap:8px;}
+  .atv-card-btn-pdf{background:transparent; color:var(--bordo); border:1.5px solid var(--bordo);}
+  .atv-card-btn-pdf:hover{background:rgba(122,46,46,.08);}
   .jogo-trilha-card{background:linear-gradient(135deg, var(--verde) 0%, #12301f 100%); border:2px solid var(--dourado); border-radius:14px; padding:24px 22px 26px; margin:32px 0; text-align:center;}
   .jogo-trilha-card .jt-icone{font-size:2.1rem; line-height:1; margin-bottom:6px;}
   .jogo-trilha-card .jt-eyebrow{font-family:'Inter',sans-serif; font-weight:700; letter-spacing:.1em; text-transform:uppercase; font-size:.7rem; color:var(--dourado-2); opacity:.9;}
@@ -196,6 +199,7 @@
     .mini-trilha a .codigo{ display:none; }
     .atv-card{flex-wrap:wrap;}
     .atv-card-btn{width:100%; text-align:center;}
+    .atv-card-btns{flex-direction:row; width:100%;}
   }
 </style>
 </head>
@@ -264,6 +268,11 @@
     <a class="atv-card-btn" href="https://drive.google.com/file/d/1sVzYa3Z208JQztStkYr8OwDjE4OJbGvL/view?usp=sharing" target="_blank" rel="noopener">Abrir slides →</a>
   </div>
 
+  <figure class="figura-charge">
+    <img src="tema4/img1.jpeg" alt="O Projeto da De.sigualdade: escravidão, acesso à terra e como o Brasil Imperial desenhou o país que conhecemos hoje." onclick="abrirLightbox(this)" style="max-width:100%;">
+    <figcaption>O projeto da desigualdade: escravidão, acesso à terra e o desenho do país que conhecemos hoje.</figcaption>
+  </figure>
+
   <h2 class="secao">1. O fim do tráfico transatlântico</h2>
   <p>Sob forte pressão diplomática e naval da Inglaterra — interessada em abrir novos mercados consumidores e não mais depender do tráfico —, o Brasil aprova a <strong>Lei Eusébio de Queirós (1850)</strong>, que proíbe definitivamente o tráfico transatlântico de pessoas escravizadas. A partir dela, o preço de uma pessoa escravizada dispara dentro do Brasil, e os fazendeiros passam a buscar alternativas de mão de obra.</p>
 
@@ -274,8 +283,16 @@
       <div class="atv-card-titulo">Duas leituras sobre o fim do tráfico no Brasil</div>
       <div class="atv-card-desc">Compare os textos de Lilia Schwarcz e Luiz Felipe de Alencastro e identifique o tema comum e os diferentes enfoques de cada autor.</div>
     </div>
-    <a class="atv-card-btn" href="https://drive.google.com/file/d/18oh8jOruVJOOtVCpuCwPzb8_sfkC_zA7/view?usp=sharing" target="_blank" rel="noopener">Abrir atividade →</a>
+    <div class="atv-card-btns">
+      <a class="atv-card-btn" href="tema4/atv1.html" target="_blank" rel="noopener">Abrir atividade →</a>
+      <a class="atv-card-btn atv-card-btn-pdf" href="https://drive.google.com/file/d/18oh8jOruVJOOtVCpuCwPzb8_sfkC_zA7/view?usp=sharing" target="_blank" rel="noopener">Abrir PDF</a>
+    </div>
   </div>
+
+  <figure class="figura-charge">
+    <img src="tema4/img2.jpeg" alt="A Estruturação Desenhada da Desigualdade: as leis de 1850. 1850: Fim do Tráfico Transatlântico — pressionado pela Inglaterra, o Brasil aprova a Lei Eusébio de Queirós; o preço das pessoas escravizadas dispara dentro do Brasil. 1850: A Lei de Terras — antes, a terra era obtida por posse; agora, só pode ser adquirida por compra. Sem tráfico, a escravidão tinha prazo de validade; a Lei de Terras garantiu que, quando livres, os trabalhadores não tivessem para onde ir a não ser trabalhar para os grandes fazendeiros." onclick="abrirLightbox(this)" style="max-width:100%;">
+    <figcaption>As leis de 1850: o fim do tráfico e a Lei de Terras, um projeto para a manutenção do poder agrário.</figcaption>
+  </figure>
 
   <h2 class="secao">2. A Lei de Terras de 1850: o mesmo ano, uma decisão decisiva</h2>
   <details class="acordeao" open>
@@ -285,8 +302,19 @@
     <p>O resultado foi o aprofundamento da <strong>concentração fundiária</strong>: a terra permaneceu concentrada nas mãos da elite agrária, um padrão que ainda hoje marca a estrutura fundiária brasileira.</p>
   </details>
 
+  <figure class="figura-charge">
+    <img src="tema4/img3.jpeg" alt="O Início da Concentração Fundiária: indígenas, trabalhadores pobres livres, libertos e ex-escravizados sem capital passam pelo filtro do preço alto da terra e ficam de fora — apenas a elite agrária é aprovada." onclick="abrirLightbox(this)" style="max-width:100%;">
+    <figcaption>O filtro do preço da terra: sem capital, sem pequenos proprietários.</figcaption>
+  </figure>
+
   <h2 class="secao">3. Resistência: quilombos e revoltas</h2>
   <p>A escravidão nunca foi aceita passivamente. Enquanto durou, os escravizados resistiram de muitas formas: pela desobediência cotidiana, pela fuga e formação de <strong>quilombos</strong>, por levantes urbanos organizados e pela busca de espaços para praticar suas culturas e religiões.</p>
+
+  <figure class="figura-charge">
+    <img src="tema4/img4.jpeg" alt="A Resistência Nunca Foi Passiva: mapa do Brasil destacando a Revolta dos Malês (Bahia, 1835), levante urbano de escravizados e libertos de fé muçulmana em Salvador, parte de um ciclo de mais de 20 revoltas; e a Revolta de Manuel Congo (Vassouras, RJ, 1838), levante na região cafeeira liderado por Manuel Congo, que acabou enforcado em 1839. A punição severa aos rebeldes, prevista no Código Criminal do Império, prova que o sistema via a resistência como uma ameaça real e constante." onclick="abrirLightbox(this)" style="max-width:100%;">
+    <figcaption>A resistência nunca foi passiva: a Revolta dos Malês e a Revolta de Manuel Congo.</figcaption>
+  </figure>
+
   <div class="galeria-perfis">
     <div class="perfil">
       <h4>Revolta dos Malês (Bahia, 1835)</h4>
@@ -306,7 +334,10 @@
       <div class="atv-card-titulo">Uma das maiores rebeliões escravas do Império</div>
       <div class="atv-card-desc">Leia o relato historiográfico sobre a revolta de 1838 em Vassouras e responda a questões sobre a repressão e a punição dos rebeldes.</div>
     </div>
-    <a class="atv-card-btn" href="https://drive.google.com/file/d/1-8VvLQfET4NHFoalJ94mEtsTAvoaRidm/view?usp=sharing" target="_blank" rel="noopener">Abrir atividade →</a>
+    <div class="atv-card-btns">
+      <a class="atv-card-btn" href="tema4/atv3.html" target="_blank" rel="noopener">Abrir atividade →</a>
+      <a class="atv-card-btn atv-card-btn-pdf" href="https://drive.google.com/file/d/1-8VvLQfET4NHFoalJ94mEtsTAvoaRidm/view?usp=sharing" target="_blank" rel="noopener">Abrir PDF</a>
+    </div>
   </div>
 
   <h2 class="secao">4. A abolição gradual da escravidão</h2>
@@ -317,6 +348,11 @@
     <li><strong>1885 — Lei dos Sexagenários (Saraiva-Cotegipe):</strong> liberta pessoas escravizadas com mais de 60 anos — idade que, na época, poucos alcançavam, e sem qualquer garantia real de subsistência para os libertos.</li>
     <li><strong>1888 — Lei Áurea:</strong> abolição total e imediata da escravidão, sem indenização às pessoas libertas e sem qualquer política de reforma agrária ou inclusão social.</li>
   </ul>
+
+  <figure class="figura-charge">
+    <img src="tema4/img5.jpeg" alt="Abolição em Conta-Gotas (1850-1888): 1850 Lei Eusébio de Queirós (nada mudou para quem já era escravizado no Brasil); 1871 Lei do Ventre Livre (filhos livres, mas presos à tutela do senhor até os 21 anos); 1885 Lei dos Sexagenários (liberta maiores de 60 anos, idade que poucos alcançavam, sem garantia de sobrevivência); 1888 Lei Áurea (abolição imediata, mas sem reforma agrária, sem indenização e sem inclusão social)." onclick="abrirLightbox(this)" style="max-width:100%;">
+    <figcaption>Abolição em conta-gotas: quase quatro décadas até o fim da escravidão.</figcaption>
+  </figure>
 
   <h2 class="secao">5. O movimento abolicionista</h2>
   <p>Ao lado da resistência dos próprios escravizados, cresceu, sobretudo a partir da década de 1870, um movimento social organizado pelo fim da escravidão: o <strong>abolicionismo</strong>. Abolicionistas de diferentes origens e cores divulgavam sua mensagem por meio de artigos, charges, passeatas e comícios.</p>
@@ -363,6 +399,11 @@
     </ul>
   </details>
 
+  <figure class="figura-charge">
+    <img src="tema4/img6.jpeg" alt="A Pressão nas Ruas: o Movimento Abolicionista. Luiz Gama (o Advogado): vendido ilegalmente, tornou-se advogado autodidata e libertou centenas na Justiça. André Rebouças (o Engenheiro): defendia que a abolição só funcionaria se acompanhada de reforma agrária. José do Patrocínio (o Jornalista): liderou a Confederação Abolicionista nas ruas e jornais. Angelo Agostini (o Caricaturista): usava o humor na Revista Ilustrada para atacar a escravidão. Ações Práticas: grupos como os Caifazes ajudavam fugas em massa, liderando milhares para o Quilombo do Jabaquara." onclick="abrirLightbox(this)" style="max-width:100%;">
+    <figcaption>A pressão nas ruas: advogados, engenheiros, jornalistas e caricaturistas na luta abolicionista.</figcaption>
+  </figure>
+
   <div class="atv-card">
     <div class="atv-card-icone">📄</div>
     <div class="atv-card-texto">
@@ -370,7 +411,10 @@
       <div class="atv-card-titulo">A pedra da "Abolição" nas charges de Angelo Agostini</div>
       <div class="atv-card-desc">Interprete as duas charges da Revista Ilustrada (1884) e os diálogos entre os personagens sobre a chegada da Abolição.</div>
     </div>
-    <a class="atv-card-btn" href="https://drive.google.com/file/d/14S82Ph_llKHozMMWL5hEH_FpsMuPR7d2/view?usp=sharing" target="_blank" rel="noopener">Abrir atividade →</a>
+    <div class="atv-card-btns">
+      <a class="atv-card-btn" href="tema4/atv4.html" target="_blank" rel="noopener">Abrir atividade →</a>
+      <a class="atv-card-btn atv-card-btn-pdf" href="https://drive.google.com/file/d/14S82Ph_llKHozMMWL5hEH_FpsMuPR7d2/view?usp=sharing" target="_blank" rel="noopener">Abrir PDF</a>
+    </div>
   </div>
 
   <h2 class="secao">6. Da parceria ao colonato: a substituição da mão de obra</h2>
@@ -380,6 +424,12 @@
   <p>Na prática, o sistema não atendeu às expectativas dos imigrantes: eles chegavam endividados com as despesas da viagem e, depois, com roupas, remédios e alimentos comprados no armazém da própria fazenda. Em 1857, esse descontentamento explodiu na <strong>Revolta de Ibicaba</strong>, reprimida pelas autoridades. O mestre-escola suíço Thomas Davatz, um dos líderes, denunciou os maus-tratos em um livro publicado após retornar à Europa — o que levou alguns países europeus a proibir a emigração para o Brasil.</p>
   <h3 class="subsecao">O colonato: um novo regime de trabalho</h3>
   <p>A partir da década de 1870, as fazendas paulistas adotaram um novo sistema, o <strong>colonato</strong>: os colonos passaram a receber um salário anual fixo pelo trabalho no cafezal, além da permissão para plantar milho, mandioca e feijão e criar animais para consumo próprio ou venda.</p>
+
+  <figure class="figura-charge">
+    <img src="tema4/img8.jpeg" alt="O Novo Regime de Trabalho no Oeste Paulista. Parceria (1847, Nicolau Vergueiro): divisão dos lucros da colheita do café entre o imigrante e o fazendeiro; o problema oculto era que as famílias já chegavam endividadas; o resultado foi que falhou, gerando revoltas como a de Ibicaba (1857), liderada por Thomas Davatz. Colonato (a partir de 1870): salário anual fixo mais permissão para plantar roça própria; melhorava a subsistência, mas mantinha o trabalhador dependente da grande fazenda; tornou-se o modelo padrão nas fazendas paulistas." onclick="abrirLightbox(this)" style="max-width:100%;">
+    <figcaption>Da parceria ao colonato: dois regimes de trabalho para os imigrantes nas fazendas de café.</figcaption>
+  </figure>
+
   <div class="tabela-scroll">
   <table class="comparativo">
     <tr><th>Origem</th><th>Total de imigrantes (1819–1883)</th></tr>
@@ -393,6 +443,12 @@
     <tr><td>Suíços</td><td>7.289</td></tr>
   </table>
   </div>
+
+  <figure class="figura-charge">
+    <img src="tema4/img7.jpeg" alt="O Café Precisa de Braços (e o Governo, de Imigrantes). Para substituir a mão de obra negra e promover o 'branqueamento' da população, o governo e fazendeiros incentivaram a vinda de europeus. Volume de Imigrantes (1819-1883): 1. Portugueses 223.626; 2. Italianos 96.018; 3. Alemães 62.327; 4. Outros (Espanhóis, Russos, Suíços, etc.). No Oeste Paulista, imigrantes iam para as imensas fazendas de café substituir a mão de obra escravizada. No Sul, o governo oferecia pequenos lotes de terra, fundando colônias como São Leopoldo e Blumenau, com forte identidade cultural preservada." onclick="abrirLightbox(this)" style="max-width:100%;">
+    <figcaption>O café precisa de braços: o volume de imigrantes incentivados a vir para o Brasil (1819–1883).</figcaption>
+  </figure>
+
   <p>A Itália foi a principal origem dos imigrantes que vieram trabalhar nas fazendas de café paulistas: companhias de navegação e agentes do governo brasileiro faziam ampla propaganda por lá, prometendo terra farta, riqueza mineral e clima favorável a quem embarcasse rumo ao Brasil.</p>
   <div class="galeria-charges">
     <figure class="figura-charge">
@@ -415,7 +471,10 @@
       <div class="atv-card-titulo">O cartaz de propaganda e as cartas dos imigrantes italianos</div>
       <div class="atv-card-desc">Compare a propaganda que atraía famílias italianas ao Brasil com relatos reais de imigrantes em cartas enviadas à Itália.</div>
     </div>
-    <a class="atv-card-btn" href="https://drive.google.com/file/d/1Na4mmLhHjEo5p_7233pShe29fC21X39P/view?usp=sharing" target="_blank" rel="noopener">Abrir atividade →</a>
+    <div class="atv-card-btns">
+      <a class="atv-card-btn" href="tema4/atv5.html" target="_blank" rel="noopener">Abrir atividade →</a>
+      <a class="atv-card-btn atv-card-btn-pdf" href="https://drive.google.com/file/d/1Na4mmLhHjEo5p_7233pShe29fC21X39P/view?usp=sharing" target="_blank" rel="noopener">Abrir PDF</a>
+    </div>
   </div>
 
   <h2 class="secao">7. Liberdade sem terra, sem trabalho, sem cidadania plena</h2>
@@ -430,6 +489,11 @@
 
   <p>Mesmo diante de tantas dificuldades, a população negra recém-liberta seguiu construindo formas de vida coletiva e cultural — em rodas de samba, centros religiosos, clubes esportivos e na chamada <strong>imprensa negra</strong>, com jornais próprios que davam voz às suas próprias experiências.</p>
 
+  <figure class="figura-charge">
+    <img src="tema4/img11.jpeg" alt="1888: A Equação da Liberdade Incompleta. Abolição Jurídica (cerca de 720 mil pessoas libertadas), sem terras, sem qualificação garantida, sem políticas de inclusão, resultando em Liberdade sem Cidadania Plena. Os libertos foram disputar subempregos nas periferias, muitas vezes preteridos em favor de imigrantes vistos como 'mais civilizados' pela elite racista. Resistência: apesar do abandono do Estado, a população negra construiu redes próprias de vida e resistência — rodas de samba, clubes, centros religiosos e uma forte imprensa negra." onclick="abrirLightbox(this)" style="max-width:100%;">
+    <figcaption>1888: a equação da liberdade incompleta — abolição jurídica sem cidadania plena.</figcaption>
+  </figure>
+
   <div class="atv-card">
     <div class="atv-card-icone">📄</div>
     <div class="atv-card-texto">
@@ -437,12 +501,21 @@
       <div class="atv-card-titulo">Branqueamento e racismo científico no pós-Abolição</div>
       <div class="atv-card-desc">Analise a pintura de Modesto Brocos y Gomez (1895) e reflita sobre a ideologia do branqueamento e seus ecos na sociedade brasileira atual.</div>
     </div>
-    <a class="atv-card-btn" href="https://drive.google.com/file/d/1WyLP4uLWH6u3sjq06OxO6BxvU7T65pkc/view?usp=sharing" target="_blank" rel="noopener">Abrir atividade →</a>
+    <div class="atv-card-btns">
+      <a class="atv-card-btn" href="tema4/atv2.html" target="_blank" rel="noopener">Abrir atividade →</a>
+      <a class="atv-card-btn atv-card-btn-pdf" href="https://drive.google.com/file/d/1WyLP4uLWH6u3sjq06OxO6BxvU7T65pkc/view?usp=sharing" target="_blank" rel="noopener">Abrir PDF</a>
+    </div>
   </div>
 
   <h2 class="secao">8. A política indigenista no Segundo Reinado</h2>
   <p>Os povos indígenas também foram diretamente afetados pela Lei de Terras e pela expansão agrícola. O governo imperial promoveu <strong>aldeamentos</strong> — núcleos controlados pelo Estado que tentavam "civilizar" e integrar forçadamente as populações indígenas à sociedade nacional — enquanto suas terras eram cada vez mais griladas e ocupadas pela expansão das fazendas, favorecida pelo novo regime de propriedade privada da terra.</p>
   <p>A política oficial classificava os povos indígenas em duas categorias: os chamados <span class="destaque">"índios mansos"</span>, considerados já integrados ou integráveis, e os <span class="destaque">"índios bravos"</span>, tidos como hostis e "imersos no estado de barbárie".</p>
+
+  <figure class="figura-charge">
+    <img src="tema4/img9.jpeg" alt="A Política Indigenista: Civilizar ou Excluir? O Debate do Império. José Bonifácio defendia a 'integração branda', civilizar por meio da catequese e da educação (proposta que prevaleceu oficialmente). Francisco Adolfo de Varnhagen considerava os povos naturalmente hostis, defendendo a incorporação apenas pelo uso da força e da guerra. Na Prática: a ferramenta principal do Estado foram os Aldeamentos — núcleos controlados para integrar forçadamente as populações indígenas, enquanto suas terras originais eram invadidas e griladas pelos fazendeiros." onclick="abrirLightbox(this)" style="max-width:100%;">
+    <figcaption>Civilizar ou excluir: o debate entre José Bonifácio e Varnhagen sobre os povos indígenas.</figcaption>
+  </figure>
+
   <details class="acordeao">
     <summary>Um debate entre intelectuais do Império</summary>
     <p>Dois importantes intelectuais do século XIX discordavam sobre como tratar os povos indígenas — mas concordavam com a ideia, hoje reconhecida como racista, de que eles seriam "inferiores". <strong>José Bonifácio de Andrada e Silva</strong> defendia a integração branda, por meio da catequese e da educação. Já <strong>Francisco Adolfo de Varnhagen</strong> considerava os indígenas naturalmente hostis à civilização, defendendo que só poderiam ser incorporados pela força e pela guerra.</p>
@@ -450,8 +523,18 @@
   </details>
   <p>Curiosamente, enquanto a política real tratava os povos indígenas como obstáculo ao "progresso", a literatura do <strong>Romantismo</strong> fazia o caminho contrário: romances <em>indianistas</em>, como <em>O Guarani</em> e <em>Iracema</em>, de José de Alencar, e poemas de Gonçalves Dias, transformaram o índio idealizado em símbolo da nova nação brasileira — um índio literário, heroico, bem diferente da realidade vivida pelos povos indígenas reais daquele período.</p>
 
+  <figure class="figura-charge">
+    <img src="tema4/img10.jpeg" alt="O Índio Literário vs. O Índio Real. O Mito Romântico: na literatura do Indianismo (Romantismo de José de Alencar e Gonçalves Dias), o indígena era idealizado, transformado no símbolo heroico da nova nação brasileira, um passado nobre e pacífico. A Realidade do Império: na prática oficial, eram vistos como um obstáculo ao 'progresso'. Sofreram com violência contínua, expulsão de seus territórios tradicionais e perda de identidade nos aldeamentos." onclick="abrirLightbox(this)" style="max-width:100%;">
+    <figcaption>O índio literário do Romantismo e o índio real, obstáculo ao "progresso" do Império.</figcaption>
+  </figure>
+
   <h2 class="secao">9. Do passado ao presente: conflitos no campo</h2>
   <p>A concentração fundiária iniciada com a Lei de Terras de 1850 tem efeitos que atravessam a história brasileira até hoje: o Brasil segue sendo um dos países com maior concentração de terras do mundo, e os conflitos agrários — entre grandes proprietários, trabalhadores rurais sem terra e povos indígenas — continuam presentes no debate público contemporâneo.</p>
+
+  <figure class="figura-charge">
+    <img src="tema4/img12.jpeg" alt="Do Passado ao Presente: as decisões do Império não ficaram no século XIX, elas desenharam a planta baixa do Brasil atual. 1850 (Lei de Terras): a propriedade vira privilégio de quem tem capital. 1888 (Abolição): fim da escravidão, mas manutenção da exclusão estrutural e econômica. Dias Atuais (o Legado): Concentração Fundiária — o Brasil segue como um dos países com maior concentração de terras do mundo; Conflitos no Campo — a disputa entre grandes proprietários, trabalhadores sem terra e povos indígenas continua no centro do debate atual. A história não é apenas o que aconteceu. É a explicação de onde estamos pisando hoje." onclick="abrirLightbox(this)" style="max-width:100%;">
+    <figcaption>Do passado ao presente: como as decisões do Império desenharam o Brasil atual.</figcaption>
+  </figure>
 
   <h2 class="secao">Termos-chave desta aula</h2>
   <div class="grade-termos">
