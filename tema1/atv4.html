@@ -3,26 +3,21 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ler e Interpretar — A Constituição de 1824 | CERO</title>
+<title>A Constituição de 1824 e a Confederação do Equador | CERO</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <style>
   :root{
-    --bg:#f0f2ec;
-    --bg-alt:#e2e6d8;
-    --paper:#fdfdf9;
-    --ink:#232a1e;
-    --ink-soft:#5c6350;
-    --verde:#4b5320;
-    --verde-dark:#333b16;
-    --verde-2:#6b7a34;
+    --bg:#f6f2fa;
+    --paper:#fffdff;
+    --ink:#241c30;
+    --ink-soft:#5a4d6b;
+    --verde:#5a2d82;
+    --verde-dark:#3a1c56;
     --gold:#a6863f;
-    --gold-light:#ddc9a3;
-    --line:#d6dac8;
-    --shadow:0 10px 30px rgba(51,59,22,.18);
+    --line:#ddd0e8;
+    --shadow:0 10px 30px rgba(58,28,86,.16);
     --radius:14px;
     --font-title:'Playfair Display', serif;
     --font-body:'Source Serif 4', serif;
@@ -34,807 +29,283 @@
     background:var(--bg);
     color:var(--ink);
     font-family:var(--font-body);
-    line-height:1.7;
-    -webkit-touch-callout:none;
-    user-select:none;
+    line-height:1.75;
   }
-  .selecionavel, main{user-select:text;}
-  .campo-resposta{user-select:text;}
+  .wrap{max-width:860px; margin:0 auto; padding:28px 18px 40px;}
 
-  /* ===== CAPA / GATE ===== */
-  #capa{
-    min-height:100vh;
-    display:flex; align-items:center; justify-content:center;
-    position:relative;
-    overflow:hidden;
-    background:linear-gradient(to bottom, #1f2410, #333b16, #5c6b28);
-    padding:24px;
-  }
-  #capa .grade-centralizada{
-    position:absolute;
-    top:0; bottom:0; left:50%;
-    transform:translateX(-50%);
-    width:100%;
-    max-width:896px;
-    pointer-events:none;
-    z-index:0;
-    opacity:.08;
-    background:
-      repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(255,255,255,.5) 39px, rgba(255,255,255,.5) 40px),
-      repeating-linear-gradient(90deg, transparent, transparent 39px, rgba(255,255,255,.5) 39px, rgba(255,255,255,.5) 40px);
-    background-size:40px 40px;
-  }
-  .capa-card{
-    position:relative;
-    z-index:1;
+  .topo{
     background:var(--paper);
     border-radius:var(--radius);
     box-shadow:var(--shadow);
-    max-width:480px;
-    width:100%;
-    padding:36px 32px;
-    text-align:center;
-  }
-  .capa-card .tag{
-    display:inline-block; font-family:var(--font-mono); font-size:.7rem;
-    letter-spacing:.1em; text-transform:uppercase; color:var(--verde-dark);
-    background:rgba(75,83,32,.1); padding:5px 12px; border-radius:999px; margin-bottom:14px;
-  }
-  .capa-card h1{font-family:var(--font-title); font-size:1.6rem; margin:0 0 10px; color:var(--verde-dark);}
-  .capa-card p.desc{color:var(--ink-soft); font-size:.94rem; margin:0 0 22px;}
-  .capa-card input{
-    width:100%; padding:12px 14px; border:1px solid var(--line); border-radius:8px;
-    font-family:var(--font-body); font-size:1rem; margin-bottom:14px;
-  }
-  .capa-card button{
-    width:100%; padding:13px; border:none; border-radius:8px;
-    background:var(--verde); color:#fff; font-weight:600; font-size:1rem; cursor:pointer;
-    font-family:var(--font-body); transition:filter .15s ease;
-  }
-  .capa-card button:hover{filter:brightness(1.08);}
-  .capa-aviso{font-size:.78rem; color:#a33; margin-top:8px; display:none;}
-
-  /* ===== APP ===== */
-  #app{display:none;}
-  .sticky-header{
-    position:sticky; top:0; z-index:50;
-    background:var(--verde-dark); color:#eef2e6;
-    padding:12px 20px; display:flex; align-items:center; justify-content:space-between;
-    flex-wrap:wrap; gap:8px;
-    font-family:var(--font-mono); font-size:.82rem;
-  }
-  .sticky-header .aluno{font-family:var(--font-body); font-weight:600; font-size:.92rem;}
-  .barra-progresso-trilho{
-    flex:1; min-width:120px; height:8px; background:rgba(255,255,255,.2); border-radius:6px; overflow:hidden; margin:0 14px;
-  }
-  .barra-progresso-fill{height:100%; background:var(--gold); width:0%; transition:width .3s ease;}
-
-  .wrap{max-width:800px; margin:0 auto; padding:32px 24px 60px;}
-
-  header.topo{margin-bottom:28px;}
-  header.topo .hero-tag{
-    display:inline-block; font-family:var(--font-mono); font-size:.72rem;
-    letter-spacing:.1em; text-transform:uppercase; color:var(--verde-dark);
-    background:rgba(75,83,32,.1); padding:5px 12px; border-radius:999px; margin-bottom:12px;
-  }
-  header.topo h1{font-family:var(--font-title); font-size:clamp(1.5rem,4vw,2rem); margin:0 0 8px; color:var(--ink);}
-  header.topo p.sub{color:var(--ink-soft); margin:0; font-size:.98rem;}
-  header.topo .aluno-info{
-    font-family:var(--font-mono); font-size:.82rem; color:var(--verde-dark);
-    background:var(--bg-alt); display:inline-block; padding:6px 12px; border-radius:8px; margin-top:12px;
+    padding:26px 26px 22px;
+    border-top:5px solid var(--verde);
+    margin-bottom:26px;
   }
   .descritor-bar{
-    font-family:var(--font-mono); font-size:.76rem; color:var(--ink-soft);
-    background:var(--paper); border:1px solid var(--line); border-radius:8px;
-    padding:8px 14px; margin-bottom:14px; display:inline-block;
+    display:block; font-family:var(--font-mono); font-size:.7rem;
+    letter-spacing:.06em; text-transform:uppercase; color:var(--verde-dark);
+    background:rgba(90,45,130,.09); padding:7px 12px; border-radius:8px;
   }
-  .ficha-id{
-    display:flex; flex-wrap:wrap; gap:10px 26px;
-    background:var(--paper); border:1px solid var(--line); border-radius:10px;
-    padding:12px 16px; margin-top:12px; font-family:var(--font-mono); font-size:.84rem; color:var(--ink);
+  .hero-tag{
+    display:inline-block; margin-top:12px;
+    font-family:var(--font-mono); font-size:.68rem; letter-spacing:.1em;
+    text-transform:uppercase; color:var(--gold);
   }
-  .ficha-id span b{color:var(--verde-dark);}
+  .topo h1{font-family:var(--font-title); font-size:1.8rem; margin:6px 0 8px; color:var(--verde-dark); line-height:1.25;}
+  .topo .sub{margin:0; color:var(--ink-soft); font-size:.98rem;}
 
-  /* ===== TEXTO DE APOIO ===== */
   .texto-apoio{
-    background:var(--paper); border:1px solid var(--line); border-radius:var(--radius);
-    box-shadow:var(--shadow); padding:28px 30px; margin-bottom:22px;
+    background:var(--paper); border-radius:var(--radius); box-shadow:var(--shadow);
+    padding:24px 26px; margin-bottom:22px;
   }
-  .texto-apoio h2{font-family:var(--font-title); font-size:1.25rem; color:var(--verde-dark); margin:0 0 4px;}
-  .texto-apoio .fonte-tag{font-family:var(--font-mono); font-size:.72rem; color:var(--ink-soft); margin-bottom:16px; display:block;}
-  .texto-apoio p{margin:0 0 14px; color:var(--ink);}
-  .texto-apoio p:last-of-type{margin-bottom:0;}
-
-  .referencia-box{
-    margin-top:20px; padding:14px 16px;
-    background:var(--bg-alt); border-left:3px solid var(--gold); border-radius:0 8px 8px 0;
+  .texto-apoio h2{font-family:var(--font-title); font-size:1.22rem; color:var(--verde-dark); margin:0 0 4px;}
+  .fonte-tag{font-family:var(--font-mono); font-size:.68rem; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-soft);}
+  .texto-apoio > p{font-size:1rem; text-align:justify;}
+  .documento-fonte{
+    margin-top:16px; background:#faf6fd; border-left:4px solid var(--verde);
+    border-radius:0 10px 10px 0; padding:16px 18px; font-size:1rem; text-align:justify;
   }
-  .referencia-box .rot{
-    font-family:var(--font-mono); font-size:.7rem; text-transform:uppercase; letter-spacing:.08em;
-    color:var(--verde-dark); display:block; margin-bottom:6px;
-  }
-  .referencia-box p{margin:0 0 6px; font-size:.86rem; color:var(--ink-soft); font-family:var(--font-mono); line-height:1.6; word-break:break-word; overflow-wrap:anywhere;}
-  .referencia-box p:last-child{margin-bottom:0;}
-
+  .documento-fonte p{margin:0 0 10px;}
+  .documento-fonte p:last-child{margin-bottom:0;}
+  .documento-fonte ul{margin:0; padding-left:20px;}
+  .documento-fonte li{margin-bottom:9px;}
+  .documento-fonte .assinatura{text-align:right; font-style:italic; color:var(--ink-soft); font-size:.92rem;}
   .glossario-box{
-    margin-top:20px; padding:16px 18px;
-    background:var(--paper); border:1px solid var(--line); border-radius:8px;
+    margin-top:14px; background:#fdf9f0; border:1px solid var(--gold);
+    border-radius:10px; padding:14px 16px;
   }
   .glossario-box .rot{
-    font-family:var(--font-mono); font-size:.7rem; text-transform:uppercase; letter-spacing:.08em;
-    color:var(--verde-dark); display:block; margin-bottom:10px;
+    display:block; font-family:var(--font-mono); font-size:.62rem;
+    letter-spacing:.09em; text-transform:uppercase; color:var(--gold); margin-bottom:8px;
   }
   .glossario-box dl{margin:0;}
-  .glossario-box dt{
-    font-family:var(--font-mono); font-weight:700; font-size:.86rem; color:var(--verde-dark);
-    background:rgba(75,83,32,.1); display:inline-block; padding:2px 8px; border-radius:4px; margin-bottom:4px;
-  }
-  .glossario-box dd{margin:0 0 12px; font-size:.9rem; color:var(--ink); line-height:1.6;}
+  .glossario-box dt{font-weight:700; color:var(--verde-dark); font-size:.92rem;}
+  .glossario-box dd{margin:0 0 10px; font-size:.9rem; color:var(--ink-soft);}
   .glossario-box dd:last-child{margin-bottom:0;}
-
-  .documento-fonte{
-    background:var(--bg-alt);
-    border-left:3px solid var(--verde);
-    border-radius:0 8px 8px 0;
-    padding:16px 20px;
-    margin:16px 0;
+  .referencia-box{
+    margin-top:14px; border:1px dashed var(--line); border-radius:10px;
+    padding:12px 14px; background:#fcfaff;
   }
-  .documento-fonte ul{margin:0; padding-left:20px;}
-  .documento-fonte li{margin-bottom:10px; font-style:italic; color:var(--ink);}
-  .documento-fonte li:last-child{margin-bottom:0;}
-  .documento-fonte p{margin:0; font-style:italic; color:var(--ink);}
-  .documento-fonte strong{font-style:normal; color:var(--verde-dark); background:rgba(75,83,32,.14); padding:0 3px; border-radius:3px;}
+  .referencia-box .rot{
+    display:block; font-family:var(--font-mono); font-size:.62rem;
+    letter-spacing:.09em; text-transform:uppercase; color:var(--gold); margin-bottom:5px;
+  }
+  .referencia-box p{margin:0; font-size:.84rem; color:var(--ink-soft); word-break:break-word;}
 
-  /* ===== QUESTOES ===== */
   .questoes-titulo{
-    font-family:var(--font-title); font-size:1.2rem; color:var(--verde-dark);
-    margin:0 0 18px; display:flex; align-items:center; gap:10px;
+    font-family:var(--font-title); font-size:1.3rem; color:var(--verde-dark);
+    margin:34px 0 16px; padding-bottom:8px; border-bottom:2px solid var(--line);
   }
   .questao{
-    background:var(--paper); border:1px solid var(--line); border-radius:12px;
+    background:var(--paper); border-radius:var(--radius); box-shadow:var(--shadow);
     padding:20px 22px; margin-bottom:18px;
+    border-left:5px solid var(--verde);
   }
-  .questao.intercalada{margin-bottom:22px;}
-  .questao .num-q{
+  .enunciado{display:flex; gap:12px; align-items:flex-start; font-size:1rem;}
+  .num-q{
+    flex:0 0 auto; width:30px; height:30px; border-radius:50%;
+    background:var(--verde); color:#fff;
     display:inline-flex; align-items:center; justify-content:center;
-    width:26px; height:26px; border-radius:50%; background:var(--verde);
-    color:#fff; font-family:var(--font-mono); font-size:.78rem; margin-right:8px; flex-shrink:0;
+    font-family:var(--font-mono); font-size:.85rem; font-weight:600; margin-top:2px;
   }
-  .questao .enunciado{font-weight:600; color:var(--ink); margin-bottom:12px; display:flex; align-items:flex-start;}
-  .questao textarea{
-    width:100%; min-height:90px; padding:12px 14px; border:1px solid var(--line); border-radius:8px;
-    font-family:var(--font-body); font-size:.96rem; resize:vertical; color:var(--ink);
+  .subitens{margin:14px 0 0 42px; padding:0; list-style:none;}
+  .subitens li{
+    display:flex; gap:10px; align-items:flex-start;
+    margin-bottom:10px; font-size:.97rem;
+    background:#faf6fd; border:1px solid var(--line); border-radius:10px;
+    padding:11px 14px; cursor:pointer;
+    transition:border-color .15s ease, background .15s ease, transform .15s ease;
   }
-  .questao textarea:focus{outline:2px solid var(--verde-2); outline-offset:1px;}
-  .contador-chars{font-family:var(--font-mono); font-size:.72rem; color:var(--ink-soft); margin-top:6px; text-align:right;}
-
-  .subitem{margin-top:16px;}
-  .subitem:first-of-type{margin-top:14px;}
-  .subitem-label{display:block; font-weight:600; color:var(--ink); margin-bottom:8px; font-size:.94rem;}
-
-  .comentario-prof{
-    display:none; margin-top:14px; padding:14px 16px;
-    background:#eef2e2; border:1px solid #c7d3ab; border-radius:8px; font-size:.9rem; color:var(--verde-dark);
+  .subitens li:last-child{margin-bottom:0;}
+  .subitens li:hover{border-color:var(--verde); background:#f3e9fa; transform:translateY(-1px);}
+  .subitens li .letra{
+    flex:0 0 auto; font-family:var(--font-mono); font-size:.78rem; font-weight:600;
+    color:#fff; background:var(--verde); border-radius:6px; padding:1px 8px; margin-top:3px;
   }
-  .comentario-prof.show{display:block;}
-  .comentario-prof b{display:block; margin-bottom:4px; font-family:var(--font-title); font-size:.92rem;}
-
-  /* ===== ALERTA / FINALIZAR ===== */
-  .alerta-incompleto{
-    display:none; background:#fdf3e2; border:1px solid #f1d9a6; color:#8a5a10;
-    padding:12px 16px; border-radius:8px; font-size:.9rem; margin-bottom:16px;
+  .subitens li .txt{flex:1 1 auto;}
+  .subitens li .lupa{
+    flex:0 0 auto; font-family:var(--font-mono); font-size:.6rem;
+    letter-spacing:.06em; text-transform:uppercase; color:var(--gold); margin-top:5px;
   }
-  .alerta-incompleto.show{display:block;}
-
-  .acoes-finais{display:flex; gap:12px; flex-wrap:wrap; margin-top:10px;}
-  .btn{
-    font-family:var(--font-body); font-weight:600; font-size:.94rem; padding:12px 22px;
-    border-radius:8px; border:none; cursor:pointer; transition:filter .15s ease;
+  .alternativas{margin:14px 0 0 42px;}
+  .alt{display:flex; gap:10px; align-items:flex-start; margin-bottom:9px; font-size:.95rem;}
+  .alt .rotulo{
+    flex:0 0 auto; min-width:26px; text-align:center;
+    font-family:var(--font-mono); font-size:.75rem; font-weight:600;
+    color:var(--verde-dark); background:rgba(90,45,130,.1);
+    border-radius:6px; padding:2px 6px;
   }
-  .btn:hover{filter:brightness(1.08);}
-  .btn-primario{background:var(--verde); color:#fff;}
-  .btn-secundario{background:transparent; color:var(--ink); border:1px solid var(--line);}
-  .btn-pdf{background:var(--gold); color:#fff;}
-  .btn[disabled]{opacity:.5; cursor:not-allowed;}
+  .instrucao-multipla{
+    margin:12px 0 0 42px; font-family:var(--font-mono); font-size:.66rem;
+    letter-spacing:.07em; text-transform:uppercase; color:var(--ink-soft);
+  }
+  .dica-clique{
+    display:block; margin-top:12px; margin-left:42px;
+    font-family:var(--font-mono); font-size:.66rem; letter-spacing:.08em;
+    text-transform:uppercase; color:var(--gold);
+  }
 
-  /* ===== POPUP ===== */
   .popup-overlay{
-    display:none; position:fixed; inset:0; background:rgba(31,36,16,.6);
-    align-items:center; justify-content:center; z-index:200; padding:20px;
+    position:fixed; inset:0; z-index:100; background:rgba(36,28,48,.62);
+    display:none; align-items:center; justify-content:center; padding:20px;
   }
-  .popup-overlay.show{display:flex;}
+  .popup-overlay.ativo{display:flex;}
   .popup-card{
     background:var(--paper); border-radius:var(--radius); box-shadow:var(--shadow);
-    max-width:420px; width:100%; padding:32px 28px; text-align:center;
+    max-width:540px; width:100%; padding:28px 26px 24px;
+    max-height:85vh; overflow-y:auto; border-top:5px solid var(--gold);
   }
-  .popup-card .emoji{font-size:2.4rem; margin-bottom:10px;}
-  .popup-card h3{font-family:var(--font-title); margin:0 0 8px; color:var(--verde-dark);}
-  .popup-card p{color:var(--ink-soft); font-size:.94rem; margin:0 0 20px;}
+  .popup-card .rot{
+    display:block; font-family:var(--font-mono); font-size:.65rem;
+    letter-spacing:.1em; text-transform:uppercase; color:var(--gold); margin-bottom:8px;
+  }
+  .popup-card h3{font-family:var(--font-title); font-size:1.15rem; color:var(--verde-dark); margin:0 0 12px;}
+  .popup-conteudo{font-size:.97rem; color:var(--ink); margin-bottom:18px;}
+  .popup-conteudo p{margin:0 0 10px;}
+  .popup-conteudo p:last-child{margin-bottom:0;}
+  .popup-conteudo b{color:var(--verde-dark);}
+  .btn{
+    width:100%; padding:12px; border:none; border-radius:8px;
+    background:var(--verde); color:#fff; font-weight:600; font-size:.98rem;
+    font-family:var(--font-body); cursor:pointer; transition:filter .15s ease;
+  }
+  .btn:hover{filter:brightness(1.1);}
 
-  footer.rodape{text-align:center; padding:24px; color:var(--ink-soft); font-family:var(--font-mono); font-size:.8rem;}
+  .rodape{
+    text-align:center; font-family:var(--font-mono); font-size:.68rem;
+    letter-spacing:.08em; text-transform:uppercase; color:var(--ink-soft);
+    padding:24px 12px 32px;
+  }
 
-  @media (max-width:600px){
-    .wrap{padding:24px 16px 50px;}
-    .texto-apoio, .questao{padding:18px 18px;}
+  @media (max-width:520px){
+    .topo h1{font-size:1.45rem;}
+    .texto-apoio, .questao, .topo{padding-left:18px; padding-right:18px;}
+    .subitens, .alternativas, .dica-clique, .instrucao-multipla{margin-left:0;}
   }
 </style>
 </head>
 <body>
 
-<!-- ===== CAPA ===== -->
-<div id="capa">
-  <div class="grade-centralizada"></div>
-  <div class="capa-card">
-    <span class="tag">8º ano · História · CERO</span>
-    <h1>Ler e Interpretar: A Constituição de 1824</h1>
-    <p class="desc">Dois documentos históricos e questões dissertativas. Preencha os dados para começar.</p>
-    <input type="text" id="nome-aluno" placeholder="Seu nome completo">
-    <input type="text" id="turma-aluno" placeholder="Turma (ex.: 8º A)">
-    <button onclick="iniciarAtividade()">Iniciar atividade</button>
-    <div class="capa-aviso" id="capa-aviso">Por favor, digite seu nome para continuar.</div>
+<div class="wrap">
+  <header class="topo">
+    <span class="descritor-bar">História / 8.º Ano do Ensino Fundamental &nbsp;|&nbsp; (GO-EF08HI15-A) – Independência e Nação</span>
+    <span class="hero-tag">Ler e Interpretar Documentos</span>
+    <h1>A Constituição de 1824 e a Confederação do Equador</h1>
+    <p class="sub">Leia com atenção os dois textos a seguir e responda às questões. Clique em cada item (a, b, c...) para ver a resposta.</p>
+  </header>
+
+  <section class="texto-apoio">
+    <h2>Texto 1 — A Constituição de 1824</h2>
+    <span class="fonte-tag">Outorgada por D. Pedro I em 24 de março de 1824</span>
+
+    <div class="documento-fonte">
+      <ul>
+        <li>Artigo 1º – O Império do Brasil é a associação política de todos os cidadãos brasileiros [...].</li>
+        <li>Artigo 2º – O seu território é dividido em Províncias [...].</li>
+        <li>Artigo 3º – O seu governo é monárquico <strong>hereditário</strong> [...].</li>
+        <li>Artigo 5º – A religião Católica Apostólica Romana continuará a ser a religião do Império. Todas as outras religiões serão permitidas com seu culto doméstico ou particular em casas para isso destinadas, sem forma alguma exterior de templo. [...]</li>
+        <li>Artigo 10º – Os poderes [...] são quatro: o Poder Legislativo, o <strong>Poder Moderador</strong>, o Poder Executivo e o Poder Judiciário. [...]</li>
+        <li>Artigo 13º – O Poder Legislativo é delegado à Assembleia Geral [...].</li>
+        <li>Artigo 14º – A Assembleia Geral compõe-se de duas Câmaras: Câmara dos Deputados e Senado. [...]</li>
+        <li>Artigo 40º – O Senado é composto de membros <strong>vitalícios</strong> [...].</li>
+        <li>Artigo 92º – São excluídos de votar [...] os que não tiverem renda líquida anual de cem mil-réis [...].</li>
+      </ul>
+    </div>
+
+    <div class="glossario-box">
+      <span class="rot">Glossário — Termos destacados no texto</span>
+      <dl>
+        <dt>Poder Moderador</dt>
+        <dd>Poder exclusivo do imperador, acima dos outros três poderes (Legislativo, Executivo e Judiciário), usado para intervir e arbitrar conflitos entre eles — uma característica típica da Constituição de 1824.</dd>
+        <dt>Hereditário</dt>
+        <dd>Que se transmite por herança dentro da família: o cargo de imperador passava de pai para filho, sem eleição para o trono.</dd>
+        <dt>Vitalícios</dt>
+        <dd>Que dura por toda a vida: os membros do Senado ocupavam o cargo até a morte, sem mandato com prazo definido.</dd>
+      </dl>
+    </div>
+
+    <div class="referencia-box">
+      <span class="rot">Referência (ABNT NBR 6023)</span>
+      <p>CONSTITUIÇÃO política do Império do Brasil: Carta de Lei de 25 de março de 1824. Repositório UFSC. Acesso em: 9 nov. 2018.</p>
+    </div>
+  </section>
+
+  <div class="questao">
+    <div class="enunciado"><span class="num-q">1</span> Sobre o texto, responda:</div>
+    <ul class="subitens">
+      <li data-resposta="1a"><span class="letra">a</span><span class="txt">Qual a forma de governo adotada pelo Brasil?</span><span class="lupa">ver</span></li>
+      <li data-resposta="1b"><span class="letra">b</span><span class="txt">O que a Constituição de 1824 determinava com relação à religião?</span><span class="lupa">ver</span></li>
+      <li data-resposta="1c"><span class="letra">c</span><span class="txt">Quantos e quais eram os poderes?</span><span class="lupa">ver</span></li>
+      <li data-resposta="1d"><span class="letra">d</span><span class="txt">Dê o significado das três palavras em negrito no texto e explique o artigo 92º.</span><span class="lupa">ver</span></li>
+    </ul>
   </div>
+
+  <section class="texto-apoio">
+    <h2>Texto 2 — A Confederação do Equador</h2>
+    <span class="fonte-tag">Manifesto de Frei Caneca</span>
+
+    <div class="documento-fonte">
+      <p>A massa da província [...] detesta todo governo arbitrário, iliberal [...] e tirânico, tenha o nome que tiver [...]. A massa da província só se há de pacificar [...] quando vir a Imprensa livre; [...] o imperador sem o comando da força armada; e outras instituições [...] que sustentem a liberdade do cidadão e sua propriedade, e promovam a felicidade da pátria; fora disso, a massa da província [...] gritará – Do Rio nada, nada; não queremos nada.</p>
+    </div>
+
+    <div class="referencia-box">
+      <span class="rot">Referência (ABNT NBR 6023)</span>
+      <p>DEL PRIORE, Mary; NEVES, Maria de Fátima das; ALAMBERT, Francisco. Documentos de História do Brasil: de Cabral aos anos 90. São Paulo: Scipione, 1997. p. 45.</p>
+    </div>
+  </section>
+
+  <div class="questao">
+    <div class="enunciado"><span class="num-q">2</span> Sobre o texto, responda:</div>
+    <ul class="subitens">
+      <li data-resposta="2a"><span class="letra">a</span><span class="txt">Identifique e transcreva o trecho em que o autor critica os governos autoritários.</span><span class="lupa">ver</span></li>
+      <li data-resposta="2b"><span class="letra">b</span><span class="txt">O que o jornalista Frei Caneca defende nesse manifesto?</span><span class="lupa">ver</span></li>
+      <li data-resposta="2c"><span class="letra">c</span><span class="txt">O que Frei Caneca quis dizer com "fora disso, a massa da província [...] gritará – Do Rio nada, nada; não queremos nada"?</span><span class="lupa">ver</span></li>
+    </ul>
+  </div>
+
 </div>
 
-<!-- ===== APP ===== -->
-<div id="app">
-  <div class="sticky-header">
-    <span class="aluno" id="header-nome"></span>
-    <div class="barra-progresso-trilho"><div class="barra-progresso-fill" id="barra-fill"></div></div>
-    <span id="contador-geral">Respondidas: 0/7</span>
-  </div>
+<footer class="rodape">Colégio Estadual Rodolfo de Oliveira · CERO · 2026</footer>
 
-  <div class="wrap">
-    <header class="topo selecionavel">
-      <span class="descritor-bar">História / 8.º Ano do Ensino Fundamental &nbsp;|&nbsp; (GO-EF08HI15-A) – Independência e Nação</span>
-      <span class="hero-tag" style="display:block; margin-top:10px;">Ler e Interpretar Documentos</span>
-      <h1>A Constituição de 1824 e a Confederação do Equador</h1>
-      <p class="sub">Leia com atenção os dois textos a seguir e responda às questões.</p>
-      <div class="ficha-id" id="ficha-id">
-        <span><b>NOME:</b> <span id="ficha-nome"></span></span>
-        <span><b>DATA:</b> <span id="ficha-data"></span></span>
-        <span><b>TURMA:</b> <span id="ficha-turma"></span></span>
-      </div>
-    </header>
-
-    <main>
-      <h2 class="questoes-titulo">📖 Para Refletir</h2>
-
-      <section class="texto-apoio selecionavel">
-        <h2>Texto 1 — A Constituição de 1824</h2>
-        <span class="fonte-tag">Outorgada por D. Pedro I em 24 de março de 1824</span>
-
-        <div class="documento-fonte">
-          <ul>
-            <li>Artigo 1º – O Império do Brasil é a associação política de todos os cidadãos brasileiros [...].</li>
-            <li>Artigo 2º – O seu território é dividido em Províncias [...].</li>
-            <li>Artigo 3º – O seu governo é monárquico <strong>hereditário</strong> [...].</li>
-            <li>Artigo 5º – A religião Católica Apostólica Romana continuará a ser a religião do Império. Todas as outras religiões serão permitidas com seu culto doméstico ou particular em casas para isso destinadas, sem forma alguma exterior de templo. [...]</li>
-            <li>Artigo 10º – Os poderes [...] são quatro: o Poder Legislativo, o <strong>Poder Moderador</strong>, o Poder Executivo e o Poder Judiciário. [...]</li>
-            <li>Artigo 13º – O Poder Legislativo é delegado à Assembleia Geral [...].</li>
-            <li>Artigo 14º – A Assembleia Geral compõe-se de duas Câmaras: Câmara dos Deputados e Senado. [...]</li>
-            <li>Artigo 40º – O Senado é composto de membros <strong>vitalícios</strong> [...].</li>
-            <li>Artigo 92º – São excluídos de votar [...] os que não tiverem renda líquida anual de cem mil-réis [...].</li>
-          </ul>
-        </div>
-
-        <div class="glossario-box">
-          <span class="rot">Glossário — Termos destacados no texto</span>
-          <dl>
-            <dt>Poder Moderador</dt>
-            <dd>Poder exclusivo do imperador, acima dos outros três poderes (Legislativo, Executivo e Judiciário), usado para intervir e arbitrar conflitos entre eles — uma característica típica da Constituição de 1824.</dd>
-            <dt>Hereditário</dt>
-            <dd>Que se transmite por herança dentro da família: o cargo de imperador passava de pai para filho, sem eleição para o trono.</dd>
-            <dt>Vitalícios</dt>
-            <dd>Que dura por toda a vida: os membros do Senado ocupavam o cargo até a morte, sem mandato com prazo definido.</dd>
-          </dl>
-        </div>
-
-        <div class="referencia-box">
-          <span class="rot">Referência (ABNT NBR 6023)</span>
-          <p>CONSTITUIÇÃO política do Império do Brasil: Carta de Lei de 25 de março de 1824. Repositório UFSC. Disponível em: https://repositorio.ufsc.br/bitstream/handle/123456789/99968/1824_Constitui%C3%A7%C3%A3o_do_Imp%C3%A9rio.pdf?sequence=1&isAllowed=y. Acesso em: 9 nov. 2018.</p>
-        </div>
-      </section>
-
-      <div class="questao intercalada" data-questao="1">
-        <div class="enunciado"><span class="num-q">1</span> Sobre o texto, responda:</div>
-
-        <div class="subitem">
-          <label class="subitem-label">a) Qual a forma de governo adotada pelo Brasil?</label>
-          <textarea id="resp-1a" class="campo-resposta dissertativa" data-min="30" placeholder="Escreva sua resposta aqui..."></textarea>
-          <div class="contador-chars">0 caracteres (mínimo 30)</div>
-        </div>
-
-        <div class="subitem">
-          <label class="subitem-label">b) O que a Constituição de 1824 determinava com relação à religião?</label>
-          <textarea id="resp-1b" class="campo-resposta dissertativa" data-min="40" placeholder="Escreva sua resposta aqui..."></textarea>
-          <div class="contador-chars">0 caracteres (mínimo 40)</div>
-        </div>
-
-        <div class="subitem">
-          <label class="subitem-label">c) Quantos e quais eram os poderes?</label>
-          <textarea id="resp-1c" class="campo-resposta dissertativa" data-min="30" placeholder="Escreva sua resposta aqui..."></textarea>
-          <div class="contador-chars">0 caracteres (mínimo 30)</div>
-        </div>
-
-        <div class="subitem">
-          <label class="subitem-label">d) Dê o significado das três palavras em negrito no texto e explique o artigo 92º.</label>
-          <textarea id="resp-1d" class="campo-resposta dissertativa" data-min="80" placeholder="Escreva sua resposta aqui..."></textarea>
-          <div class="contador-chars">0 caracteres (mínimo 80)</div>
-        </div>
-
-        <div class="comentario-prof">
-          <b>Comentário do professor</b>
-          a) O Brasil adotou a monarquia hereditária: o governo era exercido por um imperador, e o cargo passava por herança dentro da família real, sem eleição para o trono. b) A Constituição estabelecia o catolicismo como religião oficial do Império; as demais religiões eram permitidas, mas apenas em culto doméstico ou particular, sem templos com forma exterior visível — ou seja, não havia liberdade religiosa plena. c) Eram quatro os poderes: Legislativo, Moderador, Executivo e Judiciário. d) "Hereditário" significa que o cargo de imperador era transmitido por herança dentro da família real. "Poder Moderador" era um poder exclusivo do imperador, acima dos outros três, usado para intervir e arbitrar conflitos entre eles — uma característica típica da Constituição de 1824. "Vitalícios" significa que os membros do Senado ocupavam o cargo por toda a vida, sem mandato com prazo definido. Já o artigo 92º estabelecia o chamado voto censitário: só podiam votar os cidadãos com uma renda mínima anual, o que excluía a maior parte da população pobre da participação política.
-        </div>
-      </div>
-
-      <section class="texto-apoio selecionavel">
-        <h2>Texto 2 — A Confederação do Equador</h2>
-        <span class="fonte-tag">Manifesto de Frei Caneca</span>
-
-        <div class="documento-fonte">
-          <p>A massa da província [...] detesta todo governo arbitrário, iliberal [...] e tirânico, tenha o nome que tiver [...]. A massa da província só se há de pacificar [...] quando vir a Imprensa livre; [...] o imperador sem o comando da força armada; e outras instituições [...] que sustentem a liberdade do cidadão e sua propriedade, e promovam a felicidade da pátria; fora disso, a massa da província [...] gritará – Do Rio nada, nada; não queremos nada.</p>
-        </div>
-
-        <div class="referencia-box">
-          <span class="rot">Referência (ABNT NBR 6023)</span>
-          <p>DEL PRIORE, Mary; NEVES, Maria de Fátima das; ALAMBERT, Francisco. Documentos de História do Brasil: de Cabral aos anos 90. São Paulo: Scipione, 1997. p. 45.</p>
-        </div>
-      </section>
-
-      <div class="questao intercalada" data-questao="2">
-        <div class="enunciado"><span class="num-q">2</span> Sobre o texto, responda:</div>
-
-        <div class="subitem">
-          <label class="subitem-label">a) Identifique e transcreva o trecho em que o autor critica os governos autoritários.</label>
-          <textarea id="resp-2a" class="campo-resposta dissertativa" data-min="30" placeholder="Escreva sua resposta aqui..."></textarea>
-          <div class="contador-chars">0 caracteres (mínimo 30)</div>
-        </div>
-
-        <div class="subitem">
-          <label class="subitem-label">b) O que o jornalista Frei Caneca defende nesse manifesto?</label>
-          <textarea id="resp-2b" class="campo-resposta dissertativa" data-min="50" placeholder="Escreva sua resposta aqui..."></textarea>
-          <div class="contador-chars">0 caracteres (mínimo 50)</div>
-        </div>
-
-        <div class="subitem">
-          <label class="subitem-label">c) O que Frei Caneca quis dizer com "fora disso, a massa da província [...] gritará – Do Rio nada, nada; não queremos nada"?</label>
-          <textarea id="resp-2c" class="campo-resposta dissertativa" data-min="50" placeholder="Escreva sua resposta aqui..."></textarea>
-          <div class="contador-chars">0 caracteres (mínimo 50)</div>
-        </div>
-
-        <div class="comentario-prof">
-          <b>Comentário do professor</b>
-          a) O trecho é: "A massa da província [...] detesta todo governo arbitrário, iliberal [...] e tirânico, tenha o nome que tiver [...]". b) Frei Caneca defende a liberdade de imprensa, um imperador sem controle direto sobre a força armada, e instituições que garantam a liberdade e a propriedade dos cidadãos — ou seja, defende um governo mais liberal e limitado, em oposição ao autoritarismo centralizador exercido a partir do Rio de Janeiro. c) Ele quis dizer que, se essas condições de liberdade não fossem atendidas, a província (Pernambuco) rejeitaria qualquer proposta vinda do governo central — expressando o desejo de maior autonomia em relação ao poder centralizado do Império, no contexto do movimento separatista que ficou conhecido como Confederação do Equador (1824).
-        </div>
-      </div>
-
-      <div class="alerta-incompleto" id="alerta-incompleto">
-        ⚠️ Ainda há campos incompletos (respeite o mínimo de caracteres indicado em cada um). Revise antes de finalizar.
-      </div>
-
-      <div class="acoes-finais">
-        <button class="btn btn-primario" onclick="finalizarAtividade()">Finalizar e ver comentários</button>
-        <button class="btn btn-secundario" onclick="refazerAtividade()">Refazer</button>
-        <button class="btn btn-pdf" onclick="exportarPDF()">Exportar em PDF</button>
-      </div>
-    </main>
-  </div>
-
-  <footer class="rodape">Colégio Estadual Rodolfo de Oliveira · CERO · 2026</footer>
-</div>
-
-<!-- ===== POPUP ===== -->
 <div class="popup-overlay" id="popup-overlay">
   <div class="popup-card">
-    <div class="emoji">🎉</div>
-    <h3>Atividade concluída!</h3>
-    <p>Suas respostas foram registradas. Os comentários do professor já estão disponíveis abaixo de cada questão para você comparar com o que escreveu.</p>
-    <button class="btn btn-primario" onclick="fecharPopup()">Continuar</button>
+    <span class="rot">Resposta</span>
+    <h3 id="popup-titulo">Questão 1</h3>
+    <div class="popup-conteudo" id="popup-conteudo"></div>
+    <button class="btn" onclick="fecharPopup()">Fechar</button>
   </div>
 </div>
 
 <script>
-/* ===== GATE DE NOME ===== */
-function iniciarAtividade(){
-  const nome = document.getElementById('nome-aluno').value.trim();
-  const turma = document.getElementById('turma-aluno').value.trim();
-  const aviso = document.getElementById('capa-aviso');
-  if(!nome){
-    aviso.style.display = 'block';
-    return;
-  }
-  aviso.style.display = 'none';
-  const hoje = new Date();
-  const dataFormatada = String(hoje.getDate()).padStart(2,'0') + '/' + String(hoje.getMonth()+1).padStart(2,'0') + '/' + hoje.getFullYear();
-  document.getElementById('header-nome').textContent = nome;
-  document.getElementById('ficha-nome').textContent = nome;
-  document.getElementById('ficha-data').textContent = dataFormatada;
-  document.getElementById('ficha-turma').textContent = turma || '—';
-  document.getElementById('capa').style.display = 'none';
-  document.getElementById('app').style.display = 'block';
-  window.scrollTo(0,0);
-}
+  const RESPOSTAS = {
+  "1a": "<p>Monarquia hereditária: quem governava era um imperador, e o cargo passava de pai para filho, sem eleição.</p>",
+  "1b": "<p>O catolicismo era a religião oficial do Império. As outras religiões eram permitidas só em casa ou em locais sem aparência de templo. Ou seja, não havia liberdade religiosa completa.</p>",
+  "1c": "<p>Eram quatro: Legislativo, Moderador, Executivo e Judiciário.</p>",
+  "1d": "<p><b>Hereditário:</b> o trono passava por herança dentro da família real.</p><p><b>Poder Moderador:</b> poder exclusivo do imperador, acima dos outros três poderes.</p><p><b>Vitalícios:</b> os senadores ficavam no cargo por toda a vida.</p><p><b>Artigo 92º:</b> criava o voto censitário — só votava quem tinha uma renda mínima, o que deixava a maioria pobre fora da política.</p>",
+  "2a": "<p>“A massa da província [...] detesta todo governo arbitrário, iliberal [...] e tirânico, tenha o nome que tiver [...]”.</p>",
+  "2b": "<p>Imprensa livre, um imperador sem o comando das forças armadas e instituições que garantam a liberdade e a propriedade dos cidadãos. Em resumo: um governo mais liberal, com menos poder concentrado nas mãos do imperador.</p>",
+  "2c": "<p>Que, se essas garantias não fossem atendidas, Pernambuco não aceitaria nada vindo do governo central, no Rio de Janeiro. É o desejo de mais autonomia, que levou à Confederação do Equador, em 1824.</p>"
+};
 
-/* ===== CONTADOR DE CARACTERES E PROGRESSO ===== */
-const textareas = document.querySelectorAll('textarea.dissertativa');
+  const overlay = document.getElementById('popup-overlay');
+  const titulo = document.getElementById('popup-titulo');
+  const conteudo = document.getElementById('popup-conteudo');
 
-function atualizarProgresso(){
-  let respondidas = 0;
-  textareas.forEach(function(t){
-    const min = parseInt(t.dataset.min, 10);
-    if(t.value.trim().length >= min) respondidas++;
-  });
-  document.getElementById('contador-geral').textContent = 'Respondidas: ' + respondidas + '/' + textareas.length;
-  document.getElementById('barra-fill').style.width = (respondidas / textareas.length * 100) + '%';
-}
-
-textareas.forEach(function(t){
-  const contadorEl = t.parentElement.querySelector('.contador-chars');
-  const min = parseInt(t.dataset.min, 10);
-  t.addEventListener('input', function(){
-    contadorEl.textContent = t.value.length + ' caracteres (mínimo ' + min + ')';
-    atualizarProgresso();
-  });
-});
-
-/* ===== FINALIZAR ===== */
-function finalizarAtividade(){
-  let completo = true;
-  textareas.forEach(function(t){
-    const min = parseInt(t.dataset.min, 10);
-    if(t.value.trim().length < min) completo = false;
-  });
-
-  const alerta = document.getElementById('alerta-incompleto');
-  if(!completo){
-    alerta.classList.add('show');
-    alerta.scrollIntoView({behavior:'smooth', block:'center'});
-    return;
-  }
-  alerta.classList.remove('show');
-
-  document.querySelectorAll('.comentario-prof').forEach(function(c){
-    c.classList.add('show');
-  });
-
-  document.getElementById('popup-overlay').classList.add('show');
-}
-
-function fecharPopup(){
-  document.getElementById('popup-overlay').classList.remove('show');
-}
-
-function refazerAtividade(){
-  textareas.forEach(function(t){
-    t.value = '';
-    t.parentElement.querySelector('.contador-chars').textContent = '0 caracteres (mínimo ' + t.dataset.min + ')';
-  });
-  document.querySelectorAll('.comentario-prof').forEach(function(c){
-    c.classList.remove('show');
-  });
-  document.getElementById('alerta-incompleto').classList.remove('show');
-  atualizarProgresso();
-  window.scrollTo(0,0);
-}
-
-/* ===== EXPORTAR PDF ===== */
-function sleep(ms){ return new Promise(function(r){ setTimeout(r, ms); }); }
-
-function esc(str){
-  const d = document.createElement('div');
-  d.textContent = str || '';
-  return d.innerHTML.replace(/\n/g, '<br>');
-}
-
-async function exportarPDF(){
-  const overlay = document.createElement('div');
-  overlay.id = 'pdf-overlay';
-  overlay.style.cssText = 'position:fixed;inset:0;background:rgba(31,36,16,.6);display:flex;align-items:center;justify-content:center;z-index:999;';
-  overlay.innerHTML =
-    '<div style="background:#fff;border-radius:14px;padding:32px 36px;text-align:center;max-width:300px;box-shadow:0 10px 30px rgba(51,59,22,.3);font-family:\'Source Serif 4\',serif;">' +
-      '<div style="font-size:2rem;margin-bottom:8px;">📄</div>' +
-      '<h4 style="margin:0 0 4px;color:#333b16;font-family:\'Playfair Display\',serif;">Gerando PDF…</h4>' +
-      '<p style="margin:0 0 14px;color:#5c6350;font-size:.86rem;">Aguarde alguns instantes.</p>' +
-      '<div style="background:#e2e6d8;border-radius:6px;overflow:hidden;height:8px;">' +
-        '<div id="pdf-prog" style="height:100%;width:0%;background:#4b5320;transition:width .2s ease;"></div>' +
-      '</div>' +
-      '<div id="pdf-prog-txt" style="margin-top:8px;font-family:\'JetBrains Mono\',monospace;font-size:.74rem;color:#5c6350;">0%</div>' +
-    '</div>';
-  document.body.appendChild(overlay);
-  await sleep(80);
-  function setP(pct, msg){
-    const pp = document.getElementById('pdf-prog'), pt = document.getElementById('pdf-prog-txt');
-    if(pp) pp.style.width = pct + '%';
-    if(pt) pt.textContent = msg || (pct + '%');
-  }
-
-  try{
-    const { jsPDF } = window.jspdf;
-    const pdf = new jsPDF({orientation:'portrait', unit:'px', format:'a4', hotfixes:['px_scaling']});
-    const PW = pdf.internal.pageSize.getWidth(), PH = pdf.internal.pageSize.getHeight();
-    const ML = 28, CW = PW - ML*2;
-    let y = ML;
-
-    async function addImg(el){
-      const canvas = await html2canvas(el, {scale:2, useCORS:true, logging:false, backgroundColor:'#ffffff', scrollX:0, scrollY:0, windowWidth:860});
-      const imgW = CW, imgH = (canvas.height / canvas.width) * imgW;
-      const dataUrl = canvas.toDataURL('image/jpeg', .92), avail = PH - ML*2;
-      if(imgH <= avail){
-        if(y + imgH > PH - ML){ pdf.addPage(); y = ML; }
-        pdf.addImage(dataUrl, 'JPEG', ML, y, imgW, imgH);
-        y += imgH + 8;
-      } else {
-        const pxPerPdfPt = canvas.width / imgW;
-        let srcY = 0;
-        while(srcY < canvas.height){
-          const availPt = PH - y - ML, sliceH_pt = Math.min(availPt, avail);
-          const sliceH_px = Math.round(sliceH_pt * pxPerPdfPt), actualH_px = Math.min(sliceH_px, canvas.height - srcY);
-          const tmp = document.createElement('canvas');
-          tmp.width = canvas.width; tmp.height = actualH_px;
-          tmp.getContext('2d').drawImage(canvas, 0, srcY, canvas.width, actualH_px, 0, 0, canvas.width, actualH_px);
-          const sliceUrl = tmp.toDataURL('image/jpeg', .92), slicePt = (actualH_px / canvas.width) * imgW;
-          pdf.addImage(sliceUrl, 'JPEG', ML, y, imgW, slicePt);
-          srcY += actualH_px; y += slicePt;
-          if(srcY < canvas.height){ pdf.addPage(); y = ML; }
-        }
-        y += 8;
-      }
-    }
-
-    async function band(tag, txt){
-      const b = document.createElement('div');
-      b.style.cssText = 'width:860px;font-family:Arial,sans-serif;position:absolute;left:-9999px;top:0';
-      b.innerHTML = '<div style="background:linear-gradient(90deg,#4b5320,#333b16);border-radius:8px;padding:12px 22px;display:flex;align-items:center;gap:12px">' +
-        '<span style="background:rgba(255,255,255,.2);color:#fff;font-weight:700;font-size:12px;letter-spacing:1px;border-radius:20px;padding:3px 12px">' + tag + '</span>' +
-        '<span style="color:#fff;font-size:15px;font-weight:700">' + txt + '</span></div>';
-      document.body.appendChild(b);
-      await sleep(20);
-      await addImg(b);
-      document.body.removeChild(b);
-    }
-
-    const nome = document.getElementById('header-nome').textContent || 'Aluno(a)';
-    const turma = document.getElementById('ficha-turma').textContent || '—';
-    const now = new Date();
-    const dtStr = now.toLocaleDateString('pt-BR') + ' às ' + now.toLocaleTimeString('pt-BR', {hour:'2-digit', minute:'2-digit'});
-
-    setP(5, 'Preparando capa…'); await sleep(40);
-    const coverEl = document.createElement('div');
-    coverEl.style.cssText = 'width:860px;font-family:Arial,sans-serif;overflow:hidden;position:absolute;left:-9999px;top:0';
-    coverEl.innerHTML =
-      '<div style="background:linear-gradient(135deg,#1f2410 0%,#4b5320 60%,#6b7a34 100%);padding:32px 48px 28px;color:white">' +
-        '<div style="font-size:10px;letter-spacing:3px;text-transform:uppercase;opacity:.7;font-weight:700;margin-bottom:6px">História · 8º Ano do Ensino Fundamental · GO-EF08HI15-A</div>' +
-        '<div style="font-size:26px;font-weight:900;line-height:1.2;margin-bottom:5px">A Constituição de 1824 e a Confederação do Equador</div>' +
-        '<div style="font-size:13px;opacity:.8;font-style:italic">Ler e interpretar documentos · 2 textos · 7 questões</div>' +
-      '</div>' +
-      '<div style="background:#f0f2ec;padding:22px 48px 26px;border-bottom:3px solid #ddc9a3">' +
-        '<div style="font-size:9px;text-transform:uppercase;letter-spacing:2px;color:#4b5320;font-weight:700;margin-bottom:5px">Aluno(a)</div>' +
-        '<div style="font-size:20px;font-weight:700;color:#232a1e;border-bottom:2.5px solid #4b5320;padding-bottom:6px;display:inline-block;margin-bottom:16px">' + esc(nome) + '</div>' +
-        '<div style="display:flex;gap:12px;flex-wrap:wrap">' +
-          '<div style="background:white;border-radius:8px;padding:12px 18px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.07);min-width:84px">' +
-            '<div style="font-size:22px;font-weight:900;color:#4b5320">' + esc(turma) + '</div>' +
-            '<div style="font-size:9px;text-transform:uppercase;letter-spacing:1px;color:#888;margin-top:2px">Turma</div></div>' +
-          '<div style="background:white;border-radius:8px;padding:12px 18px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.07);min-width:84px">' +
-            '<div style="font-size:22px;font-weight:900;color:#a6863f">7</div>' +
-            '<div style="font-size:9px;text-transform:uppercase;letter-spacing:1px;color:#888;margin-top:2px">Respostas</div></div>' +
-          '<div style="background:white;border-radius:8px;padding:12px 18px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.07);min-width:140px">' +
-            '<div style="font-size:13px;font-weight:700;color:#333">' + dtStr + '</div>' +
-            '<div style="font-size:9px;text-transform:uppercase;letter-spacing:1px;color:#888;margin-top:2px">Gerado em</div></div>' +
-        '</div>' +
-        '<div style="font-size:9px;color:#bbb;margin-top:14px">Colégio Estadual Rodolfo de Oliveira · Goiás · 2026</div>' +
-      '</div>';
-    document.body.appendChild(coverEl); await sleep(60); await addImg(coverEl); document.body.removeChild(coverEl);
-
-    // TEXTO DE APOIO — TEXTO 1
-    setP(12, 'Preparando Texto 1…'); await sleep(20);
-    await band('TEXTO 1', 'A Constituição de 1824');
-    const texto1El = document.createElement('div');
-    texto1El.style.cssText = 'width:860px;font-family:Arial,sans-serif;background:white;overflow:hidden;border:1px solid #d6dac8;border-radius:10px;position:absolute;left:-9999px;top:0';
-    texto1El.innerHTML =
-      '<div style="padding:18px 24px;background:#fdfdfa">' +
-        '<div style="background:#e2e6d8;border-left:3px solid #4b5320;border-radius:0 8px 8px 0;padding:14px 18px;margin-bottom:14px">' +
-          '<div style="font-size:11.5px;color:#232a1e;line-height:1.8;font-style:italic;margin-bottom:8px">Artigo 1º – O Império do Brasil é a associação política de todos os cidadãos brasileiros [...].</div>' +
-          '<div style="font-size:11.5px;color:#232a1e;line-height:1.8;font-style:italic;margin-bottom:8px">Artigo 2º – O seu território é dividido em Províncias [...].</div>' +
-          '<div style="font-size:11.5px;color:#232a1e;line-height:1.8;font-style:italic;margin-bottom:8px">Artigo 3º – O seu governo é monárquico <b style="font-style:normal;background:rgba(75,83,32,.18);padding:0 3px;border-radius:3px">hereditário</b> [...].</div>' +
-          '<div style="font-size:11.5px;color:#232a1e;line-height:1.8;font-style:italic;margin-bottom:8px">Artigo 5º – A religião Católica Apostólica Romana continuará a ser a religião do Império. Todas as outras religiões serão permitidas com seu culto doméstico ou particular em casas para isso destinadas, sem forma alguma exterior de templo. [...]</div>' +
-          '<div style="font-size:11.5px;color:#232a1e;line-height:1.8;font-style:italic;margin-bottom:8px">Artigo 10º – Os poderes [...] são quatro: o Poder Legislativo, o <b style="font-style:normal;background:rgba(75,83,32,.18);padding:0 3px;border-radius:3px">Poder Moderador</b>, o Poder Executivo e o Poder Judiciário. [...]</div>' +
-          '<div style="font-size:11.5px;color:#232a1e;line-height:1.8;font-style:italic;margin-bottom:8px">Artigo 13º – O Poder Legislativo é delegado à Assembleia Geral [...].</div>' +
-          '<div style="font-size:11.5px;color:#232a1e;line-height:1.8;font-style:italic;margin-bottom:8px">Artigo 14º – A Assembleia Geral compõe-se de duas Câmaras: Câmara dos Deputados e Senado. [...]</div>' +
-          '<div style="font-size:11.5px;color:#232a1e;line-height:1.8;font-style:italic;margin-bottom:8px">Artigo 40º – O Senado é composto de membros <b style="font-style:normal;background:rgba(75,83,32,.18);padding:0 3px;border-radius:3px">vitalícios</b> [...].</div>' +
-          '<div style="font-size:11.5px;color:#232a1e;line-height:1.8;font-style:italic">Artigo 92º – São excluídos de votar [...] os que não tiverem renda líquida anual de cem mil-réis [...].</div>' +
-        '</div>' +
-        '<div style="border:1px solid #d6dac8;border-radius:8px;padding:12px 16px;margin-bottom:14px">' +
-          '<div style="font-size:9px;text-transform:uppercase;letter-spacing:1px;color:#333b16;font-weight:700;margin-bottom:8px">Glossário — Termos destacados no texto</div>' +
-          '<div style="margin-bottom:8px"><span style="font-family:monospace;font-weight:700;font-size:11px;color:#333b16;background:rgba(75,83,32,.1);padding:2px 6px;border-radius:4px">Poder Moderador</span><div style="font-size:11px;color:#232a1e;line-height:1.6;margin-top:3px">Poder exclusivo do imperador, acima dos outros três poderes, usado para arbitrar conflitos entre eles.</div></div>' +
-          '<div style="margin-bottom:8px"><span style="font-family:monospace;font-weight:700;font-size:11px;color:#333b16;background:rgba(75,83,32,.1);padding:2px 6px;border-radius:4px">Hereditário</span><div style="font-size:11px;color:#232a1e;line-height:1.6;margin-top:3px">Que se transmite por herança: o cargo de imperador passava de pai para filho, sem eleição.</div></div>' +
-          '<div><span style="font-family:monospace;font-weight:700;font-size:11px;color:#333b16;background:rgba(75,83,32,.1);padding:2px 6px;border-radius:4px">Vitalícios</span><div style="font-size:11px;color:#232a1e;line-height:1.6;margin-top:3px">Que dura por toda a vida: os senadores ocupavam o cargo até a morte, sem mandato com prazo definido.</div></div>' +
-        '</div>' +
-        '<div style="font-size:10px;color:#5c6350;font-family:monospace;border-top:1px solid #eee;padding-top:10px;word-break:break-word">CONSTITUIÇÃO política do Império do Brasil: Carta de Lei de 25 de março de 1824. Repositório UFSC. Acesso em: 9 nov. 2018.</div>' +
-      '</div>';
-    document.body.appendChild(texto1El); await sleep(20); await addImg(texto1El); document.body.removeChild(texto1El);
-
-    // QUESTÃO 1 (a-d)
-    setP(30, 'Questão 1…'); await sleep(15);
-    (function(){
-      const partes = [
-        {label:'a) Qual a forma de governo adotada pelo Brasil?', id:'resp-1a'},
-        {label:'b) O que a Constituição de 1824 determinava com relação à religião?', id:'resp-1b'},
-        {label:'c) Quantos e quais eram os poderes?', id:'resp-1c'},
-        {label:'d) Significado das três palavras em negrito e explicação do artigo 92º', id:'resp-1d'}
-      ];
-      let respostasHTML = '';
-      partes.forEach(function(parte){
-        const valor = document.getElementById(parte.id) ? document.getElementById(parte.id).value : '';
-        respostasHTML +=
-          '<div style="margin-bottom:10px">' +
-            '<div style="font-size:10px;font-weight:700;color:#4b5320;text-transform:uppercase;letter-spacing:1px;margin-bottom:4px">' + parte.label + '</div>' +
-            '<div style="background:#eef2e2;border:1.5px solid #b7c48d;border-radius:8px;padding:12px 15px;min-height:40px">' +
-              '<div style="font-size:12px;color:#232a1e;line-height:1.75;white-space:pre-wrap">' + (esc(valor) || '<span style=\"color:#aaa\">(sem resposta)</span>') + '</div>' +
-            '</div>' +
-          '</div>';
-      });
-      const q1El = document.createElement('div');
-      q1El.style.cssText = 'width:860px;font-family:Arial,sans-serif;background:white;overflow:hidden;border:1px solid #d6dac8;border-radius:10px;position:absolute;left:-9999px;top:0';
-      q1El.innerHTML =
-        '<div style="background:linear-gradient(90deg,#4b5320,#333b16);padding:10px 22px;display:flex;justify-content:space-between;align-items:center">' +
-          '<span style="color:white;font-weight:700;font-size:13px;letter-spacing:.8px">QUESTÃO 1</span>' +
-          '<span style="background:rgba(255,255,255,.15);color:rgba(255,255,255,.9);font-size:11px;padding:3px 12px;border-radius:20px;font-weight:600">Dissertativa</span></div>' +
-        '<div style="padding:18px 24px 16px;background:#fdfdfa">' +
-          '<div style="font-size:13px;font-weight:700;color:#232a1e;line-height:1.6;margin-bottom:14px;padding-bottom:12px;border-bottom:1px solid #eee">Sobre o Texto 1, responda:</div>' +
-          '<div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">' +
-            '<div style="width:4px;height:15px;background:#4b5320;border-radius:2px"></div>' +
-            '<div style="font-size:10px;font-weight:700;color:#4b5320;text-transform:uppercase;letter-spacing:1.5px">Resposta do Aluno(a)</div></div>' +
-          respostasHTML +
-          '<div style="display:flex;align-items:center;gap:8px;margin:12px 0 7px">' +
-            '<div style="width:4px;height:15px;background:#a6863f;border-radius:2px"></div>' +
-            '<div style="font-size:10px;font-weight:700;color:#8a6f2f;text-transform:uppercase;letter-spacing:1.5px">Comentário do Professor</div></div>' +
-          '<div style="background:#f7f1e3;border:1.5px solid #ddc9a3;border-radius:8px;padding:13px 16px">' +
-            '<div style="font-size:12px;color:#4a3a10;line-height:1.8">a) O Brasil adotou a monarquia hereditária: o governo era exercido por um imperador, e o cargo passava por herança dentro da família real. b) O catolicismo era a religião oficial do Império; as demais religiões eram permitidas apenas em culto doméstico ou particular, sem templos com forma exterior visível. c) Eram quatro os poderes: Legislativo, Moderador, Executivo e Judiciário. d) "Hereditário" significa transmitido por herança; "Poder Moderador" era um poder exclusivo do imperador, acima dos outros três, usado para arbitrar conflitos entre eles; "vitalícios" significa que os senadores ocupavam o cargo por toda a vida. O artigo 92º estabelecia o voto censitário: só votavam os cidadãos com renda mínima anual, excluindo a maior parte da população pobre.</div></div>' +
-        '</div>';
-      document.body.appendChild(q1El);
-      window.__q1El = q1El;
-    })();
-    await sleep(12); await addImg(window.__q1El); document.body.removeChild(window.__q1El);
-
-    // TEXTO DE APOIO — TEXTO 2
-    setP(52, 'Preparando Texto 2…'); await sleep(20);
-    await band('TEXTO 2', 'A Confederação do Equador — Frei Caneca');
-    const texto2El = document.createElement('div');
-    texto2El.style.cssText = 'width:860px;font-family:Arial,sans-serif;background:white;overflow:hidden;border:1px solid #d6dac8;border-radius:10px;position:absolute;left:-9999px;top:0';
-    texto2El.innerHTML =
-      '<div style="padding:18px 24px;background:#fdfdfa">' +
-        '<div style="background:#e2e6d8;border-left:3px solid #4b5320;border-radius:0 8px 8px 0;padding:14px 18px;margin-bottom:14px">' +
-          '<div style="font-size:12px;color:#232a1e;line-height:1.85;font-style:italic">A massa da província [...] detesta todo governo arbitrário, iliberal [...] e tirânico, tenha o nome que tiver [...]. A massa da província só se há de pacificar [...] quando vir a Imprensa livre; [...] o imperador sem o comando da força armada; e outras instituições [...] que sustentem a liberdade do cidadão e sua propriedade, e promovam a felicidade da pátria; fora disso, a massa da província [...] gritará – Do Rio nada, nada; não queremos nada.</div>' +
-        '</div>' +
-        '<div style="font-size:10px;color:#5c6350;font-family:monospace;border-top:1px solid #eee;padding-top:10px">DEL PRIORE, Mary; NEVES, Maria de Fátima das; ALAMBERT, Francisco. Documentos de História do Brasil: de Cabral aos anos 90. São Paulo: Scipione, 1997. p. 45.</div>' +
-      '</div>';
-    document.body.appendChild(texto2El); await sleep(20); await addImg(texto2El); document.body.removeChild(texto2El);
-
-    // QUESTÃO 2 (a-c)
-    setP(72, 'Questão 2…'); await sleep(15);
-    (function(){
-      const partes = [
-        {label:'a) Trecho que critica os governos autoritários', id:'resp-2a'},
-        {label:'b) O que Frei Caneca defende no manifesto?', id:'resp-2b'},
-        {label:'c) Significado de "Do Rio nada, nada; não queremos nada"', id:'resp-2c'}
-      ];
-      let respostasHTML = '';
-      partes.forEach(function(parte){
-        const valor = document.getElementById(parte.id) ? document.getElementById(parte.id).value : '';
-        respostasHTML +=
-          '<div style="margin-bottom:10px">' +
-            '<div style="font-size:10px;font-weight:700;color:#4b5320;text-transform:uppercase;letter-spacing:1px;margin-bottom:4px">' + parte.label + '</div>' +
-            '<div style="background:#eef2e2;border:1.5px solid #b7c48d;border-radius:8px;padding:12px 15px;min-height:40px">' +
-              '<div style="font-size:12px;color:#232a1e;line-height:1.75;white-space:pre-wrap">' + (esc(valor) || '<span style=\"color:#aaa\">(sem resposta)</span>') + '</div>' +
-            '</div>' +
-          '</div>';
-      });
-      const q2El = document.createElement('div');
-      q2El.style.cssText = 'width:860px;font-family:Arial,sans-serif;background:white;overflow:hidden;border:1px solid #d6dac8;border-radius:10px;position:absolute;left:-9999px;top:0';
-      q2El.innerHTML =
-        '<div style="background:linear-gradient(90deg,#4b5320,#333b16);padding:10px 22px;display:flex;justify-content:space-between;align-items:center">' +
-          '<span style="color:white;font-weight:700;font-size:13px;letter-spacing:.8px">QUESTÃO 2</span>' +
-          '<span style="background:rgba(255,255,255,.15);color:rgba(255,255,255,.9);font-size:11px;padding:3px 12px;border-radius:20px;font-weight:600">Dissertativa</span></div>' +
-        '<div style="padding:18px 24px 16px;background:#fdfdfa">' +
-          '<div style="font-size:13px;font-weight:700;color:#232a1e;line-height:1.6;margin-bottom:14px;padding-bottom:12px;border-bottom:1px solid #eee">Sobre o Texto 2, responda:</div>' +
-          '<div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">' +
-            '<div style="width:4px;height:15px;background:#4b5320;border-radius:2px"></div>' +
-            '<div style="font-size:10px;font-weight:700;color:#4b5320;text-transform:uppercase;letter-spacing:1.5px">Resposta do Aluno(a)</div></div>' +
-          respostasHTML +
-          '<div style="display:flex;align-items:center;gap:8px;margin:12px 0 7px">' +
-            '<div style="width:4px;height:15px;background:#a6863f;border-radius:2px"></div>' +
-            '<div style="font-size:10px;font-weight:700;color:#8a6f2f;text-transform:uppercase;letter-spacing:1.5px">Comentário do Professor</div></div>' +
-          '<div style="background:#f7f1e3;border:1.5px solid #ddc9a3;border-radius:8px;padding:13px 16px">' +
-            '<div style="font-size:12px;color:#4a3a10;line-height:1.8">a) O trecho é: "A massa da província [...] detesta todo governo arbitrário, iliberal [...] e tirânico, tenha o nome que tiver [...]". b) Frei Caneca defende a liberdade de imprensa, um imperador sem controle direto sobre a força armada, e instituições que garantam a liberdade e a propriedade dos cidadãos — um governo mais liberal e limitado, em oposição ao autoritarismo centralizador do Rio de Janeiro. c) Ele quis dizer que, sem essas condições de liberdade, a província rejeitaria qualquer proposta vinda do governo central — expressando o desejo de maior autonomia, no contexto da Confederação do Equador (1824).</div></div>' +
-        '</div>';
-      document.body.appendChild(q2El);
-      window.__q2El = q2El;
-    })();
-    await sleep(12); await addImg(window.__q2El); document.body.removeChild(window.__q2El);
-
-    // RODAPÉ EM TODAS AS PÁGINAS
-    setP(92, 'Finalizando…'); await sleep(30);
-    const totalPages = pdf.getNumberOfPages();
-    for(let p=1; p<=totalPages; p++){
-      pdf.setPage(p);
-      const fEl = document.createElement('div');
-      fEl.style.cssText = 'width:' + Math.round(CW) + 'px;height:22px;background:#f0f2ec;display:flex;align-items:center;justify-content:space-between;padding:0 28px;font-size:10px;color:#888;font-family:Arial,sans-serif;position:absolute;left:-9999px;top:0';
-      fEl.innerHTML = '<span>A Constituição de 1824 · ' + esc(nome) + '</span><span>Página ' + p + ' de ' + totalPages + '</span>';
-      document.body.appendChild(fEl);
-      const fc = await html2canvas(fEl, {scale:2, logging:false, backgroundColor:'#f0f2ec'});
-      document.body.removeChild(fEl);
-      const fUrl = fc.toDataURL('image/jpeg', .9), fH = (fc.height / fc.width) * CW;
-      pdf.setFillColor(240,242,236); pdf.rect(ML, PH-fH, CW, fH, 'F');
-      pdf.addImage(fUrl, 'JPEG', ML, PH-fH, CW, fH);
-    }
-
-    setP(100, 'Salvando…'); await sleep(200);
-    const safeName = nome.replace(/[^a-zA-Z0-9_\-]/g, '_');
-    pdf.save('Constituicao_1824_' + safeName + '.pdf');
-
-  } catch(err){
-    console.error(err);
-    alert('Erro ao gerar PDF: ' + err.message);
-  } finally {
-    const ov = document.getElementById('pdf-overlay');
-    if(ov) document.body.removeChild(ov);
-  }
-}
-
-/* ===== PROTEÇÃO ANTI-COLA ===== */
-(function () {
-  const CAMPOS_PROTEGIDOS = document.querySelectorAll('textarea.dissertativa, .campo-resposta');
-  const LIMITE_BLOCO = 25;
-
-  function bloquear(e) {
-    e.preventDefault();
-    mostrarToast('Colar não permitido nesta atividade.');
-  }
-
-  CAMPOS_PROTEGIDOS.forEach(function (campo) {
-    ['paste', 'copy', 'cut', 'drop', 'dragover', 'contextmenu'].forEach(function (evt) {
-      campo.addEventListener(evt, bloquear);
-    });
-
-    campo.addEventListener('beforeinput', function (e) {
-      if (e.inputType === 'insertFromPaste' || e.inputType === 'insertFromDrop') {
-        e.preventDefault();
-        mostrarToast('Colar não permitido nesta atividade.');
-      }
-    });
-
-    let valorAnterior = campo.value;
-    campo.addEventListener('input', function (e) {
-      const diferenca = campo.value.length - valorAnterior.length;
-      if (diferenca >= LIMITE_BLOCO && e.inputType !== 'insertReplacementText') {
-        campo.value = valorAnterior;
-        mostrarToast('Colar não permitido nesta atividade.');
-      } else {
-        valorAnterior = campo.value;
-      }
+  document.querySelectorAll('[data-resposta]').forEach(function(el){
+    el.addEventListener('click', function(){
+      const chave = el.getAttribute('data-resposta');
+      const num = chave.replace(/[a-z]$/, '');
+      const letra = chave.replace(/^[0-9]+/, '');
+      titulo.textContent = letra ? ('Questão ' + num + ' — item ' + letra + ')') : ('Questão ' + num);
+      conteudo.innerHTML = RESPOSTAS[chave];
+      overlay.classList.add('ativo');
     });
   });
 
-  function mostrarToast(mensagem) {
-    let toast = document.getElementById('anti-cola-toast');
-    if (!toast) {
-      toast = document.createElement('div');
-      toast.id = 'anti-cola-toast';
-      toast.style.cssText =
-        'position:fixed;bottom:24px;left:50%;transform:translateX(-50%);' +
-        'background:#333;color:#fff;padding:10px 20px;border-radius:8px;' +
-        'font-size:14px;z-index:9999;opacity:0;transition:opacity .3s;';
-      document.body.appendChild(toast);
-    }
-    toast.textContent = mensagem;
-    toast.style.opacity = '1';
-    clearTimeout(toast._timeout);
-    toast._timeout = setTimeout(function () {
-      toast.style.opacity = '0';
-    }, 2500);
-  }
-})();
+  function fecharPopup(){ overlay.classList.remove('ativo'); }
+  overlay.addEventListener('click', function(e){ if(e.target === overlay) fecharPopup(); });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') fecharPopup(); });
+
 </script>
 
 </body>
