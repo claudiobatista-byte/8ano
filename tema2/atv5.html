@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A Guarda Nacional no Período Regencial | CERO</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#f6f2fa;
+    --paper:#fffdff;
+    --ink:#241c30;
+    --ink-soft:#5a4d6b;
+    --verde:#5a2d82;
+    --verde-dark:#3a1c56;
+    --gold:#a6863f;
+    --line:#ddd0e8;
+    --shadow:0 10px 30px rgba(58,28,86,.16);
+    --radius:14px;
+    --font-title:'Playfair Display', serif;
+    --font-body:'Source Serif 4', serif;
+    --font-mono:'JetBrains Mono', monospace;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:var(--font-body);
+    line-height:1.75;
+  }
+  .wrap{max-width:860px; margin:0 auto; padding:28px 18px 40px;}
+
+  .topo{
+    background:var(--paper);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    padding:26px 26px 22px;
+    border-top:5px solid var(--verde);
+    margin-bottom:26px;
+  }
+  .descritor-bar{
+    display:block; font-family:var(--font-mono); font-size:.7rem;
+    letter-spacing:.06em; text-transform:uppercase; color:var(--verde-dark);
+    background:rgba(90,45,130,.09); padding:7px 12px; border-radius:8px;
+  }
+  .hero-tag{
+    display:inline-block; margin-top:12px;
+    font-family:var(--font-mono); font-size:.68rem; letter-spacing:.1em;
+    text-transform:uppercase; color:var(--gold);
+  }
+  .topo h1{font-family:var(--font-title); font-size:1.8rem; margin:6px 0 8px; color:var(--verde-dark); line-height:1.25;}
+  .topo .sub{margin:0; color:var(--ink-soft); font-size:.98rem;}
+
+  .texto-apoio{
+    background:var(--paper); border-radius:var(--radius); box-shadow:var(--shadow);
+    padding:24px 26px; margin-bottom:22px;
+  }
+  .texto-apoio h2{font-family:var(--font-title); font-size:1.22rem; color:var(--verde-dark); margin:0 0 4px;}
+  .fonte-tag{font-family:var(--font-mono); font-size:.68rem; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-soft);}
+  .texto-apoio > p{font-size:1rem; text-align:justify;}
+  .documento-fonte{
+    margin-top:16px; background:#faf6fd; border-left:4px solid var(--verde);
+    border-radius:0 10px 10px 0; padding:16px 18px; font-size:1rem; text-align:justify;
+  }
+  .documento-fonte p{margin:0 0 10px;}
+  .documento-fonte p:last-child{margin-bottom:0;}
+  .documento-fonte ul{margin:0; padding-left:20px;}
+  .documento-fonte li{margin-bottom:9px;}
+  .documento-fonte .assinatura{text-align:right; font-style:italic; color:var(--ink-soft); font-size:.92rem;}
+  .glossario-box{
+    margin-top:14px; background:#fdf9f0; border:1px solid var(--gold);
+    border-radius:10px; padding:14px 16px;
+  }
+  .glossario-box .rot{
+    display:block; font-family:var(--font-mono); font-size:.62rem;
+    letter-spacing:.09em; text-transform:uppercase; color:var(--gold); margin-bottom:8px;
+  }
+  .glossario-box dl{margin:0;}
+  .glossario-box dt{font-weight:700; color:var(--verde-dark); font-size:.92rem;}
+  .glossario-box dd{margin:0 0 10px; font-size:.9rem; color:var(--ink-soft);}
+  .glossario-box dd:last-child{margin-bottom:0;}
+  .referencia-box{
+    margin-top:14px; border:1px dashed var(--line); border-radius:10px;
+    padding:12px 14px; background:#fcfaff;
+  }
+  .referencia-box .rot{
+    display:block; font-family:var(--font-mono); font-size:.62rem;
+    letter-spacing:.09em; text-transform:uppercase; color:var(--gold); margin-bottom:5px;
+  }
+  .referencia-box p{margin:0; font-size:.84rem; color:var(--ink-soft); word-break:break-word;}
+
+  .questoes-titulo{
+    font-family:var(--font-title); font-size:1.3rem; color:var(--verde-dark);
+    margin:34px 0 16px; padding-bottom:8px; border-bottom:2px solid var(--line);
+  }
+  .questao{
+    background:var(--paper); border-radius:var(--radius); box-shadow:var(--shadow);
+    padding:20px 22px; margin-bottom:18px;
+    border-left:5px solid var(--verde);
+  }
+  .enunciado{display:flex; gap:12px; align-items:flex-start; font-size:1rem;}
+  .num-q{
+    flex:0 0 auto; width:30px; height:30px; border-radius:50%;
+    background:var(--verde); color:#fff;
+    display:inline-flex; align-items:center; justify-content:center;
+    font-family:var(--font-mono); font-size:.85rem; font-weight:600; margin-top:2px;
+  }
+  .subitens{margin:14px 0 0 42px; padding:0; list-style:none;}
+  .subitens li{
+    display:flex; gap:10px; align-items:flex-start;
+    margin-bottom:10px; font-size:.97rem;
+    background:#faf6fd; border:1px solid var(--line); border-radius:10px;
+    padding:11px 14px; cursor:pointer;
+    transition:border-color .15s ease, background .15s ease, transform .15s ease;
+  }
+  .subitens li:last-child{margin-bottom:0;}
+  .subitens li:hover{border-color:var(--verde); background:#f3e9fa; transform:translateY(-1px);}
+  .subitens li .letra{
+    flex:0 0 auto; font-family:var(--font-mono); font-size:.78rem; font-weight:600;
+    color:#fff; background:var(--verde); border-radius:6px; padding:1px 8px; margin-top:3px;
+  }
+  .subitens li .txt{flex:1 1 auto;}
+  .subitens li .lupa{
+    flex:0 0 auto; font-family:var(--font-mono); font-size:.6rem;
+    letter-spacing:.06em; text-transform:uppercase; color:var(--gold); margin-top:5px;
+  }
+  .alternativas{margin:14px 0 0 42px;}
+  .alt{display:flex; gap:10px; align-items:flex-start; margin-bottom:9px; font-size:.95rem;}
+  .alt .rotulo{
+    flex:0 0 auto; min-width:26px; text-align:center;
+    font-family:var(--font-mono); font-size:.75rem; font-weight:600;
+    color:var(--verde-dark); background:rgba(90,45,130,.1);
+    border-radius:6px; padding:2px 6px;
+  }
+  .instrucao-multipla{
+    margin:12px 0 0 42px; font-family:var(--font-mono); font-size:.66rem;
+    letter-spacing:.07em; text-transform:uppercase; color:var(--ink-soft);
+  }
+  .dica-clique{
+    display:block; margin-top:12px; margin-left:42px;
+    font-family:var(--font-mono); font-size:.66rem; letter-spacing:.08em;
+    text-transform:uppercase; color:var(--gold);
+  }
+
+  .popup-overlay{
+    position:fixed; inset:0; z-index:100; background:rgba(36,28,48,.62);
+    display:none; align-items:center; justify-content:center; padding:20px;
+  }
+  .popup-overlay.ativo{display:flex;}
+  .popup-card{
+    background:var(--paper); border-radius:var(--radius); box-shadow:var(--shadow);
+    max-width:540px; width:100%; padding:28px 26px 24px;
+    max-height:85vh; overflow-y:auto; border-top:5px solid var(--gold);
+  }
+  .popup-card .rot{
+    display:block; font-family:var(--font-mono); font-size:.65rem;
+    letter-spacing:.1em; text-transform:uppercase; color:var(--gold); margin-bottom:8px;
+  }
+  .popup-card h3{font-family:var(--font-title); font-size:1.15rem; color:var(--verde-dark); margin:0 0 12px;}
+  .popup-conteudo{font-size:.97rem; color:var(--ink); margin-bottom:18px;}
+  .popup-conteudo p{margin:0 0 10px;}
+  .popup-conteudo p:last-child{margin-bottom:0;}
+  .popup-conteudo b{color:var(--verde-dark);}
+  .btn{
+    width:100%; padding:12px; border:none; border-radius:8px;
+    background:var(--verde); color:#fff; font-weight:600; font-size:.98rem;
+    font-family:var(--font-body); cursor:pointer; transition:filter .15s ease;
+  }
+  .btn:hover{filter:brightness(1.1);}
+
+  .rodape{
+    text-align:center; font-family:var(--font-mono); font-size:.68rem;
+    letter-spacing:.08em; text-transform:uppercase; color:var(--ink-soft);
+    padding:24px 12px 32px;
+  }
+
+  @media (max-width:520px){
+    .topo h1{font-size:1.45rem;}
+    .texto-apoio, .questao, .topo{padding-left:18px; padding-right:18px;}
+    .subitens, .alternativas, .dica-clique, .instrucao-multipla{margin-left:0;}
+  }
+
+  .questao[data-resposta]{cursor:pointer; transition:border-color .15s ease, transform .15s ease;}
+  .questao[data-resposta]:hover{transform:translateY(-2px); box-shadow:0 14px 34px rgba(58,28,86,.22);}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="topo">
+    <span class="descritor-bar">História / 8.º Ano do Ensino Fundamental &nbsp;|&nbsp; (GO-EF08HI16-A) – Primeiro Reinado e Período Regencial</span>
+    <span class="hero-tag">Texto de Apoio</span>
+    <h1>A Guarda Nacional</h1>
+    <p class="sub">Leia com atenção o texto a seguir e responda às quatro questões. Clique em uma questão para ver a resposta.</p>
+  </header>
+
+  <section class="texto-apoio">
+    <h2>A Guarda Nacional</h2>
+    <span class="fonte-tag">Texto de apoio — criação e funcionamento</span>
+
+    <div class="documento-fonte">
+      <p>A Guarda Nacional foi criada em 18 de agosto de 1831, no início do período conhecido como Regência (quando o Brasil era governado por regentes, pois Dom Pedro II ainda era criança). Ela surgiu a partir de um grupo chamado “Batalhão Sagrado”, organizado pelo Ministro da Justiça Diogo Feijó para conter revoltas de soldados no Rio de Janeiro. Um dos seus primeiros comandantes foi o jovem Luís Alves de Lima e Silva, que décadas depois ficaria famoso como Duque de Caxias.</p>
+      <p>A ideia de criar essa força não foi original do Brasil: ela foi inspirada em uma guarda semelhante criada na França naquele mesmo ano. Porém, os dois países usaram suas guardas de formas diferentes. Na França, a guarda defendia os interesses da burguesia (os comerciantes e industriais). No Brasil, a Guarda Nacional foi usada para proteger a ordem social da época — ou seja, manter o sistema escravista e garantir o poder dos grandes proprietários de terra no meio rural.</p>
+      <p>Segundo a lei que a criou, a função da Guarda Nacional era defender a Constituição, a liberdade, a independência e a unidade do Império, além de manter a “ordem” e a “tranquilidade pública”. Na prática, os políticos moderados que estavam no poder logo após a abdicação de Dom Pedro I usaram essa força para evitar revoltas militares e manter o controle do país.</p>
+      <p>Como funcionava: todos os homens que podiam votar (eleitores) entre 21 e 60 anos eram obrigados a participar da Guarda Nacional. Até 1850, os próprios membros escolhiam seus oficiais de baixa patente em eleições organizadas pelos juízes de paz de cada município. Essas eleições davam poder aos chefes políticos locais, conhecidos como “coronéis” — homens influentes que comandavam a vida política das cidades do interior. Esse poder dos coronéis continuou existindo mesmo depois do fim do Império. Quem fazia parte da Guarda Nacional ficava dispensado de servir no Exército, o que enfraquecia as forças militares regulares.</p>
+      <p>Dessa forma, a Guarda Nacional funcionou como uma espécie de “exército da nação”, ajudando a garantir que os políticos moderados permanecessem no poder e evitando revoltas militares durante a maior parte do período imperial.</p>
+    </div>
+
+    <div class="glossario-box">
+      <span class="rot">Glossário</span>
+      <dl>
+        <dt>Regência</dt>
+        <dd>Período em que o Brasil foi governado por regentes, entre 1831 e 1840.</dd>
+        <dt>Abdicação</dt>
+        <dd>Ato de renunciar ao trono; refere-se à renúncia de Dom Pedro I em 1831.</dd>
+        <dt>Coronéis</dt>
+        <dd>Chefes políticos locais que tinham grande poder e influência nos municípios, especialmente no meio rural.</dd>
+      </dl>
+    </div>
+
+    <div class="referencia-box">
+      <span class="rot">Referência (ABNT NBR 6023)</span>
+      <p>SANTOS, Ana Maria dos; NEVES, Guilherme Pereira das; MACHADO, Humberto Fernandes; GONÇALVES, William da Silva. História do Brasil: de terra ignota ao Brasil atual. Rio de Janeiro: Log On, 2002. p. 130-131. (Texto adaptado).</p>
+    </div>
+  </section>
+  <div class="questao" data-resposta="1">
+    <div class="enunciado"><span class="num-q">1</span> De acordo com o texto, por que o governo do Período Regencial decidiu criar a Guarda Nacional em vez de usar o próprio Exército que o Brasil já tinha?</div>
+    <span class="dica-clique">Toque para ver a resposta</span>
+  </div>
+  <div class="questao" data-resposta="2">
+    <div class="enunciado"><span class="num-q">2</span> O texto mostra que o Brasil copiou a ideia da Guarda Nacional da França. Porém, ela foi usada de um jeito diferente aqui. Qual grupo social foi defendido pela Guarda Nacional no Brasil e o que ela tentava proteger?</div>
+    <span class="dica-clique">Toque para ver a resposta</span>
+  </div>
+  <div class="questao" data-resposta="3">
+    <div class="enunciado"><span class="num-q">3</span> O texto conta que, até 1850, os membros da Guarda Nacional elegiam seus próprios chefes nas cidades. Como esse costume de votar para escolher os oficiais ajudou a dar poder aos fazendeiros ricos, conhecidos como "coronéis"?</div>
+    <span class="dica-clique">Toque para ver a resposta</span>
+  </div>
+  <div class="questao" data-resposta="4">
+    <div class="enunciado"><span class="num-q">4</span> A lei dizia que só os homens que podiam votar (os eleitores) eram obrigados a entrar na Guarda Nacional. Sabendo que na época do Império só votava quem tinha muito dinheiro, explique por que a maioria da população brasileira ficava de fora dessa força armada.</div>
+    <span class="dica-clique">Toque para ver a resposta</span>
+  </div>
+</div>
+
+<footer class="rodape">Colégio Estadual Rodolfo de Oliveira · CERO · 2026</footer>
+
+<div class="popup-overlay" id="popup-overlay">
+  <div class="popup-card">
+    <span class="rot">Resposta</span>
+    <h3 id="popup-titulo">Questão 1</h3>
+    <div class="popup-conteudo" id="popup-conteudo"></div>
+    <button class="btn" onclick="fecharPopup()">Fechar</button>
+  </div>
+</div>
+
+<script>
+  const RESPOSTAS = {
+  "1": "<p>Porque o Exército regular era pouco confiável e havia revoltas entre os próprios soldados. A Guarda Nacional, criada a partir do “Batalhão Sagrado”, deu aos políticos moderados uma força de confiança para manter a ordem.</p>",
+  "2": "<p>Defendia os grandes proprietários de terra, a elite rural. Buscava manter o sistema escravista e a ordem social da época — diferente da França, onde a guarda defendia a burguesia.</p>",
+  "3": "<p>Como os membros elegiam seus oficiais, os chefes políticos locais usavam essas eleições para ampliar sua influência e controlar a política dos municípios do interior. Esse poder dos coronéis sobreviveu ao fim do Império.</p>",
+  "4": "<p>Só votava quem tinha renda alta, e só os eleitores eram obrigados a servir. Como a maior parte da população era pobre e não votava, ficava automaticamente fora da Guarda Nacional.</p>"
+};
+
+  const overlay = document.getElementById('popup-overlay');
+  const titulo = document.getElementById('popup-titulo');
+  const conteudo = document.getElementById('popup-conteudo');
+
+  document.querySelectorAll('[data-resposta]').forEach(function(el){
+    el.addEventListener('click', function(){
+      const chave = el.getAttribute('data-resposta');
+      const num = chave.replace(/[a-z]$/, '');
+      const letra = chave.replace(/^[0-9]+/, '');
+      titulo.textContent = letra ? ('Questão ' + num + ' — item ' + letra + ')') : ('Questão ' + num);
+      conteudo.innerHTML = RESPOSTAS[chave];
+      overlay.classList.add('ativo');
+    });
+  });
+
+  function fecharPopup(){ overlay.classList.remove('ativo'); }
+  overlay.addEventListener('click', function(e){ if(e.target === overlay) fecharPopup(); });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') fecharPopup(); });
+
+</script>
+
+</body>
+</html>

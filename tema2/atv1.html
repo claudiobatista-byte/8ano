@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Leitura e Escrita — Revoltas do Período Regencial | CERO</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#f6f2fa;
+    --paper:#fffdff;
+    --ink:#241c30;
+    --ink-soft:#5a4d6b;
+    --verde:#5a2d82;
+    --verde-dark:#3a1c56;
+    --gold:#a6863f;
+    --line:#ddd0e8;
+    --shadow:0 10px 30px rgba(58,28,86,.16);
+    --radius:14px;
+    --font-title:'Playfair Display', serif;
+    --font-body:'Source Serif 4', serif;
+    --font-mono:'JetBrains Mono', monospace;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:var(--font-body);
+    line-height:1.75;
+  }
+  .wrap{max-width:860px; margin:0 auto; padding:28px 18px 40px;}
+
+  .topo{
+    background:var(--paper);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    padding:26px 26px 22px;
+    border-top:5px solid var(--verde);
+    margin-bottom:26px;
+  }
+  .descritor-bar{
+    display:block; font-family:var(--font-mono); font-size:.7rem;
+    letter-spacing:.06em; text-transform:uppercase; color:var(--verde-dark);
+    background:rgba(90,45,130,.09); padding:7px 12px; border-radius:8px;
+  }
+  .hero-tag{
+    display:inline-block; margin-top:12px;
+    font-family:var(--font-mono); font-size:.68rem; letter-spacing:.1em;
+    text-transform:uppercase; color:var(--gold);
+  }
+  .topo h1{font-family:var(--font-title); font-size:1.8rem; margin:6px 0 8px; color:var(--verde-dark); line-height:1.25;}
+  .topo .sub{margin:0; color:var(--ink-soft); font-size:.98rem;}
+
+  .texto-apoio{
+    background:var(--paper); border-radius:var(--radius); box-shadow:var(--shadow);
+    padding:24px 26px; margin-bottom:22px;
+  }
+  .texto-apoio h2{font-family:var(--font-title); font-size:1.22rem; color:var(--verde-dark); margin:0 0 4px;}
+  .fonte-tag{font-family:var(--font-mono); font-size:.68rem; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-soft);}
+  .texto-apoio > p{font-size:1rem; text-align:justify;}
+  .documento-fonte{
+    margin-top:16px; background:#faf6fd; border-left:4px solid var(--verde);
+    border-radius:0 10px 10px 0; padding:16px 18px; font-size:1rem; text-align:justify;
+  }
+  .documento-fonte p{margin:0 0 10px;}
+  .documento-fonte p:last-child{margin-bottom:0;}
+  .documento-fonte ul{margin:0; padding-left:20px;}
+  .documento-fonte li{margin-bottom:9px;}
+  .documento-fonte .assinatura{text-align:right; font-style:italic; color:var(--ink-soft); font-size:.92rem;}
+  .glossario-box{
+    margin-top:14px; background:#fdf9f0; border:1px solid var(--gold);
+    border-radius:10px; padding:14px 16px;
+  }
+  .glossario-box .rot{
+    display:block; font-family:var(--font-mono); font-size:.62rem;
+    letter-spacing:.09em; text-transform:uppercase; color:var(--gold); margin-bottom:8px;
+  }
+  .glossario-box dl{margin:0;}
+  .glossario-box dt{font-weight:700; color:var(--verde-dark); font-size:.92rem;}
+  .glossario-box dd{margin:0 0 10px; font-size:.9rem; color:var(--ink-soft);}
+  .glossario-box dd:last-child{margin-bottom:0;}
+  .referencia-box{
+    margin-top:14px; border:1px dashed var(--line); border-radius:10px;
+    padding:12px 14px; background:#fcfaff;
+  }
+  .referencia-box .rot{
+    display:block; font-family:var(--font-mono); font-size:.62rem;
+    letter-spacing:.09em; text-transform:uppercase; color:var(--gold); margin-bottom:5px;
+  }
+  .referencia-box p{margin:0; font-size:.84rem; color:var(--ink-soft); word-break:break-word;}
+
+  .questoes-titulo{
+    font-family:var(--font-title); font-size:1.3rem; color:var(--verde-dark);
+    margin:34px 0 16px; padding-bottom:8px; border-bottom:2px solid var(--line);
+  }
+  .questao{
+    background:var(--paper); border-radius:var(--radius); box-shadow:var(--shadow);
+    padding:20px 22px; margin-bottom:18px;
+    border-left:5px solid var(--verde);
+  }
+  .enunciado{display:flex; gap:12px; align-items:flex-start; font-size:1rem;}
+  .num-q{
+    flex:0 0 auto; width:30px; height:30px; border-radius:50%;
+    background:var(--verde); color:#fff;
+    display:inline-flex; align-items:center; justify-content:center;
+    font-family:var(--font-mono); font-size:.85rem; font-weight:600; margin-top:2px;
+  }
+  .subitens{margin:14px 0 0 42px; padding:0; list-style:none;}
+  .subitens li{
+    display:flex; gap:10px; align-items:flex-start;
+    margin-bottom:10px; font-size:.97rem;
+    background:#faf6fd; border:1px solid var(--line); border-radius:10px;
+    padding:11px 14px; cursor:pointer;
+    transition:border-color .15s ease, background .15s ease, transform .15s ease;
+  }
+  .subitens li:last-child{margin-bottom:0;}
+  .subitens li:hover{border-color:var(--verde); background:#f3e9fa; transform:translateY(-1px);}
+  .subitens li .letra{
+    flex:0 0 auto; font-family:var(--font-mono); font-size:.78rem; font-weight:600;
+    color:#fff; background:var(--verde); border-radius:6px; padding:1px 8px; margin-top:3px;
+  }
+  .subitens li .txt{flex:1 1 auto;}
+  .subitens li .lupa{
+    flex:0 0 auto; font-family:var(--font-mono); font-size:.6rem;
+    letter-spacing:.06em; text-transform:uppercase; color:var(--gold); margin-top:5px;
+  }
+  .alternativas{margin:14px 0 0 42px;}
+  .alt{display:flex; gap:10px; align-items:flex-start; margin-bottom:9px; font-size:.95rem;}
+  .alt .rotulo{
+    flex:0 0 auto; min-width:26px; text-align:center;
+    font-family:var(--font-mono); font-size:.75rem; font-weight:600;
+    color:var(--verde-dark); background:rgba(90,45,130,.1);
+    border-radius:6px; padding:2px 6px;
+  }
+  .instrucao-multipla{
+    margin:12px 0 0 42px; font-family:var(--font-mono); font-size:.66rem;
+    letter-spacing:.07em; text-transform:uppercase; color:var(--ink-soft);
+  }
+  .dica-clique{
+    display:block; margin-top:12px; margin-left:42px;
+    font-family:var(--font-mono); font-size:.66rem; letter-spacing:.08em;
+    text-transform:uppercase; color:var(--gold);
+  }
+
+  .popup-overlay{
+    position:fixed; inset:0; z-index:100; background:rgba(36,28,48,.62);
+    display:none; align-items:center; justify-content:center; padding:20px;
+  }
+  .popup-overlay.ativo{display:flex;}
+  .popup-card{
+    background:var(--paper); border-radius:var(--radius); box-shadow:var(--shadow);
+    max-width:540px; width:100%; padding:28px 26px 24px;
+    max-height:85vh; overflow-y:auto; border-top:5px solid var(--gold);
+  }
+  .popup-card .rot{
+    display:block; font-family:var(--font-mono); font-size:.65rem;
+    letter-spacing:.1em; text-transform:uppercase; color:var(--gold); margin-bottom:8px;
+  }
+  .popup-card h3{font-family:var(--font-title); font-size:1.15rem; color:var(--verde-dark); margin:0 0 12px;}
+  .popup-conteudo{font-size:.97rem; color:var(--ink); margin-bottom:18px;}
+  .popup-conteudo p{margin:0 0 10px;}
+  .popup-conteudo p:last-child{margin-bottom:0;}
+  .popup-conteudo b{color:var(--verde-dark);}
+  .btn{
+    width:100%; padding:12px; border:none; border-radius:8px;
+    background:var(--verde); color:#fff; font-weight:600; font-size:.98rem;
+    font-family:var(--font-body); cursor:pointer; transition:filter .15s ease;
+  }
+  .btn:hover{filter:brightness(1.1);}
+
+  .rodape{
+    text-align:center; font-family:var(--font-mono); font-size:.68rem;
+    letter-spacing:.08em; text-transform:uppercase; color:var(--ink-soft);
+    padding:24px 12px 32px;
+  }
+
+  @media (max-width:520px){
+    .topo h1{font-size:1.45rem;}
+    .texto-apoio, .questao, .topo{padding-left:18px; padding-right:18px;}
+    .subitens, .alternativas, .dica-clique, .instrucao-multipla{margin-left:0;}
+  }
+
+  .questao[data-resposta]{cursor:pointer; transition:border-color .15s ease, transform .15s ease;}
+  .questao[data-resposta]:hover{transform:translateY(-2px); box-shadow:0 14px 34px rgba(58,28,86,.22);}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="topo">
+    <span class="descritor-bar">História / 8.º Ano do Ensino Fundamental &nbsp;|&nbsp; (GO-EF08HI16-A) – Primeiro Reinado e Período Regencial</span>
+    <span class="hero-tag">Integrando com Língua Portuguesa</span>
+    <h1>Vozes da Revolta: Literatura e História</h1>
+    <p class="sub">Leia com atenção os dois textos a seguir e responda às oito questões. Clique em uma questão para ver a resposta.</p>
+  </header>
+
+  <section class="texto-apoio">
+    <h2>Texto 1 — Erico Verissimo</h2>
+    <span class="fonte-tag">Trecho literário — romance histórico</span>
+
+    <div class="documento-fonte">
+      <p>— Escuta o que vou lhe dizer, amigo. Nesta província a gente só pode ter como certo uma coisa: mais cedo ou mais tarde rebenta uma guerra ou uma revolução — atirou ambos os braços para o lado, num gesto de despreocupação. — Que é que adianta plantar, criar, trabalhar como burro de carga? O direito mesmo era a nossa gente nunca tirar o fardamento do corpo nem a espada da cinta. [...] O castelhano está aí mesmo. Hoje é Montevidéu. Amanhã, Buenos Aires. E nós aqui no Continente sempre acabamos entrando na dança.</p>
+    </div>
+
+    <div class="referencia-box">
+      <span class="rot">Referência (ABNT NBR 6023)</span>
+      <p>VERISSIMO, Erico. Um certo capitão Rodrigo. São Paulo: Editora Globo, 1987. p. 18.</p>
+    </div>
+  </section>
+  <div class="questao" data-resposta="1">
+    <div class="enunciado"><span class="num-q">1</span> Identifique a quem ou a que o personagem está se referindo ao dizer "Nesta província..." e "nossa gente".</div>
+    <span class="dica-clique">Toque para ver a resposta</span>
+  </div>
+  <div class="questao" data-resposta="2">
+    <div class="enunciado"><span class="num-q">2</span> A expressão "a gente", quando se refere a "nós", é empregada de maneira informal, sendo muito comum o seu uso na linguagem cotidiana. Essa expressão aparece no texto com esse sentido? Justifique.</div>
+    <span class="dica-clique">Toque para ver a resposta</span>
+  </div>
+  <div class="questao" data-resposta="3">
+    <div class="enunciado"><span class="num-q">3</span> Na linguagem literária, os escritores costumam usar figuras de linguagem. Encontre e transcreva um exemplo retirado do texto.</div>
+    <span class="dica-clique">Toque para ver a resposta</span>
+  </div>
+  <section class="texto-apoio">
+    <h2>Texto 2 — A escrita e a Revolta dos Malês</h2>
+    <span class="fonte-tag">Trecho historiográfico — Revolta dos Malês (1835)</span>
+
+    <div class="documento-fonte">
+      <p>[...] me interesso por revoltas, em geral. Mas, nesse caso particular, o que me atraiu foi o fato de o chefe de polícia local atribuir o relativo sucesso da revolta ao papel da escrita no seu planejamento. Sabe-se que escravos e homens livres participantes da revolta – a maioria [...] de origem iorubá – frequentavam escolas informais islamitas, onde aprendiam a ler e a escrever em caracteres árabes, e que muitos dos líderes tinham perfeito domínio da leitura e da escrita, o que os colocava acima dos colonizadores brancos que mal sabiam assinar o nome. Com essa habilidade eles puderam planejar o levante em segredo, enviando mensagens e instruções que foram apreendidas pela polícia [...]. Assim, meu antigo interesse pelas consequências da alfabetização se viu aguçado por esse episódio que punha à luz as potencialidades da leitura e da escrita para a transformação cultural.</p>
+    </div>
+
+    <div class="glossario-box">
+      <span class="rot">Glossário</span>
+      <dl>
+        <dt>Escolas islamitas</dt>
+        <dd>Escolas onde se estuda o Corão em língua árabe.</dd>
+      </dl>
+    </div>
+
+    <div class="referencia-box">
+      <span class="rot">Referência (ABNT NBR 6023)</span>
+      <p>GOODY, Jack, 1988 apud SEFFNER, Fernando. Leitura e escrita na história. In: NEVES, Iara C. Bittencourt (Org.). Ler e escrever: compromisso de todas as áreas. Porto Alegre: UFRGS, 2011. p. 116.</p>
+    </div>
+  </section>
+  <div class="questao" data-resposta="4">
+    <div class="enunciado"><span class="num-q">4</span> Por que o autor do texto se interessou pela Revolta de 1835?</div>
+    <span class="dica-clique">Toque para ver a resposta</span>
+  </div>
+  <div class="questao" data-resposta="5">
+    <div class="enunciado"><span class="num-q">5</span> Que relação o autor do texto estabelece entre a escrita e a Revolta de 1835 na Bahia?</div>
+    <span class="dica-clique">Toque para ver a resposta</span>
+  </div>
+  <div class="questao" data-resposta="6">
+    <div class="enunciado"><span class="num-q">6</span> Diferencie os rebeldes dos colonizadores brancos no tocante à escrita.</div>
+    <span class="dica-clique">Toque para ver a resposta</span>
+  </div>
+  <div class="questao" data-resposta="7">
+    <div class="enunciado"><span class="num-q">7</span> Explique de que forma isso influenciou a revolta.</div>
+    <span class="dica-clique">Toque para ver a resposta</span>
+  </div>
+  <div class="questao" data-resposta="8">
+    <div class="enunciado"><span class="num-q">8</span> Reflita e escreva sobre a importância da leitura e da escrita na vida de uma pessoa nos dias de hoje. Justifique.</div>
+    <span class="dica-clique">Toque para ver a resposta</span>
+  </div>
+</div>
+
+<footer class="rodape">Colégio Estadual Rodolfo de Oliveira · CERO · 2026</footer>
+
+<div class="popup-overlay" id="popup-overlay">
+  <div class="popup-card">
+    <span class="rot">Resposta</span>
+    <h3 id="popup-titulo">Questão 1</h3>
+    <div class="popup-conteudo" id="popup-conteudo"></div>
+    <button class="btn" onclick="fecharPopup()">Fechar</button>
+  </div>
+</div>
+
+<script>
+  const RESPOSTAS = {
+  "1": "<p>“Nesta província” é a Província de São Pedro do Rio Grande do Sul, na época parte do Império do Brasil. “Nossa gente” são os rio-grandenses, com quem o personagem se identifica.</p>",
+  "2": "<p>Sim. Em “Nesta província a gente só pode ter como certo uma coisa”, “a gente” está no lugar de “nós” — reforçando o tom coloquial e falado do personagem.</p>",
+  "3": "<p><b>Hipérbole</b> (exagero) em “nunca tirar o fardamento do corpo nem a espada da cinta”.</p><p><b>Metáfora</b> em “entrando na dança”, que representa o envolvimento inevitável nos conflitos da região.</p>",
+  "4": "<p>Porque o chefe de polícia atribuiu o sucesso da revolta ao papel da escrita no planejamento — e o autor já estudava os efeitos da alfabetização.</p>",
+  "5": "<p>A escrita permitiu planejar o levante em segredo, com mensagens e instruções em árabe. Isso deu organização à revolta — embora as mesmas mensagens tenham sido depois apreendidas pela polícia.</p>",
+  "6": "<p>Muitos rebeldes, de origem iorubá, liam e escreviam em árabe, aprendido em escolas islâmicas informais. Já muitos colonizadores brancos mal sabiam assinar o próprio nome.</p>",
+  "7": "<p>O domínio da escrita permitiu uma comunicação segura entre os participantes, o que favoreceu o planejamento coletivo e o êxito inicial do levante.</p>",
+  "8": "<p>Resposta pessoal. Espera-se que o aluno relacione a leitura e a escrita ao acesso à informação, à autonomia e ao exercício da cidadania nos dias de hoje.</p>"
+};
+
+  const overlay = document.getElementById('popup-overlay');
+  const titulo = document.getElementById('popup-titulo');
+  const conteudo = document.getElementById('popup-conteudo');
+
+  document.querySelectorAll('[data-resposta]').forEach(function(el){
+    el.addEventListener('click', function(){
+      const chave = el.getAttribute('data-resposta');
+      const num = chave.replace(/[a-z]$/, '');
+      const letra = chave.replace(/^[0-9]+/, '');
+      titulo.textContent = letra ? ('Questão ' + num + ' — item ' + letra + ')') : ('Questão ' + num);
+      conteudo.innerHTML = RESPOSTAS[chave];
+      overlay.classList.add('ativo');
+    });
+  });
+
+  function fecharPopup(){ overlay.classList.remove('ativo'); }
+  overlay.addEventListener('click', function(e){ if(e.target === overlay) fecharPopup(); });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') fecharPopup(); });
+
+</script>
+
+</body>
+</html>

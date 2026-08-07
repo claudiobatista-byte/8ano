@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Legado Indígena no Rio Grande do Sul | CERO</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#f6f2fa;
+    --paper:#fffdff;
+    --ink:#241c30;
+    --ink-soft:#5a4d6b;
+    --verde:#5a2d82;
+    --verde-dark:#3a1c56;
+    --gold:#a6863f;
+    --line:#ddd0e8;
+    --shadow:0 10px 30px rgba(58,28,86,.16);
+    --radius:14px;
+    --font-title:'Playfair Display', serif;
+    --font-body:'Source Serif 4', serif;
+    --font-mono:'JetBrains Mono', monospace;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:var(--font-body);
+    line-height:1.75;
+  }
+  .wrap{max-width:860px; margin:0 auto; padding:28px 18px 40px;}
+
+  .topo{
+    background:var(--paper);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    padding:26px 26px 22px;
+    border-top:5px solid var(--verde);
+    margin-bottom:26px;
+  }
+  .descritor-bar{
+    display:block; font-family:var(--font-mono); font-size:.7rem;
+    letter-spacing:.06em; text-transform:uppercase; color:var(--verde-dark);
+    background:rgba(90,45,130,.09); padding:7px 12px; border-radius:8px;
+  }
+  .hero-tag{
+    display:inline-block; margin-top:12px;
+    font-family:var(--font-mono); font-size:.68rem; letter-spacing:.1em;
+    text-transform:uppercase; color:var(--gold);
+  }
+  .topo h1{font-family:var(--font-title); font-size:1.8rem; margin:6px 0 8px; color:var(--verde-dark); line-height:1.25;}
+  .topo .sub{margin:0; color:var(--ink-soft); font-size:.98rem;}
+
+  .texto-apoio{
+    background:var(--paper); border-radius:var(--radius); box-shadow:var(--shadow);
+    padding:24px 26px; margin-bottom:22px;
+  }
+  .texto-apoio h2{font-family:var(--font-title); font-size:1.22rem; color:var(--verde-dark); margin:0 0 4px;}
+  .fonte-tag{font-family:var(--font-mono); font-size:.68rem; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-soft);}
+  .texto-apoio > p{font-size:1rem; text-align:justify;}
+  .documento-fonte{
+    margin-top:16px; background:#faf6fd; border-left:4px solid var(--verde);
+    border-radius:0 10px 10px 0; padding:16px 18px; font-size:1rem; text-align:justify;
+  }
+  .documento-fonte p{margin:0 0 10px;}
+  .documento-fonte p:last-child{margin-bottom:0;}
+  .documento-fonte ul{margin:0; padding-left:20px;}
+  .documento-fonte li{margin-bottom:9px;}
+  .documento-fonte .assinatura{text-align:right; font-style:italic; color:var(--ink-soft); font-size:.92rem;}
+  .glossario-box{
+    margin-top:14px; background:#fdf9f0; border:1px solid var(--gold);
+    border-radius:10px; padding:14px 16px;
+  }
+  .glossario-box .rot{
+    display:block; font-family:var(--font-mono); font-size:.62rem;
+    letter-spacing:.09em; text-transform:uppercase; color:var(--gold); margin-bottom:8px;
+  }
+  .glossario-box dl{margin:0;}
+  .glossario-box dt{font-weight:700; color:var(--verde-dark); font-size:.92rem;}
+  .glossario-box dd{margin:0 0 10px; font-size:.9rem; color:var(--ink-soft);}
+  .glossario-box dd:last-child{margin-bottom:0;}
+  .referencia-box{
+    margin-top:14px; border:1px dashed var(--line); border-radius:10px;
+    padding:12px 14px; background:#fcfaff;
+  }
+  .referencia-box .rot{
+    display:block; font-family:var(--font-mono); font-size:.62rem;
+    letter-spacing:.09em; text-transform:uppercase; color:var(--gold); margin-bottom:5px;
+  }
+  .referencia-box p{margin:0; font-size:.84rem; color:var(--ink-soft); word-break:break-word;}
+
+  .questoes-titulo{
+    font-family:var(--font-title); font-size:1.3rem; color:var(--verde-dark);
+    margin:34px 0 16px; padding-bottom:8px; border-bottom:2px solid var(--line);
+  }
+  .questao{
+    background:var(--paper); border-radius:var(--radius); box-shadow:var(--shadow);
+    padding:20px 22px; margin-bottom:18px;
+    border-left:5px solid var(--verde);
+  }
+  .enunciado{display:flex; gap:12px; align-items:flex-start; font-size:1rem;}
+  .num-q{
+    flex:0 0 auto; width:30px; height:30px; border-radius:50%;
+    background:var(--verde); color:#fff;
+    display:inline-flex; align-items:center; justify-content:center;
+    font-family:var(--font-mono); font-size:.85rem; font-weight:600; margin-top:2px;
+  }
+  .subitens{margin:14px 0 0 42px; padding:0; list-style:none;}
+  .subitens li{
+    display:flex; gap:10px; align-items:flex-start;
+    margin-bottom:10px; font-size:.97rem;
+    background:#faf6fd; border:1px solid var(--line); border-radius:10px;
+    padding:11px 14px; cursor:pointer;
+    transition:border-color .15s ease, background .15s ease, transform .15s ease;
+  }
+  .subitens li:last-child{margin-bottom:0;}
+  .subitens li:hover{border-color:var(--verde); background:#f3e9fa; transform:translateY(-1px);}
+  .subitens li .letra{
+    flex:0 0 auto; font-family:var(--font-mono); font-size:.78rem; font-weight:600;
+    color:#fff; background:var(--verde); border-radius:6px; padding:1px 8px; margin-top:3px;
+  }
+  .subitens li .txt{flex:1 1 auto;}
+  .subitens li .lupa{
+    flex:0 0 auto; font-family:var(--font-mono); font-size:.6rem;
+    letter-spacing:.06em; text-transform:uppercase; color:var(--gold); margin-top:5px;
+  }
+  .alternativas{margin:14px 0 0 42px;}
+  .alt{display:flex; gap:10px; align-items:flex-start; margin-bottom:9px; font-size:.95rem;}
+  .alt .rotulo{
+    flex:0 0 auto; min-width:26px; text-align:center;
+    font-family:var(--font-mono); font-size:.75rem; font-weight:600;
+    color:var(--verde-dark); background:rgba(90,45,130,.1);
+    border-radius:6px; padding:2px 6px;
+  }
+  .instrucao-multipla{
+    margin:12px 0 0 42px; font-family:var(--font-mono); font-size:.66rem;
+    letter-spacing:.07em; text-transform:uppercase; color:var(--ink-soft);
+  }
+  .dica-clique{
+    display:block; margin-top:12px; margin-left:42px;
+    font-family:var(--font-mono); font-size:.66rem; letter-spacing:.08em;
+    text-transform:uppercase; color:var(--gold);
+  }
+
+  .popup-overlay{
+    position:fixed; inset:0; z-index:100; background:rgba(36,28,48,.62);
+    display:none; align-items:center; justify-content:center; padding:20px;
+  }
+  .popup-overlay.ativo{display:flex;}
+  .popup-card{
+    background:var(--paper); border-radius:var(--radius); box-shadow:var(--shadow);
+    max-width:540px; width:100%; padding:28px 26px 24px;
+    max-height:85vh; overflow-y:auto; border-top:5px solid var(--gold);
+  }
+  .popup-card .rot{
+    display:block; font-family:var(--font-mono); font-size:.65rem;
+    letter-spacing:.1em; text-transform:uppercase; color:var(--gold); margin-bottom:8px;
+  }
+  .popup-card h3{font-family:var(--font-title); font-size:1.15rem; color:var(--verde-dark); margin:0 0 12px;}
+  .popup-conteudo{font-size:.97rem; color:var(--ink); margin-bottom:18px;}
+  .popup-conteudo p{margin:0 0 10px;}
+  .popup-conteudo p:last-child{margin-bottom:0;}
+  .popup-conteudo b{color:var(--verde-dark);}
+  .btn{
+    width:100%; padding:12px; border:none; border-radius:8px;
+    background:var(--verde); color:#fff; font-weight:600; font-size:.98rem;
+    font-family:var(--font-body); cursor:pointer; transition:filter .15s ease;
+  }
+  .btn:hover{filter:brightness(1.1);}
+
+  .rodape{
+    text-align:center; font-family:var(--font-mono); font-size:.68rem;
+    letter-spacing:.08em; text-transform:uppercase; color:var(--ink-soft);
+    padding:24px 12px 32px;
+  }
+
+  @media (max-width:520px){
+    .topo h1{font-size:1.45rem;}
+    .texto-apoio, .questao, .topo{padding-left:18px; padding-right:18px;}
+    .subitens, .alternativas, .dica-clique, .instrucao-multipla{margin-left:0;}
+  }
+
+  .questao[data-resposta]{cursor:pointer; transition:border-color .15s ease, transform .15s ease;}
+  .questao[data-resposta]:hover{transform:translateY(-2px); box-shadow:0 14px 34px rgba(58,28,86,.22);}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="topo">
+    <span class="descritor-bar">História / 8.º Ano do Ensino Fundamental &nbsp;|&nbsp; (GO-EF08HI16-A) – Primeiro Reinado e Período Regencial</span>
+    <span class="hero-tag">Para Saber Mais</span>
+    <h1>Legado Indígena no Rio Grande do Sul</h1>
+    <p class="sub">Leia com atenção o texto a seguir e responda às cinco questões. Clique em uma questão para ver a resposta.</p>
+  </header>
+
+  <section class="texto-apoio">
+    <h2>Legado indígena no Rio Grande do Sul</h2>
+    <span class="fonte-tag">Texto de apoio — formação cultural do Rio Grande do Sul</span>
+
+    <div class="documento-fonte">
+      <p>A história do Rio Grande do Sul foi construída a muitas mãos. Ao longo de centenas de anos, nas terras do sul do Brasil, indígenas, portugueses, espanhóis, africanos, alemães, italianos, entre outros, promoveram intensas trocas culturais entre si.</p>
+      <p>Até o século XV, o território rio-grandense era ocupado exclusivamente por indígenas: no sul, os charruas; no norte, os jês; e, no centro, os guaranis, vindos da região amazônica em busca de sua lendária “terra sem males”. Alguns hábitos, como o de beber o chimarrão e o de usar o “tchê” como pronome de referência, considerados como típicos dos rio-grandenses, são herança desses grupos indígenas. A palavra “tchê” ou “chê” pode ser traduzida por “meu” ou “minha” na língua portuguesa. Por exemplo: “Che reí” quer dizer “minha família”; “Che tuiti” significa “meu tio paterno”.</p>
+      <p>Outra expressão interessante muito usada pelos rio-grandenses é “chê piá”, que quer dizer “meu coração”. No Sul, “piá” e “guri” são formas carinhosas de se referir a meninos e meninas. Quando alguém chama um menino de “piá” ou “guri”, na verdade está querendo dizer “meu querido menino”, termo amoroso dos guaranis que foi incorporado ao português falado hoje no Rio Grande do Sul.</p>
+    </div>
+
+    <div class="glossario-box">
+      <span class="rot">Glossário</span>
+      <dl>
+        <dt>Chimarrão</dt>
+        <dd>Infusão de erva-mate com água fervente e sem açúcar, servida em uma cuia de porongo (cabaça) com bomba (canudo), geralmente de metal.</dd>
+      </dl>
+    </div>
+
+    <div class="referencia-box">
+      <span class="rot">Referência (ABNT NBR 6023)</span>
+      <p>ASSUM, Daniel da Silva; KUNERT, Udo Ingo. Legado indígena no Rio Grande do Sul. (Texto escrito especialmente para a obra).</p>
+    </div>
+  </section>
+  <div class="questao" data-resposta="1">
+    <div class="enunciado"><span class="num-q">1</span> O texto afirma que a história do Rio Grande do Sul foi "construída a muitas mãos". Explique o que essa expressão significa e cite pelo menos três grupos que contribuíram para a formação cultural do estado.</div>
+    <span class="dica-clique">Toque para ver a resposta</span>
+  </div>
+  <div class="questao" data-resposta="2">
+    <div class="enunciado"><span class="num-q">2</span> Antes do século XV, o território rio-grandense era ocupado por diferentes povos indígenas em regiões distintas. Descreva onde viviam os charruas, os jês e os guaranis, e explique por que os guaranis migraram até essa região.</div>
+    <span class="dica-clique">Toque para ver a resposta</span>
+  </div>
+  <div class="questao" data-resposta="3">
+    <div class="enunciado"><span class="num-q">3</span> Segundo o texto, palavras como "tchê", "piá" e "guri" fazem parte do vocabulário típico dos rio-grandenses até hoje. Explique a origem dessas palavras e o que elas significavam originalmente na língua guarani.</div>
+    <span class="dica-clique">Toque para ver a resposta</span>
+  </div>
+  <div class="questao" data-resposta="4">
+    <div class="enunciado"><span class="num-q">4</span> A permanência de palavras indígenas na fala dos rio-grandenses é um exemplo de como as culturas se misturam ao longo do tempo. Na sua opinião, por que é importante preservar e reconhecer essas heranças linguísticas na cultura brasileira atual?</div>
+    <span class="dica-clique">Toque para ver a resposta</span>
+  </div>
+  <div class="questao" data-resposta="5">
+    <div class="enunciado"><span class="num-q">5</span> Você conhece alguma palavra, expressão ou costume da sua região de origem que tenha herança indígena, africana ou de outro povo que ajudou a formar a cultura local? Explique qual é essa palavra ou costume, o que ela significa e de onde ela veio.</div>
+    <span class="dica-clique">Toque para ver a resposta</span>
+  </div>
+</div>
+
+<footer class="rodape">Colégio Estadual Rodolfo de Oliveira · CERO · 2026</footer>
+
+<div class="popup-overlay" id="popup-overlay">
+  <div class="popup-card">
+    <span class="rot">Resposta</span>
+    <h3 id="popup-titulo">Questão 1</h3>
+    <div class="popup-conteudo" id="popup-conteudo"></div>
+    <button class="btn" onclick="fecharPopup()">Fechar</button>
+  </div>
+</div>
+
+<script>
+  const RESPOSTAS = {
+  "1": "<p>Significa que a cultura gaúcha foi formada pela contribuição de vários povos, em trocas culturais ao longo do tempo. O texto cita indígenas, portugueses, espanhóis, africanos, alemães e italianos — bastam três.</p>",
+  "2": "<p>Charruas no sul, jês no norte e guaranis no centro. Os guaranis vieram da região amazônica em busca da lendária “terra sem males”.</p>",
+  "3": "<p>São palavras de origem guarani que entraram no português falado no Sul. “Tchê” (ou “chê”) significa “meu” ou “minha”; “piá” e “guri” eram formas carinhosas de chamar uma criança, algo como “meu querido menino”.</p>",
+  "4": "<p>Resposta pessoal. Espera-se que o aluno valorize a diversidade cultural brasileira e reconheça a contribuição dos povos indígenas e de outros grupos na formação da identidade e da língua do país.</p>",
+  "5": "<p>Resposta pessoal. O aluno deve citar uma palavra, expressão ou costume da própria região, explicar o significado e indicar de qual povo ela veio.</p>"
+};
+
+  const overlay = document.getElementById('popup-overlay');
+  const titulo = document.getElementById('popup-titulo');
+  const conteudo = document.getElementById('popup-conteudo');
+
+  document.querySelectorAll('[data-resposta]').forEach(function(el){
+    el.addEventListener('click', function(){
+      const chave = el.getAttribute('data-resposta');
+      const num = chave.replace(/[a-z]$/, '');
+      const letra = chave.replace(/^[0-9]+/, '');
+      titulo.textContent = letra ? ('Questão ' + num + ' — item ' + letra + ')') : ('Questão ' + num);
+      conteudo.innerHTML = RESPOSTAS[chave];
+      overlay.classList.add('ativo');
+    });
+  });
+
+  function fecharPopup(){ overlay.classList.remove('ativo'); }
+  overlay.addEventListener('click', function(e){ if(e.target === overlay) fecharPopup(); });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') fecharPopup(); });
+
+</script>
+
+</body>
+</html>
