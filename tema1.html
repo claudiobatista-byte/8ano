@@ -197,6 +197,83 @@
     .mini-trilha a .rotulo{ font-size:.56rem; margin-top:5px; }
     .mini-trilha a .codigo{ display:none; }
   }
+
+  /* ===== BOX DE RESUMO DO TÓPICO (FICHAMENTO) ===== */
+  .ficha-btn{
+    display:flex; align-items:center; gap:12px; width:100%; text-align:left; cursor:pointer;
+    background:linear-gradient(135deg,#1B4332,#2D6A4F); color:#F4EEDD;
+    border:0; border-left:5px solid var(--dourado); border-radius:12px;
+    padding:14px 18px; margin:18px 0 22px; font-family:'Source Serif 4',serif; font-size:1rem;
+    box-shadow:0 4px 14px rgba(43,33,24,.14);
+    transition:transform .12s ease, filter .12s ease;
+  }
+  .ficha-btn:hover{filter:brightness(1.12); transform:translateY(-1px);}
+  .ficha-btn .ico{
+    flex:0 0 auto; width:34px; height:34px; border-radius:8px; background:var(--dourado);
+    color:#1B4332; display:flex; align-items:center; justify-content:center;
+    font-size:1.05rem; font-weight:700; font-family:'Playfair Display',serif;
+  }
+  .ficha-btn .txt{flex:1;}
+  .ficha-btn .txt strong{display:block; font-family:'Playfair Display',serif; font-size:1.02rem; color:#F4EEDD;}
+  .ficha-btn .txt em{font-style:normal; font-size:.85rem; opacity:.85; display:block; margin-top:2px;}
+  .ficha-btn .seta{font-size:1.3rem; color:var(--dourado-2);}
+
+  .modal-fundo{
+    display:none; position:fixed; inset:0; background:rgba(27,67,50,.78);
+    z-index:9000; padding:24px 16px; overflow-y:auto; user-select:text;
+  }
+  .modal-fundo.ativo{display:block;}
+  .modal-cx{
+    background:var(--paper); max-width:820px; margin:0 auto; border-radius:14px;
+    box-shadow:0 18px 50px rgba(0,0,0,.35); overflow:hidden; animation:fichaSobe .18s ease-out;
+  }
+  @keyframes fichaSobe{from{opacity:0; transform:translateY(14px);} to{opacity:1; transform:none;}}
+  .modal-topo{
+    background:var(--verde); color:#F4EEDD; padding:18px 22px;
+    display:flex; align-items:flex-start; gap:14px; position:sticky; top:0; z-index:2;
+  }
+  .modal-topo .rot{
+    font-family:'Inter',sans-serif; font-size:.7rem; letter-spacing:.14em;
+    text-transform:uppercase; color:var(--dourado-2); display:block;
+  }
+  .modal-topo h3{margin:3px 0 0; font-size:1.3rem; color:#F4EEDD; font-family:'Playfair Display',serif;}
+  .modal-fechar{
+    margin-left:auto; background:transparent; border:1px solid rgba(244,238,221,.45);
+    color:#F4EEDD; width:34px; height:34px; border-radius:8px; font-size:1.2rem;
+    cursor:pointer; line-height:1; flex:0 0 auto;
+  }
+  .modal-fechar:hover{background:rgba(244,238,221,.16);}
+  .modal-corpo{padding:20px 24px 26px;}
+  .modal-corpo h4{
+    font-family:'Inter',sans-serif; color:var(--bordo); font-size:.78rem;
+    letter-spacing:.1em; text-transform:uppercase; margin:22px 0 8px;
+    border-bottom:1px solid var(--linha); padding-bottom:6px;
+  }
+  .modal-corpo h4:first-child{margin-top:0;}
+  .modal-corpo ul{margin:0; padding-left:20px;}
+  .modal-corpo li{margin-bottom:8px; font-size:.97rem; line-height:1.6;}
+  .modal-rodape{
+    border-top:1px solid var(--linha); padding:14px 24px; background:#F4EEDD;
+    display:flex; gap:10px; flex-wrap:wrap; align-items:center; justify-content:space-between;
+  }
+  .modal-rodape span{font-family:'Inter',sans-serif; font-size:.78rem; color:var(--ink-soft);}
+  .modal-rodape button{
+    background:var(--verde-2); color:#fff; border:0; border-radius:8px; padding:9px 16px;
+    font-family:'Source Serif 4',serif; font-size:.9rem; cursor:pointer;
+  }
+  .modal-rodape button:hover{filter:brightness(1.1);}
+  @media (max-width:720px){
+    .modal-fundo{padding:0;}
+    .modal-cx{max-width:100%; min-height:100%; border-radius:0; display:flex; flex-direction:column;}
+    .modal-topo{padding:16px;}
+    .modal-topo h3{font-size:1.1rem;}
+    .modal-corpo{padding:18px 16px 24px; flex:1;}
+    .modal-rodape{position:sticky; bottom:0; padding:12px 16px calc(12px + env(safe-area-inset-bottom)); justify-content:center;}
+    .modal-rodape span{display:none;}
+    .modal-rodape button{width:100%; min-height:46px;}
+    .ficha-btn{padding:14px 16px;}
+  }
+  @media print{.ficha-btn{display:none;}}
 </style>
 </head>
 <body>
@@ -268,6 +345,11 @@
   </div>
 
   <h2 class="secao">1. Afinal, o que é uma nação?</h2>
+<button class="ficha-btn" data-ficha="1">
+  <span class="ico">1</span>
+  <span class="txt"><strong>Resumo do tópico 1</strong><em>Ideias-chave, conceitos e dados em tópicos</em></span>
+  <span class="seta" aria-hidden="true">&#8250;</span>
+</button>
   <p>Uma <span class="destaque">nação</span> é formada por pessoas que compartilham uma história, uma cultura, tradições e o sentimento de pertencer ao mesmo povo. Em geral, uma nação procura organizar-se em um <strong>Estado</strong>, com governo, leis e território próprios.</p>
   <p>Mas será que o Brasil, entre 1500 e 1822, já era uma nação?</p>
   <details class="acordeao">
@@ -291,6 +373,11 @@
   </div>
 
   <h2 class="secao">2. As três peças que formam um país</h2>
+<button class="ficha-btn" data-ficha="2">
+  <span class="ico">2</span>
+  <span class="txt"><strong>Resumo do tópico 2</strong><em>Ideias-chave, conceitos e dados em tópicos</em></span>
+  <span class="seta" aria-hidden="true">&#8250;</span>
+</button>
   <p>Para existir como país soberano, não basta um pedaço de terra: é preciso reunir três engrenagens diferentes, funcionando ao mesmo tempo.</p>
   <div class="engrenagens">
     <div class="peca"><strong>Nação</strong><p>O sentimento e o destino comum. Uma sociedade unida por cultura, tradições, história e objetivos parecidos.</p></div>
@@ -304,6 +391,11 @@
   </figure>
 
   <h2 class="secao">3. Nação e Estado: em que se diferenciam</h2>
+<button class="ficha-btn" data-ficha="3">
+  <span class="ico">3</span>
+  <span class="txt"><strong>Resumo do tópico 3</strong><em>Ideias-chave, conceitos e dados em tópicos</em></span>
+  <span class="seta" aria-hidden="true">&#8250;</span>
+</button>
   <p>É comum confundir esses dois conceitos, mas eles não são a mesma coisa:</p>
   <div class="tabela-scroll">
   <table class="revoltas">
@@ -335,10 +427,20 @@
   </figure>
 
   <h2 class="secao">4. Estado e Governo também não são sinônimos</h2>
+<button class="ficha-btn" data-ficha="4">
+  <span class="ico">4</span>
+  <span class="txt"><strong>Resumo do tópico 4</strong><em>Ideias-chave, conceitos e dados em tópicos</em></span>
+  <span class="seta" aria-hidden="true">&#8250;</span>
+</button>
   <p>O Estado é o edifício; o governo é apenas quem o administra por um tempo. O <strong>Estado</strong> é a estrutura permanente que mantém instituições, leis e exército. Já o <strong>governo</strong> é o grupo que comanda o Estado por um período específico, mudando conforme eleições ou regimes políticos.</p>
   <blockquote>"Enquanto o Estado é permanente, o governo é transitório e varia conforme os regimes políticos."<cite class="fonte">Braick; Mota, 2017</cite></blockquote>
 
   <h2 class="secao">5. Da colônia ao Reino Unido: 1808</h2>
+<button class="ficha-btn" data-ficha="5">
+  <span class="ico">5</span>
+  <span class="txt"><strong>Resumo do tópico 5</strong><em>Ideias-chave, conceitos e dados em tópicos</em></span>
+  <span class="seta" aria-hidden="true">&#8250;</span>
+</button>
   <p>Em 1808, fugindo das tropas de Napoleão Bonaparte, a família real portuguesa e toda a Corte desembarcam no Rio de Janeiro. Esse acontecimento muda profundamente o Brasil: pela primeira vez, a sede do governo português passa a funcionar em território colonial.</p>
   <details class="acordeao">
     <summary>O que mudou com a chegada da Corte?</summary>
@@ -356,6 +458,11 @@
   </figure>
 
   <h2 class="secao">6. O processo de Independência (1822)</h2>
+<button class="ficha-btn" data-ficha="6">
+  <span class="ico">6</span>
+  <span class="txt"><strong>Resumo do tópico 6</strong><em>Ideias-chave, conceitos e dados em tópicos</em></span>
+  <span class="seta" aria-hidden="true">&#8250;</span>
+</button>
   <p>Com o retorno de Dom João VI a Portugal em 1821, seu filho Dom Pedro permanece como príncipe regente do Brasil. As Cortes portuguesas tentam recolonizar o Brasil, exigindo o retorno de Dom Pedro. Diante da pressão de grupos locais — sobretudo a elite proprietária de terras — Dom Pedro decide romper com Portugal.</p>
   <blockquote>7 de setembro de 1822 — às margens do rio Ipiranga, em São Paulo, Dom Pedro proclama a Independência do Brasil.</blockquote>
   <p>É importante notar que essa independência foi conduzida <strong>pelas elites</strong>, sem ruptura da estrutura social: a escravidão continuou, a monarquia foi mantida e grande parte da população não participou da decisão.</p>
@@ -379,9 +486,19 @@
   </div>
 
   <h2 class="secao">7. O Primeiro Reinado (1822–1831)</h2>
+<button class="ficha-btn" data-ficha="7">
+  <span class="ico">7</span>
+  <span class="txt"><strong>Resumo do tópico 7</strong><em>Ideias-chave, conceitos e dados em tópicos</em></span>
+  <span class="seta" aria-hidden="true">&#8250;</span>
+</button>
   <p>Dom Pedro I torna-se Imperador do Brasil. Seu governo enfrenta desafios constantes: reconhecimento internacional da independência, conflitos com a Assembleia Constituinte, guerra pela região do Prata (Cisplatina) e forte oposição política — assuntos que você vai aprofundar no Tema 2.</p>
 
   <h2 class="secao">8. A Constituição de 1824</h2>
+<button class="ficha-btn" data-ficha="8">
+  <span class="ico">8</span>
+  <span class="txt"><strong>Resumo do tópico 8</strong><em>Ideias-chave, conceitos e dados em tópicos</em></span>
+  <span class="seta" aria-hidden="true">&#8250;</span>
+</button>
   <details class="acordeao" open>
     <summary>Uma Constituição outorgada</summary>
     <p>Após dissolver a Assembleia Constituinte de 1823, Dom Pedro I <strong>outorga</strong> (impõe, sem consulta popular) a primeira Constituição brasileira, em 1824. Ela estabelece:</p>
@@ -411,6 +528,11 @@
   </div>
 
   <h2 class="secao">9. Quem ficou de fora da nação?</h2>
+<button class="ficha-btn" data-ficha="9">
+  <span class="ico">9</span>
+  <span class="txt"><strong>Resumo do tópico 9</strong><em>Ideias-chave, conceitos e dados em tópicos</em></span>
+  <span class="seta" aria-hidden="true">&#8250;</span>
+</button>
   <p>A Constituição de 1824 separava dois grupos que, muitas vezes, confundimos hoje: a <strong>população</strong> — todas as pessoas que simplesmente viviam no território — e o <strong>"povo"</strong> — o conjunto restrito de cidadãos reconhecidos, com voz ativa na vida pública. Nem todo habitante era, oficialmente, parte do "povo".</p>
 
   <figure class="figura-charge">
@@ -441,12 +563,22 @@
   </div>
 
   <h2 class="secao">10. A equação de um país soberano</h2>
+<button class="ficha-btn" data-ficha="10">
+  <span class="ico">10</span>
+  <span class="txt"><strong>Resumo do tópico 10</strong><em>Ideias-chave, conceitos e dados em tópicos</em></span>
+  <span class="seta" aria-hidden="true">&#8250;</span>
+</button>
   <div class="equacao">
     <div class="formula">NAÇÃO <span class="op">+</span> ESTADO <span class="op">+</span> TERRITÓRIO <span class="op">=</span> <span class="resultado">PAÍS SOBERANO</span></div>
     <p class="legenda">Quando a identidade de um povo (Nação) encontra uma organização de leis (Estado), dentro de um espaço geográfico delimitado (Território), nasce um país soberano. <strong>Soberania</strong> é a capacidade desse país de tomar suas próprias decisões, sem se submeter a nenhuma potência estrangeira.</p>
   </div>
 
   <h2 class="secao">11. Nações vivas dentro do Estado brasileiro</h2>
+<button class="ficha-btn" data-ficha="11">
+  <span class="ico">11</span>
+  <span class="txt"><strong>Resumo do tópico 11</strong><em>Ideias-chave, conceitos e dados em tópicos</em></span>
+  <span class="seta" aria-hidden="true">&#8250;</span>
+</button>
   <p>Os povos indígenas são o exemplo mais direto de nações sem Estado próprio operando dentro das fronteiras do Brasil. Eles possuem identidades, línguas e organizações sociais seculares, muito anteriores à formação jurídica do Estado brasileiro. Estão submetidos às leis do Estado, mas lutam ativamente pelo reconhecimento de seus territórios — as demarcações — para proteger sua existência enquanto povos e culturas.</p>
 
   <figure class="figura-charge">
@@ -455,6 +587,11 @@
   </figure>
 
   <h2 class="secao">12. 1822 resolveu a soberania, mas não formou a nação</h2>
+<button class="ficha-btn" data-ficha="12">
+  <span class="ico">12</span>
+  <span class="txt"><strong>Resumo do tópico 12</strong><em>Ideias-chave, conceitos e dados em tópicos</em></span>
+  <span class="seta" aria-hidden="true">&#8250;</span>
+</button>
   <ul class="linha-tempo">
     <li><strong>1500–1822:</strong> o Brasil é colônia — nem Estado soberano, nem nação unificada.</li>
     <li><strong>1822:</strong> a Independência cria o Estado soberano — leis, governo e símbolos próprios nascem quase da noite para o dia.</li>
@@ -792,6 +929,62 @@
   }
 
   iniciarJogoMemoria();
+})();
+</script>
+
+
+<div class="modal-fundo" id="modalFicha" role="dialog" aria-modal="true" aria-labelledby="fichaTitulo">
+  <div class="modal-cx">
+    <div class="modal-topo">
+      <div>
+        <span class="rot" id="fichaRot">Resumo do tópico</span>
+        <h3 id="fichaTitulo"></h3>
+      </div>
+      <button class="modal-fechar" id="fecharFicha" aria-label="Fechar">&times;</button>
+    </div>
+    <div class="modal-corpo" id="fichaCorpo"></div>
+    <div class="modal-rodape">
+      <span>Colégio Estadual Rodolfo de Oliveira &middot; CERO &middot; 2026</span>
+      <button id="fecharFicha2">Voltar ao conteúdo</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ===== RESUMOS DOS TÓPICOS ===== */
+const FICHAS = {"1": {"titulo": "Afinal, o que é uma nação?", "blocos": [["Definição", ["Nação = pessoas que compartilham história, cultura, tradições e o sentimento de pertencer ao mesmo povo.", "Em geral, uma nação procura se organizar em um Estado, com governo, leis e território próprios."]], ["O Brasil colônia NÃO era uma nação", ["O território fazia parte do Império Português e era governado a partir de Portugal; as decisões políticas e econômicas eram tomadas na Europa.", "A colônia existia sobretudo para fornecer riquezas à metrópole.", "A maior parte da população — indígenas, africanos escravizados, mestiços e pobres — não participava das decisões nem se reconhecia como um único povo.", "Sem autogoverno, sem território reconhecido como país e sem povo que se veja como unidade política: é extensão da metrópole, não nação."]]]}, "2": {"titulo": "As três peças que formam um país", "blocos": [["A fórmula", ["NAÇÃO: o sentimento e o destino comum — sociedade unida por cultura, tradições, história e objetivos parecidos.", "ESTADO: a máquina burocrática — políticos, burocratas e militares, com poder de criar leis e cobrar impostos.", "TERRITÓRIO: o palco geográfico — espaço físico delimitado por fronteiras onde a autoridade é exercida."]], ["Para fixar", ["Não basta um pedaço de terra: as três engrenagens precisam funcionar ao mesmo tempo."]]]}, "3": {"titulo": "Nação e Estado: em que se diferenciam", "blocos": [["Quadro comparativo", ["O que une as pessoas: na Nação, cultura, história, pertencimento e memória; no Estado, leis, impostos e obrigações jurídicas.", "Natureza: a Nação é uma ideia coletiva, fluida e identitária; o Estado é uma estrutura organizacional, política e armada.", "Podem existir isolados? Sim: há nações inteiras sem país próprio, e impérios que governam colônias sem identidade nacional comum."]], ["Nações sem Estado — exemplos", ["Curdos: divididos pelo Oriente Médio, cultura unida, sem país só seu.", "Ciganos: espalhados globalmente, preservam identidade milenar sem buscar território fixo.", "Judeus: até 1948, nação unida pela fé e pela história, sem território ou Estado próprio.", "Palestinos: forte identidade nacional, reivindicando ativamente a formação do próprio Estado."]]]}, "4": {"titulo": "Estado e Governo também não são sinônimos", "blocos": [["A distinção", ["O Estado é o edifício: estrutura permanente que mantém instituições, leis e exército.", "O governo é quem administra o edifício por um tempo: o grupo que comanda o Estado num período, mudando conforme eleições ou regimes.", "Braick e Mota: enquanto o Estado é permanente, o governo é transitório e varia conforme os regimes políticos."]]]}, "5": {"titulo": "Da colônia ao Reino Unido: 1808", "blocos": [["O que aconteceu", ["Em 1808, fugindo das tropas de Napoleão, a família real portuguesa e a Corte desembarcam no Rio de Janeiro.", "Pela primeira vez, a sede do governo português passa a funcionar em território colonial."]], ["O que mudou com a chegada da Corte", ["Abertura dos portos às nações amigas (1808): o Brasil deixa de comerciar exclusivamente com Portugal.", "Criação de instituições: Banco do Brasil, bibliotecas, academias militares, imprensa régia — estruturas de capital, não de colônia.", "Elevação a Reino Unido de Portugal, Brasil e Algarves (1815): juridicamente, o Brasil deixa de ser colônia.", "Resultado: o processo aproxima o Brasil de uma separação política, mesmo sem ser essa a intenção de Dom João VI."]]]}, "6": {"titulo": "O processo de Independência (1822)", "blocos": [["A sequência", ["1821: Dom João VI retorna a Portugal e deixa o filho Dom Pedro como príncipe regente.", "As Cortes portuguesas tentam recolonizar o Brasil e exigem o retorno de Dom Pedro.", "Pressionado por grupos locais — sobretudo a elite proprietária de terras — Dom Pedro rompe com Portugal.", "7 de setembro de 1822: às margens do rio Ipiranga, em São Paulo, proclama a Independência."]], ["O ponto crítico", ["Foi uma independência conduzida pelas elites, sem ruptura da estrutura social: a escravidão continuou, a monarquia foi mantida e a maior parte da população não participou da decisão."]]]}, "7": {"titulo": "O Primeiro Reinado (1822–1831)", "blocos": [["Panorama", ["Dom Pedro I torna-se Imperador do Brasil.", "Desafios constantes do governo: reconhecimento internacional da independência, conflitos com a Assembleia Constituinte, guerra pela Cisplatina e forte oposição política.", "Todos esses assuntos são aprofundados no Tema 2."]]]}, "8": {"titulo": "A Constituição de 1824", "blocos": [["Uma Constituição outorgada", ["Após dissolver a Assembleia Constituinte de 1823, Dom Pedro I outorga (impõe, sem consulta popular) a primeira Constituição brasileira, em 1824."]], ["O que ela estabelece", ["Monarquia constitucional e hereditária.", "Quatro poderes: Executivo, Legislativo, Judiciário e o Poder Moderador — exclusivo do Imperador, que podia dissolver a Câmara e nomear ou destituir ministros.", "Voto censitário: só podiam votar e ser votados homens livres com determinada renda mínima."]]]}, "9": {"titulo": "Quem ficou de fora da nação?", "blocos": [["População x povo", ["População: todas as pessoas que viviam no território.", "Povo: o conjunto restrito de cidadãos reconhecidos, com voz ativa na vida pública.", "Nem todo habitante era, oficialmente, parte do 'povo'."]], ["Quem o voto censitário excluía", ["Mulheres, negros escravizados, indígenas e a maior parte dos homens pobres e livres.", "A 'nação' que nascia em 1822 incluía juridicamente apenas a elite proprietária de terras e de pessoas escravizadas."]], ["Economia", ["Economia agroexportadora (açúcar, algodão e, cada vez mais, café) sustentada no trabalho escravo.", "Forte dependência comercial e financeira em relação à Inglaterra."]]]}, "10": {"titulo": "A equação de um país soberano", "blocos": [["A equação", ["NAÇÃO + ESTADO + TERRITÓRIO = PAÍS SOBERANO.", "Quando a identidade de um povo encontra uma organização de leis dentro de um espaço geográfico delimitado, nasce um país soberano.", "Soberania = capacidade de tomar as próprias decisões, sem se submeter a nenhuma potência estrangeira."]]]}, "11": {"titulo": "Nações vivas dentro do Estado brasileiro", "blocos": [["Os povos indígenas", ["São o exemplo mais direto de nações sem Estado próprio operando dentro das fronteiras do Brasil.", "Possuem identidades, línguas e organizações sociais seculares, muito anteriores à formação jurídica do Estado brasileiro.", "Estão submetidos às leis do Estado, mas lutam pelo reconhecimento de seus territórios — as demarcações — para proteger sua existência como povos e culturas."]]]}, "12": {"titulo": "1822 resolveu a soberania, mas não formou a nação", "blocos": [["A linha do tempo", ["1500–1822: o Brasil é colônia — nem Estado soberano, nem nação unificada.", "1822: a Independência cria o Estado soberano — leis, governo e símbolos próprios nascem quase da noite para o dia.", "Ao longo do século XIX: a identidade de 'povo brasileiro' segue em construção lenta, dificultada pela manutenção da escravidão e das desigualdades."]], ["A ideia que amarra o tema", ["Criar leis é rápido; forjar uma identidade comum é lento.", "É essa diferença de ritmo que explica por que 1822 resolveu a soberania do país, mas não completou, sozinho, a construção da nação brasileira."]]]}};
+
+(function(){
+  var fundo = document.getElementById('modalFicha');
+  var corpo = document.getElementById('fichaCorpo');
+  var tit   = document.getElementById('fichaTitulo');
+  var rot   = document.getElementById('fichaRot');
+
+  function abrir(id){
+    var f = FICHAS[id]; if(!f) return;
+    rot.innerHTML = 'Resumo &middot; T\u00f3pico ' + id;
+    tit.textContent = f.titulo;
+    corpo.innerHTML = f.blocos.map(function(b){
+      return '<h4>' + b[0] + '</h4><ul>' + b[1].map(function(i){ return '<li>' + i + '</li>'; }).join('') + '</ul>';
+    }).join('');
+    fundo.classList.add('ativo');
+    document.body.style.overflow = 'hidden';
+    corpo.scrollTop = 0; fundo.scrollTop = 0;
+  }
+  function fechar(){
+    fundo.classList.remove('ativo');
+    document.body.style.overflow = '';
+  }
+
+  document.querySelectorAll('.ficha-btn').forEach(function(b){
+    b.addEventListener('click', function(){ abrir(b.dataset.ficha); });
+  });
+  document.getElementById('fecharFicha').addEventListener('click', fechar);
+  document.getElementById('fecharFicha2').addEventListener('click', fechar);
+  fundo.addEventListener('click', function(e){ if(e.target === fundo) fechar(); });
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape' && fundo.classList.contains('ativo')) fechar();
+  });
 })();
 </script>
 
