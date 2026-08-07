@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Imigração Italiana: Propaganda e Realidade | CERO</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#f6f2fa;
+    --paper:#fffdff;
+    --ink:#241c30;
+    --ink-soft:#5a4d6b;
+    --verde:#5a2d82;
+    --verde-dark:#3a1c56;
+    --gold:#a6863f;
+    --line:#ddd0e8;
+    --shadow:0 10px 30px rgba(58,28,86,.16);
+    --radius:14px;
+    --font-title:'Playfair Display', serif;
+    --font-body:'Source Serif 4', serif;
+    --font-mono:'JetBrains Mono', monospace;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:var(--font-body);
+    line-height:1.75;
+  }
+  .wrap{max-width:860px; margin:0 auto; padding:28px 18px 40px;}
+
+  .topo{
+    background:var(--paper);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    padding:26px 26px 22px;
+    border-top:5px solid var(--verde);
+    margin-bottom:26px;
+  }
+  .descritor-bar{
+    display:block; font-family:var(--font-mono); font-size:.7rem;
+    letter-spacing:.06em; text-transform:uppercase; color:var(--verde-dark);
+    background:rgba(90,45,130,.09); padding:7px 12px; border-radius:8px;
+  }
+  .hero-tag{
+    display:inline-block; margin-top:12px;
+    font-family:var(--font-mono); font-size:.68rem; letter-spacing:.1em;
+    text-transform:uppercase; color:var(--gold);
+  }
+  .topo h1{font-family:var(--font-title); font-size:1.8rem; margin:6px 0 8px; color:var(--verde-dark); line-height:1.25;}
+  .topo .sub{margin:0; color:var(--ink-soft); font-size:.98rem;}
+
+  .texto-apoio{
+    background:var(--paper); border-radius:var(--radius); box-shadow:var(--shadow);
+    padding:24px 26px; margin-bottom:22px;
+  }
+  .texto-apoio h2{font-family:var(--font-title); font-size:1.22rem; color:var(--verde-dark); margin:0 0 4px;}
+  .fonte-tag{font-family:var(--font-mono); font-size:.68rem; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-soft);}
+  .texto-apoio > p{font-size:1rem; text-align:justify;}
+  .documento-fonte{
+    margin-top:16px; background:#faf6fd; border-left:4px solid var(--verde);
+    border-radius:0 10px 10px 0; padding:16px 18px; font-size:1rem; text-align:justify;
+  }
+  .documento-fonte p{margin:0 0 10px;}
+  .documento-fonte p:last-child{margin-bottom:0;}
+  .documento-fonte ul{margin:0; padding-left:20px;}
+  .documento-fonte li{margin-bottom:9px;}
+  .documento-fonte .assinatura{text-align:right; font-style:italic; color:var(--ink-soft); font-size:.92rem;}
+  .glossario-box{
+    margin-top:14px; background:#fdf9f0; border:1px solid var(--gold);
+    border-radius:10px; padding:14px 16px;
+  }
+  .glossario-box .rot{
+    display:block; font-family:var(--font-mono); font-size:.62rem;
+    letter-spacing:.09em; text-transform:uppercase; color:var(--gold); margin-bottom:8px;
+  }
+  .glossario-box dl{margin:0;}
+  .glossario-box dt{font-weight:700; color:var(--verde-dark); font-size:.92rem;}
+  .glossario-box dd{margin:0 0 10px; font-size:.9rem; color:var(--ink-soft);}
+  .glossario-box dd:last-child{margin-bottom:0;}
+  .referencia-box{
+    margin-top:14px; border:1px dashed var(--line); border-radius:10px;
+    padding:12px 14px; background:#fcfaff;
+  }
+  .referencia-box .rot{
+    display:block; font-family:var(--font-mono); font-size:.62rem;
+    letter-spacing:.09em; text-transform:uppercase; color:var(--gold); margin-bottom:5px;
+  }
+  .referencia-box p{margin:0; font-size:.84rem; color:var(--ink-soft); word-break:break-word;}
+
+  .questoes-titulo{
+    font-family:var(--font-title); font-size:1.3rem; color:var(--verde-dark);
+    margin:34px 0 16px; padding-bottom:8px; border-bottom:2px solid var(--line);
+  }
+  .questao{
+    background:var(--paper); border-radius:var(--radius); box-shadow:var(--shadow);
+    padding:20px 22px; margin-bottom:18px;
+    border-left:5px solid var(--verde);
+  }
+  .enunciado{display:flex; gap:12px; align-items:flex-start; font-size:1rem;}
+  .num-q{
+    flex:0 0 auto; width:30px; height:30px; border-radius:50%;
+    background:var(--verde); color:#fff;
+    display:inline-flex; align-items:center; justify-content:center;
+    font-family:var(--font-mono); font-size:.85rem; font-weight:600; margin-top:2px;
+  }
+  .subitens{margin:14px 0 0 42px; padding:0; list-style:none;}
+  .subitens li{
+    display:flex; gap:10px; align-items:flex-start;
+    margin-bottom:10px; font-size:.97rem;
+    background:#faf6fd; border:1px solid var(--line); border-radius:10px;
+    padding:11px 14px; cursor:pointer;
+    transition:border-color .15s ease, background .15s ease, transform .15s ease;
+  }
+  .subitens li:last-child{margin-bottom:0;}
+  .subitens li:hover{border-color:var(--verde); background:#f3e9fa; transform:translateY(-1px);}
+  .subitens li .letra{
+    flex:0 0 auto; font-family:var(--font-mono); font-size:.78rem; font-weight:600;
+    color:#fff; background:var(--verde); border-radius:6px; padding:1px 8px; margin-top:3px;
+  }
+  .subitens li .txt{flex:1 1 auto;}
+  .subitens li .lupa{
+    flex:0 0 auto; font-family:var(--font-mono); font-size:.6rem;
+    letter-spacing:.06em; text-transform:uppercase; color:var(--gold); margin-top:5px;
+  }
+  .alternativas{margin:14px 0 0 42px;}
+  .alt{display:flex; gap:10px; align-items:flex-start; margin-bottom:9px; font-size:.95rem;}
+  .alt .rotulo{
+    flex:0 0 auto; min-width:26px; text-align:center;
+    font-family:var(--font-mono); font-size:.75rem; font-weight:600;
+    color:var(--verde-dark); background:rgba(90,45,130,.1);
+    border-radius:6px; padding:2px 6px;
+  }
+  .instrucao-multipla{
+    margin:12px 0 0 42px; font-family:var(--font-mono); font-size:.66rem;
+    letter-spacing:.07em; text-transform:uppercase; color:var(--ink-soft);
+  }
+  .dica-clique{
+    display:block; margin-top:12px; margin-left:42px;
+    font-family:var(--font-mono); font-size:.66rem; letter-spacing:.08em;
+    text-transform:uppercase; color:var(--gold);
+  }
+
+  .popup-overlay{
+    position:fixed; inset:0; z-index:100; background:rgba(36,28,48,.62);
+    display:none; align-items:center; justify-content:center; padding:20px;
+  }
+  .popup-overlay.ativo{display:flex;}
+  .popup-card{
+    background:var(--paper); border-radius:var(--radius); box-shadow:var(--shadow);
+    max-width:540px; width:100%; padding:28px 26px 24px;
+    max-height:85vh; overflow-y:auto; border-top:5px solid var(--gold);
+  }
+  .popup-card .rot{
+    display:block; font-family:var(--font-mono); font-size:.65rem;
+    letter-spacing:.1em; text-transform:uppercase; color:var(--gold); margin-bottom:8px;
+  }
+  .popup-card h3{font-family:var(--font-title); font-size:1.15rem; color:var(--verde-dark); margin:0 0 12px;}
+  .popup-conteudo{font-size:.97rem; color:var(--ink); margin-bottom:18px;}
+  .popup-conteudo p{margin:0 0 10px;}
+  .popup-conteudo p:last-child{margin-bottom:0;}
+  .popup-conteudo b{color:var(--verde-dark);}
+  .btn{
+    width:100%; padding:12px; border:none; border-radius:8px;
+    background:var(--verde); color:#fff; font-weight:600; font-size:.98rem;
+    font-family:var(--font-body); cursor:pointer; transition:filter .15s ease;
+  }
+  .btn:hover{filter:brightness(1.1);}
+
+  .rodape{
+    text-align:center; font-family:var(--font-mono); font-size:.68rem;
+    letter-spacing:.08em; text-transform:uppercase; color:var(--ink-soft);
+    padding:24px 12px 32px;
+  }
+
+  @media (max-width:520px){
+    .topo h1{font-size:1.45rem;}
+    .texto-apoio, .questao, .topo{padding-left:18px; padding-right:18px;}
+    .subitens, .alternativas, .dica-clique, .instrucao-multipla{margin-left:0;}
+  }
+
+  /* questões sem subitens: o card inteiro é clicável */
+  .questao[data-resposta]{cursor:pointer; transition:transform .15s ease, box-shadow .15s ease;}
+  .questao[data-resposta]:hover{transform:translateY(-2px); box-shadow:0 14px 34px rgba(58,28,86,.22);}
+
+  /* imagens de fonte (charges) */
+  .imagem-fonte{margin-top:16px;}
+  .imagem-fonte img{
+    display:block; width:100%; height:auto;
+    border:1px solid var(--line); border-radius:10px; background:#fff;
+  }
+  .imagem-fonte .legenda{
+    margin-top:9px; font-size:.84rem; color:var(--ink-soft);
+    font-style:italic; line-height:1.5;
+  }
+
+  /* tabela de dados */
+  .tabela-fonte{overflow-x:auto; margin-top:16px;}
+  .tabela-fonte table{
+    width:100%; border-collapse:collapse;
+    font-family:var(--font-mono); font-size:.8rem; min-width:640px;
+  }
+  .tabela-fonte caption{
+    caption-side:top; text-align:left; font-family:var(--font-title);
+    font-size:1.02rem; color:var(--verde-dark); padding-bottom:10px;
+  }
+  .tabela-fonte th{
+    background:var(--verde); color:#fff; padding:8px 10px;
+    border:1px solid var(--line); text-align:center;
+  }
+  .tabela-fonte th:first-child{text-align:left;}
+  .tabela-fonte td{padding:7px 10px; border:1px solid var(--line); text-align:center;}
+  .tabela-fonte td:first-child{text-align:left; font-weight:700;}
+  .tabela-fonte tbody tr:nth-child(even){background:#faf6fd;}
+  .tabela-fonte tr.total td{background:var(--verde); color:#fff;}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="topo">
+    <span class="descritor-bar">História / 8.º Ano do Ensino Fundamental &nbsp;|&nbsp; (GO-EF08HI18-B) - Escravidão e acesso a Terra</span>
+    <span class="hero-tag">Cruzar Fontes Históricas</span>
+    <h1>Imigração Italiana: Propaganda e Realidade</h1>
+    <p class="sub">Leia com atenção as três fontes a seguir e responda às cinco questões. Clique em uma questão para ver a resposta.</p>
+  </header>
+
+  <section class="texto-apoio">
+    <h2>Fonte 1 — Cartaz de propaganda</h2>
+    <span class="fonte-tag">Convite à emigração italiana para o Brasil</span>
+
+    <div class="imagem-fonte">
+      <img src="img4.png" alt="Cartaz de propaganda convidando famílias italianas a emigrar para o Brasil: In América — Terre in Brasile per gli Italiani.">
+      <div class="legenda">Cartaz de propaganda convidando famílias italianas a emigrar para o Brasil: “...In América — Terre in Brasile per gli Italiani”. Promete navios semanais, riqueza, clima tropical, terras e utensílios doados pelo governo.</div>
+    </div>
+  </section>
+
+  <section class="texto-apoio">
+    <h2>Fonte 2 — Carta de Paulo Rossato (1884)</h2>
+    <span class="fonte-tag">Imigrante italiano no Rio Grande do Sul</span>
+
+    <div class="documento-fonte">
+      <p>Tragam ferramentas para a colônia: dois podões grandes, de cabo de ferro, quatro machados [...] e as facas de ponta. Tragam videiras de uvas negrara, xebido, [...] e todas as que quiserem. [...] Para a família tragam os seguintes objetos: todo o material de cozinha: o caldeirão de lavar roupa, o panelão [...] onde se fazia a polenta, a máquina de fazer macarrão, os lampiões. Se for possível, tragam também [...] todos os copos, garrafas, tigelas e pratos [...] Você, pai, traga todos os instrumentos de carpintaria e, se puder, compre também um serrote de fazer tábuas.</p>
+    </div>
+
+    <div class="referencia-box">
+      <span class="rot">Referência (ABNT NBR 6023)</span>
+      <p>ALVIM, Zuleika. Imigrantes: a vida privada dos pobres no campo. In: NOVAIS, Fernando; SEVCENKO, Nicolau (Org.). História da vida privada no Brasil. São Paulo: Companhia das Letras, 1998. v. 3, p. 247-248.</p>
+    </div>
+  </section>
+  <section class="texto-apoio">
+    <h2>Fonte 3 — Carta de Felice Sartor (1885)</h2>
+    <span class="fonte-tag">Imigrante italiano em Santa Teresa de Caxias, RS</span>
+
+    <div class="documento-fonte">
+      <p>Queridos pais, [...] Eu parti de Santa Rita, porque trabalhava com um patrão que não era bom... Parti daquele lugar feio para chegar em outro pior. Agora estou a serviço de outro dono: tenho que trabalhar junto com os negros, levando pesos sobre os ombros, subindo e descendo os montes como um burro. Começo a trabalhar de manhã ainda com as estrelas no céu e, sempre com as estrelas no céu, voltamos para casa à noite. Comemos: de manhã, feijão... ao meio-dia, feijão... de noite, feijão. A aldeia é muito longe... um dia de caminhada; e os preços da comida são muito altos. [...] Tudo é caro; pelo que concerne os animais... existem de todas as variedades; o bicho-do-pé é como as formigas na Itália. Assim, se existe alguém que quer vir para a América falem para ele que fique na Itália. Eu, daqui a um ano, se estou bem volto para casa... Só me falta cumprimentar a todos vocês... pai, mãe, irmãos, parentes, amigos, adeus.</p>
+    </div>
+
+    <div class="referencia-box">
+      <span class="rot">Referência (ABNT NBR 6023)</span>
+      <p>BIGAZZI, Anna Rosa C. Italianos: história e memória de uma comunidade. São Paulo: Companhia Editora Nacional, 2006. p. 183-184.</p>
+    </div>
+  </section>
+  <div class="questao" data-resposta="1">
+    <div class="enunciado"><span class="num-q">1</span> Segundo a Fonte 1 (o cartaz), que promessas eram feitas para convencer as famílias italianas a emigrar? Cite pelo menos três delas.</div>
+    <span class="dica-clique">Toque para ver a resposta</span>
+  </div>
+
+  <div class="questao" data-resposta="2">
+    <div class="enunciado"><span class="num-q">2</span> Na Fonte 2, Paulo Rossato pede à família que traga uma lista grande de ferramentas, utensílios de cozinha e instrumentos de carpintaria. O que esse pedido revela sobre a estrutura que realmente esperava os imigrantes ao chegar às colônias?</div>
+    <span class="dica-clique">Toque para ver a resposta</span>
+  </div>
+
+  <div class="questao" data-resposta="3">
+    <div class="enunciado"><span class="num-q">3</span> Na Fonte 3, Felice Sartor descreve sua rotina de trabalho e chega a comparar sua condição à de um animal de carga. Que aspectos da vida do imigrante essa carta revela que o cartaz escondia ou não mencionava?</div>
+    <span class="dica-clique">Toque para ver a resposta</span>
+  </div>
+
+  <div class="questao" data-resposta="4">
+    <div class="enunciado"><span class="num-q">4</span> Felice Sartor escreve: "se existe alguém que quer vir para a América, falem para ele que fique na Itália." Por que essa frase é uma evidência tão forte do contraste entre a propaganda migratória e a experiência real de muitos imigrantes?</div>
+    <span class="dica-clique">Toque para ver a resposta</span>
+  </div>
+
+  <div class="questao" data-resposta="5">
+    <div class="enunciado"><span class="num-q">5</span> Comparando as três fontes, explique por que é importante, ao estudar História, cruzar diferentes tipos de documentos — como uma propaganda oficial e cartas pessoais — antes de tirar conclusões sobre um processo histórico.</div>
+    <span class="dica-clique">Toque para ver a resposta</span>
+  </div>
+
+</div>
+
+<footer class="rodape">Colégio Estadual Rodolfo de Oliveira · CERO · 2026</footer>
+
+<div class="popup-overlay" id="popup-overlay">
+  <div class="popup-card">
+    <span class="rot">Resposta</span>
+    <h3 id="popup-titulo">Questão 1</h3>
+    <div class="popup-conteudo" id="popup-conteudo"></div>
+    <button class="btn" onclick="fecharPopup()">Fechar</button>
+  </div>
+</div>
+
+<script>
+  const RESPOSTAS = {
+  "1": "<p>O cartaz prometia, entre outras coisas: navios saindo toda semana, riqueza e oportunidades, clima tropical e abundância, e terras e utensílios doados pelo governo a todos os imigrantes.</p>",
+  "2": "<p>Que a estrutura nas colônias era muito precária. Os imigrantes precisavam trazer da Itália quase tudo para viver e trabalhar — ferramentas, panelas, instrumentos de carpintaria — porque nada disso era fornecido no local. Isso contradiz diretamente a promessa de fartura e de “utensílios dados pelo governo”.</p>",
+  "3": "<p>O trabalho exaustivo, comparado ao de um animal de carga; a jornada do escurecer ao escurecer; a comida pobre e repetitiva (feijão nas três refeições); o isolamento, com a aldeia a um dia de caminhada; o custo de vida alto; e problemas como o bicho-do-pé. Nada disso aparecia no cartaz.</p>",
+  "4": "<p>Porque é o oposto exato da mensagem do cartaz — e vem de quem viveu a experiência, não de um anúncio interessado em atrair mão de obra. Um imigrante dizendo “fique na Itália” mostra o tamanho da decepção por trás da promessa de prosperidade.</p>",
+  "5": "<p>Porque cada fonte tem uma intenção diferente: a propaganda quer convencer e mostra só vantagens; as cartas registram a experiência vivida, com dificuldades e contradições. Cruzar documentos permite identificar exageros e omissões e chegar a conclusões mais equilibradas sobre o passado.</p>"
+};
+
+  const overlay = document.getElementById('popup-overlay');
+  const titulo = document.getElementById('popup-titulo');
+  const conteudo = document.getElementById('popup-conteudo');
+
+  document.querySelectorAll('[data-resposta]').forEach(function(el){
+    el.addEventListener('click', function(){
+      const chave = el.getAttribute('data-resposta');
+      const num = chave.replace(/[a-z]$/, '');
+      const letra = chave.replace(/^[0-9]*/, '');
+      if(num && letra){ titulo.textContent = 'Questão ' + num + ' — item ' + letra + ')'; }
+      else if(letra){ titulo.textContent = 'Item ' + letra + ')'; }
+      else { titulo.textContent = 'Questão ' + num; }
+      conteudo.innerHTML = RESPOSTAS[chave];
+      overlay.classList.add('ativo');
+    });
+  });
+
+  function fecharPopup(){ overlay.classList.remove('ativo'); }
+  overlay.addEventListener('click', function(e){ if(e.target === overlay) fecharPopup(); });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') fecharPopup(); });
+
+</script>
+
+</body>
+</html>
