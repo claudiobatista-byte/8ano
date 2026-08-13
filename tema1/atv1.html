@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Documentos da Independência do Brasil | CERO</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#f6f2fa;
+    --paper:#fffdff;
+    --ink:#241c30;
+    --ink-soft:#5a4d6b;
+    --verde:#5a2d82;
+    --verde-dark:#3a1c56;
+    --gold:#a6863f;
+    --line:#ddd0e8;
+    --shadow:0 10px 30px rgba(58,28,86,.16);
+    --radius:14px;
+    --font-title:'Playfair Display', serif;
+    --font-body:'Source Serif 4', serif;
+    --font-mono:'JetBrains Mono', monospace;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:var(--font-body);
+    line-height:1.75;
+  }
+  .wrap{max-width:860px; margin:0 auto; padding:28px 18px 40px;}
+
+  .topo{
+    background:var(--paper);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    padding:26px 26px 22px;
+    border-top:5px solid var(--verde);
+    margin-bottom:26px;
+  }
+  .descritor-bar{
+    display:block; font-family:var(--font-mono); font-size:.7rem;
+    letter-spacing:.06em; text-transform:uppercase; color:var(--verde-dark);
+    background:rgba(90,45,130,.09); padding:7px 12px; border-radius:8px;
+  }
+  .hero-tag{
+    display:inline-block; margin-top:12px;
+    font-family:var(--font-mono); font-size:.68rem; letter-spacing:.1em;
+    text-transform:uppercase; color:var(--gold);
+  }
+  .topo h1{font-family:var(--font-title); font-size:1.8rem; margin:6px 0 8px; color:var(--verde-dark); line-height:1.25;}
+  .topo .sub{margin:0; color:var(--ink-soft); font-size:.98rem;}
+
+  .texto-apoio{
+    background:var(--paper); border-radius:var(--radius); box-shadow:var(--shadow);
+    padding:24px 26px; margin-bottom:22px;
+  }
+  .texto-apoio h2{font-family:var(--font-title); font-size:1.22rem; color:var(--verde-dark); margin:0 0 4px;}
+  .fonte-tag{font-family:var(--font-mono); font-size:.68rem; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-soft);}
+  .texto-apoio > p{font-size:1rem; text-align:justify;}
+  .documento-fonte{
+    margin-top:16px; background:#faf6fd; border-left:4px solid var(--verde);
+    border-radius:0 10px 10px 0; padding:16px 18px; font-size:1rem; text-align:justify;
+  }
+  .documento-fonte p{margin:0 0 10px;}
+  .documento-fonte p:last-child{margin-bottom:0;}
+  .documento-fonte ul{margin:0; padding-left:20px;}
+  .documento-fonte li{margin-bottom:9px;}
+  .documento-fonte .assinatura{text-align:right; font-style:italic; color:var(--ink-soft); font-size:.92rem;}
+  .glossario-box{
+    margin-top:14px; background:#fdf9f0; border:1px solid var(--gold);
+    border-radius:10px; padding:14px 16px;
+  }
+  .glossario-box .rot{
+    display:block; font-family:var(--font-mono); font-size:.62rem;
+    letter-spacing:.09em; text-transform:uppercase; color:var(--gold); margin-bottom:8px;
+  }
+  .glossario-box dl{margin:0;}
+  .glossario-box dt{font-weight:700; color:var(--verde-dark); font-size:.92rem;}
+  .glossario-box dd{margin:0 0 10px; font-size:.9rem; color:var(--ink-soft);}
+  .glossario-box dd:last-child{margin-bottom:0;}
+  .referencia-box{
+    margin-top:14px; border:1px dashed var(--line); border-radius:10px;
+    padding:12px 14px; background:#fcfaff;
+  }
+  .referencia-box .rot{
+    display:block; font-family:var(--font-mono); font-size:.62rem;
+    letter-spacing:.09em; text-transform:uppercase; color:var(--gold); margin-bottom:5px;
+  }
+  .referencia-box p{margin:0; font-size:.84rem; color:var(--ink-soft); word-break:break-word;}
+
+  .questoes-titulo{
+    font-family:var(--font-title); font-size:1.3rem; color:var(--verde-dark);
+    margin:34px 0 16px; padding-bottom:8px; border-bottom:2px solid var(--line);
+  }
+  .questao{
+    background:var(--paper); border-radius:var(--radius); box-shadow:var(--shadow);
+    padding:20px 22px; margin-bottom:18px;
+    border-left:5px solid var(--verde);
+  }
+  .enunciado{display:flex; gap:12px; align-items:flex-start; font-size:1rem;}
+  .num-q{
+    flex:0 0 auto; width:30px; height:30px; border-radius:50%;
+    background:var(--verde); color:#fff;
+    display:inline-flex; align-items:center; justify-content:center;
+    font-family:var(--font-mono); font-size:.85rem; font-weight:600; margin-top:2px;
+  }
+  .subitens{margin:14px 0 0 42px; padding:0; list-style:none;}
+  .subitens li{
+    display:flex; gap:10px; align-items:flex-start;
+    margin-bottom:10px; font-size:.97rem;
+    background:#faf6fd; border:1px solid var(--line); border-radius:10px;
+    padding:11px 14px; cursor:pointer;
+    transition:border-color .15s ease, background .15s ease, transform .15s ease;
+  }
+  .subitens li:last-child{margin-bottom:0;}
+  .subitens li:hover{border-color:var(--verde); background:#f3e9fa; transform:translateY(-1px);}
+  .subitens li .letra{
+    flex:0 0 auto; font-family:var(--font-mono); font-size:.78rem; font-weight:600;
+    color:#fff; background:var(--verde); border-radius:6px; padding:1px 8px; margin-top:3px;
+  }
+  .subitens li .txt{flex:1 1 auto;}
+  .subitens li .lupa{
+    flex:0 0 auto; font-family:var(--font-mono); font-size:.6rem;
+    letter-spacing:.06em; text-transform:uppercase; color:var(--gold); margin-top:5px;
+  }
+  .alternativas{margin:14px 0 0 42px;}
+  .alt{display:flex; gap:10px; align-items:flex-start; margin-bottom:9px; font-size:.95rem;}
+  .alt .rotulo{
+    flex:0 0 auto; min-width:26px; text-align:center;
+    font-family:var(--font-mono); font-size:.75rem; font-weight:600;
+    color:var(--verde-dark); background:rgba(90,45,130,.1);
+    border-radius:6px; padding:2px 6px;
+  }
+  .instrucao-multipla{
+    margin:12px 0 0 42px; font-family:var(--font-mono); font-size:.66rem;
+    letter-spacing:.07em; text-transform:uppercase; color:var(--ink-soft);
+  }
+  .dica-clique{
+    display:block; margin-top:12px; margin-left:42px;
+    font-family:var(--font-mono); font-size:.66rem; letter-spacing:.08em;
+    text-transform:uppercase; color:var(--gold);
+  }
+
+  .popup-overlay{
+    position:fixed; inset:0; z-index:100; background:rgba(36,28,48,.62);
+    display:none; align-items:center; justify-content:center; padding:20px;
+  }
+  .popup-overlay.ativo{display:flex;}
+  .popup-card{
+    background:var(--paper); border-radius:var(--radius); box-shadow:var(--shadow);
+    max-width:540px; width:100%; padding:28px 26px 24px;
+    max-height:85vh; overflow-y:auto; border-top:5px solid var(--gold);
+  }
+  .popup-card .rot{
+    display:block; font-family:var(--font-mono); font-size:.65rem;
+    letter-spacing:.1em; text-transform:uppercase; color:var(--gold); margin-bottom:8px;
+  }
+  .popup-card h3{font-family:var(--font-title); font-size:1.15rem; color:var(--verde-dark); margin:0 0 12px;}
+  .popup-conteudo{font-size:.97rem; color:var(--ink); margin-bottom:18px;}
+  .popup-conteudo p{margin:0 0 10px;}
+  .popup-conteudo p:last-child{margin-bottom:0;}
+  .popup-conteudo b{color:var(--verde-dark);}
+  .btn{
+    width:100%; padding:12px; border:none; border-radius:8px;
+    background:var(--verde); color:#fff; font-weight:600; font-size:.98rem;
+    font-family:var(--font-body); cursor:pointer; transition:filter .15s ease;
+  }
+  .btn:hover{filter:brightness(1.1);}
+
+  .rodape{
+    text-align:center; font-family:var(--font-mono); font-size:.68rem;
+    letter-spacing:.08em; text-transform:uppercase; color:var(--ink-soft);
+    padding:24px 12px 32px;
+  }
+
+  @media (max-width:520px){
+    .topo h1{font-size:1.45rem;}
+    .texto-apoio, .questao, .topo{padding-left:18px; padding-right:18px;}
+    .subitens, .alternativas, .dica-clique, .instrucao-multipla{margin-left:0;}
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="topo">
+    <span class="descritor-bar">História / 8.º Ano do Ensino Fundamental &nbsp;|&nbsp; (GO-EF08HI15-A) – Independência e Nação</span>
+    <span class="hero-tag">Interpretar Fontes Históricas</span>
+    <h1>Documentos da Independência do Brasil</h1>
+    <p class="sub">Leia com atenção os dois documentos a seguir e responda às questões de interpretação. Clique em cada item (a, b, c...) para ver a resposta.</p>
+  </header>
+
+  <section class="texto-apoio">
+    <h2>Doc. 1 — Proclamação ao Povo feita pelo Governo Provisório (09/03/1817)</h2>
+    <span class="fonte-tag">Governo Provisório de Pernambuco — Insurreição Pernambucana</span>
+
+    <div class="documento-fonte">
+      <p>Pernambucanos, estai tranquilos, aparecei na Capital, o povo está contente [...]. Um governo provisório iluminado, escolhido entre todas as ordens do Estado, preside à vossa felicidade; confiai no seu zelo, e no seu patriotismo. A providência, que dirigiu a obra, a levará ao termo. Vós vereis consolidar-se a vossa fortuna, vós sereis livres do peso de enormes tributos, que gravam sobre vós; e o vosso, e nosso País, subirá ao ponto de grandeza, que há muito o espera, e vós colhereis o fruto dos trabalhos e do zelo dos vossos Cidadãos. Ajudai-os com [...] os vossos braços [...] uma nação rica é uma nação poderosa. A Pátria é a nossa mãe comum, vós sois seus filhos, sois descendentes dos valorosos Lusos [...] sois Americanos, sois Brasileiros, sois Pernambucanos.</p>
+    </div>
+
+    <div class="referencia-box">
+      <span class="rot">Referência (ABNT NBR 6023)</span>
+      <p>VILLALTA, Luiz Carlos (Org.). Coletânea de Documentos e Textos de História do Brasil Colonial. Disponível em: http://www.fafich.ufmg.br/pae/colonia/documentos/coletaneadedocumentos.pdf. Acesso em: 18 jun. 2018.</p>
+    </div>
+  </section>
+
+  <div class="questao">
+    <div class="enunciado"><span class="num-q">1</span> Sobre o documento, responda:</div>
+    <ul class="subitens">
+      <li data-resposta="1a"><span class="letra">a</span><span class="txt">Quem são os autores do documento?</span><span class="lupa">ver</span></li>
+      <li data-resposta="1b"><span class="letra">b</span><span class="txt">A quem os autores estão se dirigindo?</span><span class="lupa">ver</span></li>
+      <li data-resposta="1c"><span class="letra">c</span><span class="txt">Qual o significado, no texto, da expressão "um governo escolhido [...] entre todas as ordens do Estado"?</span><span class="lupa">ver</span></li>
+      <li data-resposta="1d"><span class="letra">d</span><span class="txt">Uma das razões mais importantes da Insurreição Pernambucana de 1817 está explícita nesse documento; qual é ela?</span><span class="lupa">ver</span></li>
+    </ul>
+  </div>
+
+  <section class="texto-apoio">
+    <h2>Doc. 2 — Jornal da época da Independência</h2>
+    <span class="fonte-tag">Mudança de sobrenome de um cidadão brasileiro</span>
+
+    <p>O texto a seguir foi retirado de um jornal da época da Independência. Leia-o com atenção.</p>
+
+    <div class="documento-fonte">
+      <p>Antônio Firmiando Macedo Braga... fazendo ciente ao respeitável público, que pelos [...] males que a nação portuguesa lhe tem causado [...] desterra de si e de toda a sua [...] família, de hoje para sempre, os indignos cognomes de Macedo Braga, que [...] há herdado de seus pais e avós, naturais desses lugares de Portugal, e substituiu a eles os da sua pátria, passando a denominar-se Antônio Firmiando Brasileiro Carioca e seus filhos: Rodrigo Antônio Brasileiro de Maceió, Inocência e Cândida Flora de Maceió.</p>
+    </div>
+
+    <div class="referencia-box">
+      <span class="rot">Referência (ABNT NBR 6023)</span>
+      <p>EDELWEISS, Frederico G. A. Antroponímia patriótica da Independência. Salvador: CEB: UFBA, 1981. p. 8. In: DEL PRIORE, Mary. O livro de ouro da História do Brasil. Rio de Janeiro: Ediouro, 2003. p. 203.</p>
+    </div>
+  </section>
+
+  <div class="questao">
+    <div class="enunciado"><span class="num-q">2</span> Sobre o documento, responda:</div>
+    <ul class="subitens">
+      <li data-resposta="2a"><span class="letra">a</span><span class="txt">Identifique e transcreva o trecho em que o autor explica o motivo de ter decidido mudar seu sobrenome e o de sua família.</span><span class="lupa">ver</span></li>
+      <li data-resposta="2b"><span class="letra">b</span><span class="txt">O que o levou a trocar "Macedo Braga" por "Brasileiro Carioca"?</span><span class="lupa">ver</span></li>
+      <li data-resposta="2c"><span class="letra">c</span><span class="txt">A que processo essa troca de sobrenome está associada?</span><span class="lupa">ver</span></li>
+    </ul>
+  </div>
+
+</div>
+
+<footer class="rodape">Colégio Estadual Rodolfo de Oliveira · CERO · 2026</footer>
+
+<div class="popup-overlay" id="popup-overlay">
+  <div class="popup-card">
+    <span class="rot">Resposta</span>
+    <h3 id="popup-titulo">Questão 1</h3>
+    <div class="popup-conteudo" id="popup-conteudo"></div>
+    <button class="btn" onclick="fecharPopup()">Fechar</button>
+  </div>
+</div>
+
+<script>
+  const RESPOSTAS = {
+  "1a": "<p>Os membros do Governo Provisório de Pernambuco, ou seja, os líderes que assumiram o poder na revolta de 1817.</p>",
+  "1b": "<p>Ao povo de Pernambuco — os “Pernambucanos”. O objetivo era acalmar a população e conquistar seu apoio ao novo governo.</p>",
+  "1c": "<p>Que o governo provisório reunia representantes de vários grupos da sociedade, e não de um só. Isso servia para passar a ideia de que o movimento tinha apoio amplo e era legítimo.</p>",
+  "1d": "<p>O peso dos impostos cobrados por Portugal. O texto promete que o povo ficará livre dos “enormes tributos”, mostrando que a revolta tinha causa econômica.</p>",
+  "2a": "<p>“pelos [...] males que a nação portuguesa lhe tem causado [...] desterra de si e de toda a sua [...] família, de hoje para sempre, os indignos cognomes de Macedo Braga”.</p>",
+  "2b": "<p>Ele associava o sobrenome português aos males causados por Portugal. Escolheu então um nome que mostrava sua identidade: brasileiro e carioca.</p>",
+  "2c": "<p>Ao processo de Independência e à construção de uma identidade nacional brasileira — um rompimento simbólico com o antigo colonizador.</p>"
+};
+
+  const overlay = document.getElementById('popup-overlay');
+  const titulo = document.getElementById('popup-titulo');
+  const conteudo = document.getElementById('popup-conteudo');
+
+  document.querySelectorAll('[data-resposta]').forEach(function(el){
+    el.addEventListener('click', function(){
+      const chave = el.getAttribute('data-resposta');
+      const num = chave.replace(/[a-z]$/, '');
+      const letra = chave.replace(/^[0-9]+/, '');
+      titulo.textContent = letra ? ('Questão ' + num + ' — item ' + letra + ')') : ('Questão ' + num);
+      conteudo.innerHTML = RESPOSTAS[chave];
+      overlay.classList.add('ativo');
+    });
+  });
+
+  function fecharPopup(){ overlay.classList.remove('ativo'); }
+  overlay.addEventListener('click', function(e){ if(e.target === overlay) fecharPopup(); });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') fecharPopup(); });
+
+</script>
+
+</body>
+</html>
