@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Primeiro Reinado e Período Regencial | CERO</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#f6f2fa;
+    --paper:#fffdff;
+    --ink:#241c30;
+    --ink-soft:#5a4d6b;
+    --verde:#5a2d82;
+    --verde-dark:#3a1c56;
+    --gold:#a6863f;
+    --line:#ddd0e8;
+    --shadow:0 10px 30px rgba(58,28,86,.16);
+    --radius:14px;
+    --font-title:'Playfair Display', serif;
+    --font-body:'Source Serif 4', serif;
+    --font-mono:'JetBrains Mono', monospace;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:var(--font-body);
+    line-height:1.75;
+  }
+  .wrap{max-width:860px; margin:0 auto; padding:28px 18px 60px;}
+
+  /* ===== TOPO ===== */
+  .topo{
+    background:var(--paper);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    padding:26px 26px 22px;
+    border-top:5px solid var(--verde);
+    margin-bottom:26px;
+  }
+  .descritor-bar{
+    display:block;
+    font-family:var(--font-mono);
+    font-size:.7rem;
+    letter-spacing:.06em;
+    text-transform:uppercase;
+    color:var(--verde-dark);
+    background:rgba(90,45,130,.09);
+    padding:7px 12px;
+    border-radius:8px;
+  }
+  .hero-tag{
+    display:inline-block; margin-top:12px;
+    font-family:var(--font-mono); font-size:.68rem; letter-spacing:.1em;
+    text-transform:uppercase; color:var(--gold);
+  }
+  .topo h1{font-family:var(--font-title); font-size:1.8rem; margin:6px 0 8px; color:var(--verde-dark); line-height:1.25;}
+  .topo .sub{margin:0; color:var(--ink-soft); font-size:.98rem;}
+
+  /* ===== FONTES ===== */
+  .texto-apoio{
+    background:var(--paper);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    padding:24px 26px;
+    margin-bottom:22px;
+  }
+  .leitura-eyebrow{
+    font-family:var(--font-mono); font-size:.66rem; letter-spacing:.12em;
+    text-transform:uppercase; color:var(--gold); display:block; margin-bottom:6px;
+  }
+  .texto-apoio h2{font-family:var(--font-title); font-size:1.22rem; color:var(--verde-dark); margin:0 0 4px;}
+  .texto-apoio > p{font-size:1rem; text-align:justify;}
+  .fonte-tag{font-family:var(--font-mono); font-size:.68rem; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-soft);}
+  .documento-fonte{
+    margin-top:16px;
+    background:#faf6fd;
+    border-left:4px solid var(--verde);
+    border-radius:0 10px 10px 0;
+    padding:16px 18px;
+    font-size:1rem;
+    text-align:justify;
+  }
+  .documento-fonte p{margin:0;}
+  .documento-fonte p + p{margin-top:12px;}
+  .referencia-box{
+    margin-top:14px;
+    border:1px dashed var(--line);
+    border-radius:10px;
+    padding:12px 14px;
+    background:#fcfaff;
+  }
+  .referencia-box .rot{
+    display:block; font-family:var(--font-mono); font-size:.62rem;
+    letter-spacing:.09em; text-transform:uppercase; color:var(--gold); margin-bottom:5px;
+  }
+  .referencia-box p{margin:0; font-size:.84rem; color:var(--ink-soft);}
+
+  /* ===== QUESTÕES ===== */
+  .questoes-titulo{
+    font-family:var(--font-title); font-size:1.3rem; color:var(--verde-dark);
+    margin:34px 0 16px; padding-bottom:8px; border-bottom:2px solid var(--line);
+  }
+  .questao{
+    background:var(--paper);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    padding:20px 22px;
+    margin-bottom:18px;
+    cursor:pointer;
+    border-left:5px solid transparent;
+    transition:border-color .15s ease, transform .15s ease;
+  }
+  .questao:hover{border-left-color:var(--verde); transform:translateY(-2px);}
+  .enunciado{display:flex; gap:12px; align-items:flex-start; font-size:1rem;}
+  .num-q{
+    flex:0 0 auto;
+    width:30px; height:30px; border-radius:50%;
+    background:var(--verde); color:#fff;
+    display:inline-flex; align-items:center; justify-content:center;
+    font-family:var(--font-mono); font-size:.85rem; font-weight:600;
+    margin-top:2px;
+  }
+  .dica-clique{
+    display:block; margin-top:10px; margin-left:42px;
+    font-family:var(--font-mono); font-size:.66rem; letter-spacing:.08em;
+    text-transform:uppercase; color:var(--gold);
+  }
+
+  /* ===== POPUP ===== */
+  .popup-overlay{
+    position:fixed; inset:0; z-index:100;
+    background:rgba(36,28,48,.62);
+    display:none; align-items:center; justify-content:center;
+    padding:20px;
+  }
+  .popup-overlay.ativo{display:flex;}
+  .popup-card{
+    background:var(--paper);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    max-width:520px; width:100%;
+    padding:28px 26px 24px;
+    max-height:85vh; overflow-y:auto;
+    border-top:5px solid var(--gold);
+  }
+  .popup-card .rot{
+    display:block; font-family:var(--font-mono); font-size:.65rem;
+    letter-spacing:.1em; text-transform:uppercase; color:var(--gold); margin-bottom:8px;
+  }
+  .popup-card h3{font-family:var(--font-title); font-size:1.15rem; color:var(--verde-dark); margin:0 0 12px;}
+  .popup-card p{margin:0 0 18px; font-size:.98rem; color:var(--ink);}
+  .btn{
+    width:100%; padding:12px; border:none; border-radius:8px;
+    background:var(--verde); color:#fff; font-weight:600; font-size:.98rem;
+    font-family:var(--font-body); cursor:pointer; transition:filter .15s ease;
+  }
+  .btn:hover{filter:brightness(1.1);}
+
+  .rodape{
+    text-align:center; font-family:var(--font-mono); font-size:.68rem;
+    letter-spacing:.08em; text-transform:uppercase; color:var(--ink-soft);
+    padding:24px 12px 32px;
+  }
+
+  @media (max-width:520px){
+    .topo h1{font-size:1.45rem;}
+    .texto-apoio, .questao, .topo{padding-left:18px; padding-right:18px;}
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="topo">
+    <span class="descritor-bar">História / 8.º Ano do Ensino Fundamental &nbsp;|&nbsp; Tema 2 — Primeiro Reinado e Período Regencial</span>
+    <span class="hero-tag">Explicar e Argumentar</span>
+    <h1>Primeiro Reinado e Período Regencial</h1>
+    <p class="sub">Leia o texto de apoio a seguir e responda às doze questões. Toque em uma questão para ver os pontos-chave da resposta.</p>
+  </header>
+
+  <section class="texto-apoio">
+    <span class="leitura-eyebrow">Para refletir</span>
+    <h2>Um Império que nasce instável</h2>
+    <span class="fonte-tag">Texto de apoio · Tema 2 — Primeiro Reinado e Período Regencial</span>
+
+    <p>Entre 1822 e 1840, o Brasil viveu seus primeiros anos como nação independente sob dois momentos bem diferentes: o governo autoritário e conturbado de Dom Pedro I e, depois de sua abdicação, o Período Regencial, marcado por disputas de poder e revoltas em várias regiões. Leia os dois blocos abaixo antes de responder às questões.</p>
+  </section>
+
+  <section class="texto-apoio">
+    <h2>Bloco 1 — O Primeiro Reinado (1822–1831)</h2>
+    <span class="fonte-tag">Síntese histórica</span>
+
+    <div class="documento-fonte">
+      <p>A independência não se resumiu ao Grito do Ipiranga: houve meses de combates com participação popular na Bahia, no Piauí, no Ceará, no Maranhão e no Pará. O reconhecimento internacional teve um preço alto — indenizações a Portugal, tarifas favoráveis à Inglaterra e o fim do tráfico negreiro em prazo determinado —, deixando o Brasil endividado desde o início.</p>
+      <p>Internamente, Dom Pedro I fechou a Assembleia Constituinte na Noite da Agonia (1823) e outorgou, sozinho, a Constituição de 1824, que estabelecia voto censitário e excluía da cidadania quem nascera escravizado. O autoritarismo gerou revoltas, como a Confederação do Equador (1824), e derrotas, como a perda da Cisplatina (1828). Somando-se à crise financeira e à disputa pelo trono português, a popularidade do imperador despencou até sua abdicação, em 7 de abril de 1831, em favor do filho de apenas 5 anos.</p>
+    </div>
+
+    <div class="referencia-box">
+      <span class="rot">Fonte do conteúdo</span>
+      <p>Material de estudo — Fichamento Tema 2, elaborado pelo Prof. Claudio (CERO, História, 8.º ano).</p>
+    </div>
+  </section>
+
+  <section class="texto-apoio">
+    <h2>Bloco 2 — O Período Regencial (1831–1840)</h2>
+    <span class="fonte-tag">Síntese histórica</span>
+
+    <div class="documento-fonte">
+      <p>Com um imperador criança, o Brasil passou a ser governado por regentes. O Ato Adicional de 1834 descentralizou o poder e criou a Regência Una, mas a instabilidade levou à Lei de Interpretação de 1840, que recentralizou o governo. Em várias províncias, revoltas populares — Cabanagem, Malês, Sabinada, Balaiada e Farroupilha — mostraram que grande parte da população não se sentia representada.</p>
+      <p>Para encerrar essa instabilidade, políticos liberais promoveram o Golpe da Maioridade em 1840, antecipando a maioridade de Dom Pedro II para os 14 anos, sob o lema "a maioridade resolverá tudo". Assim teve início o Segundo Reinado.</p>
+    </div>
+
+    <div class="referencia-box">
+      <span class="rot">Fonte do conteúdo</span>
+      <p>Material de estudo — Fichamento Tema 2, elaborado pelo Prof. Claudio (CERO, História, 8.º ano).</p>
+    </div>
+  </section>
+
+  <h2 class="questoes-titulo">Questões</h2>
+
+  <div class="questao" data-resposta="1">
+    <div class="enunciado"><span class="num-q">1</span> A independência do Brasil costuma ser lembrada apenas pelo "Grito do Ipiranga", mas o processo histórico envolveu meses de combates e forte participação popular. Explique como a independência se consolidou para além do gesto de Dom Pedro I, citando pelo menos duas províncias que resistiram militarmente às tropas portuguesas.</div>
+    <span class="dica-clique">Toque para ver a resposta</span>
+  </div>
+
+  <div class="questao" data-resposta="2">
+    <div class="enunciado"><span class="num-q">2</span> O reconhecimento da independência do Brasil por Estados Unidos, Portugal e Inglaterra ocorreu de formas diferentes e teve um "preço" para o país recém-independente. Explique as condições impostas por pelo menos dois desses países e como elas afetaram a economia do Brasil.</div>
+    <span class="dica-clique">Toque para ver a resposta</span>
+  </div>
+
+  <div class="questao" data-resposta="3">
+    <div class="enunciado"><span class="num-q">3</span> Em novembro de 1823, ocorreu um episódio conhecido como Noite da Agonia. Explique o que motivou esse conflito entre Dom Pedro I e a Assembleia Constituinte e quais foram suas consequências políticas imediatas.</div>
+    <span class="dica-clique">Toque para ver a resposta</span>
+  </div>
+
+  <div class="questao" data-resposta="4">
+    <div class="enunciado"><span class="num-q">4</span> A Constituição de 1824 foi outorgada, e não elaborada por uma assembleia eleita pelo povo. Explique o que significa uma constituição "outorgada" e cite duas características dessa Constituição que limitavam a participação política da população.</div>
+    <span class="dica-clique">Toque para ver a resposta</span>
+  </div>
+
+  <div class="questao" data-resposta="5">
+    <div class="enunciado"><span class="num-q">5</span> A Confederação do Equador (1824) foi um movimento de resistência ao autoritarismo do Império. Explique quais províncias participaram do movimento, quais eram suas divisões internas em relação à escravidão e como ele foi derrotado.</div>
+    <span class="dica-clique">Toque para ver a resposta</span>
+  </div>
+
+  <div class="questao" data-resposta="6">
+    <div class="enunciado"><span class="num-q">6</span> A Guerra da Cisplatina resultou na perda de um território pelo Império do Brasil. Explique o que aconteceu nesse conflito, qual foi seu resultado em 1828 e por que essa derrota contribuiu para o enfraquecimento político de Dom Pedro I.</div>
+    <span class="dica-clique">Toque para ver a resposta</span>
+  </div>
+
+  <div class="questao" data-resposta="7">
+    <div class="enunciado"><span class="num-q">7</span> Vários fatores contribuíram para a queda da popularidade de Dom Pedro I entre 1826 e 1831, levando à sua abdicação. Cite e explique pelo menos três desses fatores, sejam eles políticos, econômicos ou pessoais.</div>
+    <span class="dica-clique">Toque para ver a resposta</span>
+  </div>
+
+  <div class="questao" data-resposta="8">
+    <div class="enunciado"><span class="num-q">8</span> Em 7 de abril de 1831, Dom Pedro I abdicou do trono em favor de seu filho, então com apenas 5 anos de idade. Explique por que essa abdicação levou o Brasil a ser governado por regentes e o que isso significava para a organização política do país.</div>
+    <span class="dica-clique">Toque para ver a resposta</span>
+  </div>
+
+  <div class="questao" data-resposta="9">
+    <div class="enunciado"><span class="num-q">9</span> Pobres, negros, indígenas e mulheres participaram ativamente da luta pela independência e dos conflitos do período, mas a Constituição de 1824 não garantiu a esses grupos plena cidadania. Usando o exemplo do Manifesto das Mulheres de Goiana (1824), explique essa contradição entre participação popular e exclusão política.</div>
+    <span class="dica-clique">Toque para ver a resposta</span>
+  </div>
+
+  <div class="questao" data-resposta="10">
+    <div class="enunciado"><span class="num-q">10</span> O Ato Adicional de 1834 alterou a organização política do Império durante o Período Regencial. Explique o que esse Ato modificou e por que, alguns anos depois, a Lei de Interpretação de 1840 foi criada para reverter parte dessas mudanças.</div>
+    <span class="dica-clique">Toque para ver a resposta</span>
+  </div>
+
+  <div class="questao" data-resposta="11">
+    <div class="enunciado"><span class="num-q">11</span> Durante as Regências (1831-1840), diversas revoltas eclodiram em várias regiões do país, como a Cabanagem, a Malês, a Sabinada, a Balaiada e a Farroupilha. Escolha duas dessas revoltas e explique o que elas revelam sobre a insatisfação popular com o governo regencial.</div>
+    <span class="dica-clique">Toque para ver a resposta</span>
+  </div>
+
+  <div class="questao" data-resposta="12">
+    <div class="enunciado"><span class="num-q">12</span> O Golpe da Maioridade (1840) antecipou a maioridade de Dom Pedro II para os 14 anos, sob o lema "a maioridade resolverá tudo". Explique por que os liberais promoveram esse golpe e dê sua opinião: a maioridade de um imperador tão jovem poderia, de fato, resolver os problemas do período regencial? Justifique sua resposta.</div>
+    <span class="dica-clique">Toque para ver a resposta</span>
+  </div>
+</div>
+
+<footer class="rodape">Colégio Estadual Rodolfo de Oliveira · CERO · 2026</footer>
+
+<!-- ===== POPUP ===== -->
+<div class="popup-overlay" id="popup-overlay">
+  <div class="popup-card">
+    <span class="rot">Resposta</span>
+    <h3 id="popup-titulo">Questão 1</h3>
+    <p id="popup-texto"></p>
+    <button class="btn" onclick="fecharPopup()">Fechar</button>
+  </div>
+</div>
+
+<script>
+  const RESPOSTAS = {
+    "1": "O Grito do Ipiranga foi apenas o início. Houve meses de combates com participação popular, como em Pirajá (Bahia, 2 de julho de 1823) e no Jenipapo (Piauí), além de resistências no Ceará, no Maranhão e no Pará. Piauí, Ceará e Maranhão só se tornaram oficialmente parte do Brasil independente em agosto de 1823.",
+    "2": "Os Estados Unidos reconheceram em 1824, sem exigir condições formais, por causa da Doutrina Monroe. Portugal reconheceu em 1825, mediante indenização de 2 milhões de libras. A Inglaterra reconheceu em 1827, exigindo tarifa alfandegária de 15% por 15 anos e o fim do tráfico de pessoas escravizadas em três anos. Essas condições deixaram o Brasil endividado e dependente economicamente.",
+    "3": "Os deputados da Assembleia Constituinte, liderados pelos irmãos Andrada, queriam limitar os poderes do imperador. Em novembro de 1823, tropas cercaram a Assembleia (episódio conhecido como Noite da Agonia) e Dom Pedro I fechou a Constituinte e mandou prender vários deputados, revelando o caráter autoritário do governo.",
+    "4": "'Outorgada' significa que a Constituição foi imposta pelo imperador, sem discussão e aprovação por uma assembleia eleita — foi escrita em 40 dias por dez homens de confiança de Dom Pedro I e outorgada em 25 de março de 1824. Entre suas características limitadoras: o voto era censitário (dependia de renda) e quem nascera escravizado não tinha direitos políticos mesmo depois de alforriado.",
+    "5": "Participaram Pernambuco (que liderou o movimento), Alagoas, Paraíba, Rio Grande do Norte e Ceará. O movimento estava dividido internamente entre abolicionistas e escravistas. Foi derrotado por mercenários comandados por Lorde Cochrane, a serviço do Império, e Frei Caneca, uma de suas principais lideranças, foi fuzilado.",
+    "6": "A província Cisplatina se rebelou contra o domínio brasileiro e, com apoio da Argentina, venceu a guerra contra o Império. Em 1828, o território tornou-se um país independente, o Uruguai. Essa derrota militar enfraqueceu ainda mais a imagem e a popularidade de Dom Pedro I.",
+    "7": "Entre os fatores estão: o envolvimento de Dom Pedro I na disputa pelo trono português após a morte de Dom João VI (1826), o que gerou acusações de que ele priorizava Portugal; a grave crise financeira, com empréstimos, inflação e a falência do Banco do Brasil em 1829; e episódios como o assassinato de Líbero Badaró (1830) e as Noites das Garrafas (1831), que isolaram politicamente o imperador.",
+    "8": "Como o herdeiro, Dom Pedro II, tinha apenas 5 anos e não podia governar, o país passou a ser administrado por regentes, que exerciam o poder em nome do futuro imperador até que ele completasse a maioridade. Essa fase ficou conhecida como Período Regencial.",
+    "9": "Pobres, negros, indígenas e mulheres participaram ativamente da luta pela independência, mas a Constituição de 1824 concedia cidadania plena a poucos, excluindo, por exemplo, quem nascera escravizado. O Manifesto das Mulheres de Goiana (1824) é um raro registro direto da participação política feminina, mostrando que essas mulheres se posicionavam politicamente mesmo sem terem seus direitos garantidos.",
+    "10": "O Ato Adicional de 1834 descentralizou o poder, dando mais autonomia às províncias, e criou a Regência Una (um único regente eleito, em vez de um grupo). Como isso gerou instabilidade e enfraquecimento do poder central, a Lei de Interpretação de 1840 foi criada para recentralizar o governo.",
+    "11": "Exemplo de resposta: a Cabanagem (Pará, 1835-1840) foi um levante popular contra as péssimas condições de vida da população pobre. A Farroupilha (Rio Grande do Sul, 1835-1845) foi liderada por elites regionais insatisfeitas com a política econômica do governo central. Juntas, essas revoltas mostram que grande parte da população — de diferentes regiões e grupos sociais — não se sentia representada pelo governo regencial.",
+    "12": "Os liberais promoveram o golpe porque queriam encerrar a instabilidade política do Período Regencial, apostando que um imperador — mesmo jovem — traria mais legitimidade e estabilidade ao governo. É uma questão de opinião: alguns argumentam que a medida apenas antecipou artificialmente uma solução simbólica, sem resolver os problemas estruturais do país; outros consideram que ajudou a estabilizar o poder central. O importante é justificar a resposta com argumentos baseados no texto estudado."
+  };
+
+  const overlay = document.getElementById('popup-overlay');
+  const titulo = document.getElementById('popup-titulo');
+  const texto = document.getElementById('popup-texto');
+
+  document.querySelectorAll('.questao').forEach(function(q){
+    q.addEventListener('click', function(){
+      const n = q.getAttribute('data-resposta');
+      titulo.textContent = 'Questão ' + n;
+      texto.textContent = RESPOSTAS[n];
+      overlay.classList.add('ativo');
+    });
+  });
+
+  function fecharPopup(){
+    overlay.classList.remove('ativo');
+  }
+
+  overlay.addEventListener('click', function(e){
+    if(e.target === overlay) fecharPopup();
+  });
+
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape') fecharPopup();
+  });
+</script>
+
+</body>
+</html>
