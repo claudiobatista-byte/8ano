@@ -84,6 +84,28 @@
   .figura-charge img{display:block; width:100%; max-width:420px; height:auto; margin:0 auto; border-radius:8px; border:1px solid var(--linha);}
   .figura-charge figcaption{margin-top:10px; text-align:center; font-family:'Inter',sans-serif; font-size:.78rem; color:var(--ink-soft); font-style:italic;}
   .figura-charge.mapa img{max-width:560px;}
+  .figura-charge.resumo-infografico img{max-width:520px;}
+  .img-zoom{cursor:zoom-in; transition:filter .15s ease;}
+  .img-zoom:hover{filter:brightness(.96);}
+
+  .zoom-overlay{
+    position:fixed; inset:0; z-index:200;
+    background:rgba(20,20,20,.82);
+    display:none; align-items:center; justify-content:center;
+    padding:24px; cursor:zoom-out;
+  }
+  .zoom-overlay.ativo{display:flex;}
+  .zoom-overlay img{
+    display:block; max-width:90vw; max-height:90vh;
+    width:auto; height:auto;
+    border-radius:8px; box-shadow:0 10px 40px rgba(0,0,0,.5);
+  }
+  .zoom-overlay .zoom-fechar{
+    position:absolute; top:18px; right:22px;
+    width:38px; height:38px; border-radius:50%;
+    border:none; background:rgba(255,255,255,.92); color:#222;
+    font-size:1.3rem; line-height:1; cursor:pointer;
+  }
   h2.secao{font-family:'Playfair Display',serif; color:var(--verde); font-size:1.25rem; border-bottom:2px solid var(--dourado-2); padding-bottom:6px; margin:34px 0 14px;}
   h3.subsecao{font-family:'Playfair Display',serif; color:var(--bordo); font-size:1.02rem; margin:18px 0 8px;}
   details.acordeao{background:var(--paper); border:1px solid var(--linha); border-radius:10px; margin-bottom:12px; padding:14px 18px;}
@@ -701,6 +723,11 @@
     </div>
   </div>
 
+  <figure class="figura-charge resumo-infografico">
+    <img src="tema3/resumo.webp" alt="Infográfico-resumo do Tema 3 — O Segundo Reinado" class="img-zoom" onclick="abrirImagemZoom(this)">
+    <figcaption>Infográfico-resumo do Tema 3 — toque na imagem para ampliar.</figcaption>
+  </figure>
+
   <h2 class="secao">Termos-chave desta aula</h2>
   <div class="grade-termos">
     <details class="termo"><summary>Parlamentarismo às avessas</summary><p>Sistema em que o Imperador — e não o Parlamento — escolhia o governo, usando o Poder Moderador para depois garantir maioria legislativa.</p></details>
@@ -1065,6 +1092,31 @@ const FICHAS = {"1": {"titulo": "Dom Pedro II e a longa estabilidade (1840–188
     if(e.key === 'Escape' && fundo.classList.contains('ativo')) fechar();
   });
 })();
+</script>
+
+<div class="zoom-overlay" id="zoomOverlay" onclick="fecharImagemZoom(event)">
+  <button class="zoom-fechar" aria-label="Fechar" onclick="fecharImagemZoom(event)">&times;</button>
+  <img id="zoomImg" src="" alt="">
+</div>
+
+<script>
+  function abrirImagemZoom(img){
+    var overlay = document.getElementById('zoomOverlay');
+    var zoomImg = document.getElementById('zoomImg');
+    zoomImg.src = img.src;
+    zoomImg.alt = img.alt;
+    overlay.classList.add('ativo');
+    document.body.style.overflow = 'hidden';
+  }
+  function fecharImagemZoom(e){
+    if(e.target.id !== 'zoomOverlay' && e.target.id !== 'zoomImg' && !e.target.classList.contains('zoom-fechar')) return;
+    if(e.target.id === 'zoomImg') return;
+    document.getElementById('zoomOverlay').classList.remove('ativo');
+    document.body.style.overflow = '';
+  }
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape') fecharImagemZoom({target:{id:'zoomOverlay'}});
+  });
 </script>
 
 </body>
